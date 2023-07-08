@@ -1,15 +1,68 @@
-{% extends 'portfolio_home.html'%}
+{% extends 'base.html'%}
 {%block body%}
-<style>
-    a.active {
-        font-weight: bold;
-        border-bottom: #007bff;
-    }
-</style>
 
-<div class="pt-5 border-top">
+    <div class="row flex-nowrap m-4 p-4 min-vh-100">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 pr-4">
+            <div class="d-flex flex-column align-items-center px-5 pt-2 ">
+                
+                <ul class="nav nav-pills flex-column mb-sm-auto mt-3 mb-2 align-items-center pt-5 " id="menu">
+                    <li class="btn btn-primary py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20">
+                        <a href="#" class="align-middle px-0 text-white  ">
+                            <i class="fa fa-plus pr-2"></i>  <span class="ms-1 d-none  d-sm-inline">New Scenario</span>
+                        </a>
+                    </li>
+                    <li class="btn btn-primary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
+                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Your Projects</span> 
+                        </a>
+                    </li>
+                    <li class="btn btn-secondary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
+                            <i class="fa fa-save pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Saved Search</span> 
+                        </a>
+                    </li>
+                    <li class="btn btn-secondary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
+                            <i class="fa fa-comment pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Notifications</span> 
+                        </a>
+                    </li>
+                    <li class="btn btn-secondary mt-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
+                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Team Projects</span> 
+                        </a>
+                    </li>
 
-</div>
+                    
+                </ul>
+                <hr>
+                
+            </div>
+        </div>
+        <div class="col px-5">
+            <div class = 'd-flex p-3 mb-4 row bg-light'>
+                <div>
+                    <h3 class='px-3 font-weight-bold'> Your projects </h3>
+                </div>
+                <div class='ml-auto'>
+                    <h3><a class='text-muted' href="#"><i class="fa fa-sign-out-alt"></i></a></h3>
+                </div>
+
+
+            </div>
+            <div class='row p-4 row rounded-pill bg-light'>
+                <div class='d-flex flex-column'>
+                    <div> <p class='h3 font-weight-bold '> Start a new project </p></div>
+                    <div> <p class='text-muted mb-5'> Click on below button to start a new project. </p></div> 
+                    <div> <p class="btn btn-success py-1 text-white px-4 btn-pill btn-md"> New Project</p></div>
+
+                </div>
+                
+            </div>
+
+            
+        </div>
+    </div>
+
 {% endblock%}
 {% block scr %}
 
