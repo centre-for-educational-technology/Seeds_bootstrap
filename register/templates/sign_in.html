@@ -1,10 +1,8 @@
-{% extends "base_form.html" %}
-{% load socialaccount %}
-
+{% extends "base.html" %}
 {% block title %} {% endblock %}
 {% load crispy_forms_tags %}
 
-{% block content %}
+{% block body %}
 <script>
   $(document).ready(function(){
 $('.pass_show').append('<span class="ptxt">Show</span>');
@@ -173,7 +171,7 @@ transition: .3s ease all;
 
 .pass_show .ptxt:hover{color: #333333;}
 </style>
-<section class="login-block">
+<section class="login-block border-top">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -183,51 +181,27 @@ transition: .3s ease all;
                             <div class="row">
                                 <div class="col-md-12">
                                     <h2 class="text-center heading"><b>Log in</b></h2>
+                                    <center>
+                                    <p class="text-secondary text-center">Sign in with your SEEDS credentials.</p>
+                                    <small>Don't have SEEDS account? Sign up <a href="{% url 'register' %}">here</a></small>
+                                    </center>
                                 </div>
                             </div>
                             <br/>
-
                             <br/>
                             <form method="post">
                               {% csrf_token %}
-
-
-
-
-
                             <div class="form-group form-primary">Email {{form.email }} </div>
-
-
-
                             <div class="form-group pass_show"> Password
                               {{form.password}}
                             </div>
-
-
-
-                        
                             <br/>
                             <div class="row">
                                 <div class="col-md-12"> <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> <!-- <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"><i class="fa fa-lock"></i> Signup Now </button> -->
                                 </div>
                             </div>
                             <small>Forgot password ? Change   <a href="{% url 'password_reset' %}">here</a></small>
-
-
-
                             </form>
-                            <div class="or-container">
-                                <div class="line-separator"></div>
-                                <div class="or-label">or</div>
-                                <div class="line-separator"></div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block btn-outline" href="{% provider_login_url 'google' %}""><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Continue with Google</a> </div>
-                            </div> <br>
-
-
-
                       </div>
                     </div>
                 </form>

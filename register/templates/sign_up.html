@@ -138,8 +138,12 @@
                             <small class="d-flex justify-content-center">
                                 Already have an account? <a class="px-1" href="{% url 'login'%}" data-abc="true">
                                     Login</a></small>
-
                             <br />
+                            {% if form.errors|length != 0%}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.errors}}
+                              </div>
+                            {% endif %}
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="form-group form-primary">First name {{form.first_name }} </div>
@@ -164,34 +168,24 @@
                                                 </button>
                                             </div>
                                             <div class='modal-body'>
-
-
                                                 <div>
                                                     <p> Password must contain </p>
                                                     <p> - at least 8 characters </p>
                                                     <p> - one uppercase character </p>
                                                     <p> - one number </p> <br />
-
                                                     <p> Password can not be too similar to your other personal
                                                         information.</p>
                                                     <br />
                                                     <p> Password can not be entirely numeric.</p>
-
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                     <!-- End -->
-
                                 </div>
-
-
-
                                 <div class="form-group pass_show"> Repeat password
                                     {{form.password2}}
                                 </div>
-
                                 <br />
                                 <br />
                                 <div class="row">
@@ -202,7 +196,6 @@
                                     </div>
                                 </div>
                             </form>
-
                             <small class="d-flex justify-content-center">By clicking the Sign Up button, you are
                                 creating a SEEDS,</small>
                             <small class="d-flex justify-content-center"> account, and you agree with SEEDS Terms of
