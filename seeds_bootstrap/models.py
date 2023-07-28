@@ -15,7 +15,30 @@ class Scenario(models.Model):
     implementation_pace = models.DecimalField(max_digits=25, decimal_places=10)
     import_dependency = models.DecimalField(max_digits=25, decimal_places=10)
     bio_fuel = models.DecimalField(max_digits=25, decimal_places=10, default=0)
+    battery = models.DecimalField(max_digits=25, decimal_places=10,blank=True)
 
+    # storing total energy generated for query params technology types
+    roof_mounted_pv = models.DecimalField(max_digits=25, decimal_places=10,null=True)
+    open_field_pv = models.DecimalField(max_digits=25, decimal_places=10,null=True)
+    wind_onshore = models.DecimalField(max_digits=25, decimal_places=10,null=True)
+    wind_offshore = models.DecimalField(max_digits=25, decimal_places=10,null=True)
+    hydro_run_of_river = models.DecimalField(max_digits=25, decimal_places=10,null=True)
+
+    # storing total impact of scenario for electricity generation and storage
+    land_occupation = models.DecimalField(max_digits=25, decimal_places=10)
+    marine_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
+    human_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
+    fossil_depletion = models.DecimalField(max_digits=25, decimal_places=10)
+    metal_depletion = models.DecimalField(max_digits=25, decimal_places=10)
+    climate_change = models.DecimalField(max_digits=25, decimal_places=10)
+
+
+
+class Vote(models.Model):
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    submitted_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sub_date = models.DateField(default=datetime.date.today)
+    label = models.TextField(blank=True)
 
 class ScenarioLocation(models.Model):
     """
@@ -45,7 +68,6 @@ class TechStorage(models.Model):
     """
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     technology_type = models.CharField(max_length=20)
     energy_storage = models.DecimalField(max_digits=25, decimal_places=10)
 
@@ -54,6 +76,26 @@ class TechStorage(models.Model):
                                 'location_id', 'scenario_id', 'technology_type'], name='unique_location_tech')
 
 
+class Impact(models.Model):
+    """
+    Single model class to store impact control of energy generation as well as energy storage.
+    """
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
+    technology_type = models.CharField(max_length=20)
+    land_occupation = models.DecimalField(max_digits=25, decimal_places=10)
+    marine_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
+    human_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
+    fossil_depletion = models.DecimalField(max_digits=25, decimal_places=10)
+    metal_depletion = models.DecimalField(max_digits=25, decimal_places=10)
+
+    class Meta:
+
+        models.UniqueConstraint(
+            fields=['location_id', 'technology_type'], name='unique_location_tech')
+
+
+"""
 class ImpactGeneration(models.Model):
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
@@ -84,6 +126,7 @@ class ImpactStorage(models.Model):
         models.UniqueConstraint(
             fields=['location_id', 'technology_type'], name='unique_location_tech')
 
+"""
 
 class QueryParameters(models.Model):
     """
@@ -150,7 +193,7 @@ admin.site.register(Scenario)
 admin.site.register(ScenarioLocation)
 admin.site.register(TechGeneration)
 admin.site.register(TechStorage)
-admin.site.register(ImpactGeneration)
-admin.site.register(ImpactStorage)
+admin.site.register(Impact)
+
 
 # Function to check if item is in the list
