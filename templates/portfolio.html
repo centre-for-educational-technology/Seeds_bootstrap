@@ -7,7 +7,7 @@
                 
                 <ul class="nav nav-pills flex-column mb-sm-auto mt-3 mb-2 align-items-center pt-5 " id="menu">
                     <li class="btn btn-primary py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20">
-                        <a href="#" class="align-middle px-0 text-white  ">
+                        <a href="{% url 'interface'%}" class="align-middle px-0 text-white  ">
                             <i class="fa fa-plus pr-2"></i>  <span class="ms-1 d-none  d-sm-inline">New Scenario</span>
                         </a>
                     </li>
@@ -44,7 +44,7 @@
                     <h3 class='px-3 font-weight-bold'> Your projects </h3>
                 </div>
                 <div class='ml-auto'>
-                    <h3><a class='text-muted' href="#"><i class="fa fa-sign-out-alt"></i></a></h3>
+                    <h3><a title='Logout' class='text-muted' href="/logout/"><i class="fa fa-sign-out-alt"></i></a></h3>
                 </div>
 
 
@@ -62,8 +62,5 @@
             
         </div>
     </div>
-
-{% endblock%}
-{% block scr %}
 
 {% endblock%}

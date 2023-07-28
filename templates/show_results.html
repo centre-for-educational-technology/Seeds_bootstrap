@@ -5,7 +5,6 @@
         font-weight: bold;
         border-bottom: #007bff;
     }
-
     .al-range-slider__input {
         display: none;
     }
@@ -26,6 +25,7 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Scenario ID</th>
                         <th>Power capacity (Tw)</th>
                         <th>Storage capacity (Twh)</th>
                         <th>Community infrastructure</th>
@@ -37,12 +37,12 @@
                     {% for scenario in page_obj %}
                     <tr>
                         <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
-                        <td>{{scenario.power_capacity}}</td>
-                        <td>{{scenario.storage_capacity}}</td>
-                        
-                        <td>{{scenario.community_infrastructure}}</td>
-                        <td>{{scenario.implementation_pace}}</td>
-                        <td>{{scenario.import_dependency}}</td>
+                        <td>{{scenario.id}}</td>
+                        <td>{{scenario.power_capacity |floatformat:2}}</td>
+                        <td>{{scenario.storage_capacity |floatformat:2}}</td>
+                        <td>{{scenario.community_infrastructure |floatformat:2}}</td>
+                        <td>{{scenario.implementation_pace |floatformat:2}}</td>
+                        <td>{{scenario.import_dependency |floatformat:2}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -57,6 +57,8 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Scenario ID</th>
+                        <th>Climate change</th>
                         <th>Land occupation</th>
                         <th>Marince toxicity</th>
                         <th>Metal depletion</th>
@@ -67,11 +69,13 @@
                     {% for scenario in page_obj %}
                     <tr>
                         <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
-                        <td>{{scenario.power_capacity}}</td>
-                        <td>{{scenario.storage_capacity}}</td>
+                        <td>{{scenario.id}}</td>
+                        <td>{{scenario.climate_change |floatformat:2}}</td>
+                        <td>{{scenario.land_occupation |floatformat:2}}</td>
                         
-                        <td>{{scenario.community_infrastructure}}</td>
-                        <td>{{scenario.implementation_pace}}</td>
+                        <td>{{scenario.marine_toxicity |floatformat:2}}</td>
+                        <td>{{scenario.metal_depletion |floatformat:2}}</td>
+                        <td>{{scenario.human_toxicity |floatformat:2}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -84,25 +88,25 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Photovoltic (Roof-top)</th>
-                        <th>Photovoltic (Open-field)</th>
-                        <th>Hydro (Run-of-river)</th>
-                        <th>Hydro (Pumped)</th>
-                        <th>Hydro (Reservoir)</th>
-                        <th>Hydrogen</th>
-                        <th>Transmission</th>
-                        <th>Bio</th>
+                        <th>Scenario ID</th>
+                        <th>OnShore Wind</th>
+                        <th>Off-shore Wind</th>
+                        <th>Open-field Solar</th>
+                        <th>Roof-mounted Solar</th>
+                        <th>Hydro Run-of-River</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for scenario in page_obj %}
                     <tr>
                         <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
-                        <td>{{scenario.power_capacity}}</td>
-                        <td>{{scenario.storage_capacity}}</td>
+                        <td>{{scenario.id}}</td>
+                        <td>{{scenario.wind_onshore |floatformat:2}}</td>
+                        <td>{{scenario.wind_offshore |floatformat:2}}</td>
                         
-                        <td>{{scenario.community_infrastructure}}</td>
-                        <td>{{scenario.implementation_pace}}</td>
+                        <td>{{scenario.open_field_pv |floatformat:2}}</td>
+                        <td>{{scenario.roof_mounted_pv |floatformat:2}}</td>
+                        <td>{{scenario.hydro_run_of_river |floatformat:2}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
