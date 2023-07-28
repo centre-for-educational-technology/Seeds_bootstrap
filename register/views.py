@@ -82,29 +82,25 @@ def login(request):
 
 # Create your views here.
 def register(request):
+    errors = {}
     if request.method == "POST":
         form=RegisterForm(request.POST)
-
-        print(form)
-
         if form.is_valid():
             print('form is valid')
             user = form.save(commit=False)
-
             email = user.email
-
-            user.is_active = False
+            user.is_active = True
             user.username = user.email.split('@')[0] +':' + str(random.randint(0,100000))
             user.save()
             current_site = get_current_site(request)
-            subject = 'Activate Your TrustexUX Account'
+            """
+            subject = 'Activate Your Seeds Account'
             message = render_to_string('account_activation_email.html', {
                 'user': user,
                 'domain':  current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': t.account_activation_token.make_token(user),
                 })
-
             print('Domain:',current_site.domain)
             print('user pk',user.pk)
             print('base64 code uid:',urlsafe_base64_encode(force_bytes(user.pk)))
@@ -114,44 +110,39 @@ def register(request):
                 {
                   "From": {
                     "Email": "pankajchejara23@gmail.com",
-                    "Name": "TrustedUX Team "
+                    "Name": "SEEDS Team "
                   },
                   "To": [
                     {
                       "Email": user.email,
                     }
                   ],
-                  "Subject": "Activate your TrustedUX account.",
+                  "Subject": "Activate your SEEDS account.",
                   "TextPart": message,
                 }
               ]
             }
-
-
-
             result = mailjet.send.create(data=data)
             if result.status_code == 200:
-
                 print('user saved')
             print(result.status_code)
             messages.info(request, 'An email with instructions to activate your account has been sent.')
+            """
 
+            messages.info(request, 'An account has been created. You can login now')
             return redirect('login')
-
-
         else:
             print('Form is not valid')
-
+            messages.error(request, form.errors)
+            messages.info(request, 'hu lala la')
+            print(form.errors)
     else:
         c = get_current_site(request)
-        print(c.domain)
         form = RegisterForm()
-
+        
     #return render(request, "register.html", {"form":form})
     return render(request, "sign_up.html", {"form":form})
-
 # Create your views here.
-
 
 def activate(request, uidb64, token):
     print(uidb64)
@@ -165,16 +156,13 @@ def activate(request, uidb64, token):
         print('user does not exists')
     print('Account activation status:')
     print(t.account_activation_token.check_token(user, token))
-
     if user is not None and t.account_activation_token.check_token(user, token):
         user.is_active = True
-
         user.save()
         messages.success(request, 'Your account is activated successfully!.You can login now.')
         return redirect('login')
     else:
         return render(request,'base_page.html',{"title":'Expired link',"content":"The confirmation link is not valid."})
-
 
 def account_activation_sent(request):
     return render(request,'base_page.html',{"title":'Confirmation email sent',"content":'A email with confirmation link has been sent.'})
