@@ -16,7 +16,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
-
+LOGIN_URL = 'login'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'register',
     "crispy_bootstrap4",
+    "seeds_bootstrap",
+    "django_extensions"
 ]
 
 MIDDLEWARE = [
