@@ -1,0 +1,164 @@
+{% extends 'base_inspect.html'%}
+{%load static%}
+{%block body%}
+<style>
+  a.active {
+    font-weight: bold;
+    border-bottom: #007bff;
+  }
+
+  .al-range-slider__input {
+    display: none;
+  }
+</style>
+<div class='d-flex px-4 mx-4 justify-content-between'>
+  <div>
+    <h2> Comparison </h2> 
+    <p class='text-muted'> 
+      Here you can compare the features of the selected scenarios. Further actions are available using the toolbar on the bottom. Check the scenarios numbers and characteristic by clicking on the Detailed Report icon.
+    </p>
+  </div>
+
+</div>
+<div class="p-2 ">
+  <div class='row justify-content-around'>
+    <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
+      <div class='d-flex flex-row justify-content-between align-content-center'>
+        <p class='h3  font-weight-bold'>Scenario D</p>
+        <a href='{% url 'inspect' %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
+      </div>
+      <div class='' id='impact_control_a'></div>
+    </div>
+
+    <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
+      <div class='d-flex flex-row justify-content-between align-content-center'>
+        <p class='h3  font-weight-bold'>Scenario A</p>
+        <a href='{% url 'inspect' %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
+      </div>
+      <div class='' id='impact_control_b'></div>
+    </div>
+  </div>
+</div>
+
+  <div </div>
+    {% endblock%}
+    {% block scr %}
+    var data = {
+    type: "sankey",
+    orientation: "h",
+    node: {
+        pad: 15,
+        thickness: 30,
+        line: {
+        color: "black",
+        width: 0.5
+        },
+        label: {{template_data1.nodes | safe}},
+        color: {{template_data1.nodes_color| safe}},
+    },
+    link: {
+        source: {{template_data1.source| safe}},
+        target: {{template_data1.target| safe}},
+        value: {{template_data1.value| safe}},
+        color: {{template_data1.link_color| safe}}
+    }
+    }
+
+    var data = [data]
+    var layout = {
+    title: "",
+    font: {
+    size: 10
+    }
+    }
+
+    Plotly.react('impact_control_a', data, layout)
+
+    var data = {
+      type: "sankey",
+      orientation: "h",
+      node: {
+          pad: 15,
+          thickness: 30,
+          line: {
+          color: "black",
+          width: 0.5
+          },
+          label: {{template_data2.nodes | safe}},
+          color: {{template_data2.nodes_color| safe}},
+      },
+      link: {
+          source: {{template_data2.source| safe}},
+          target: {{template_data2.target| safe}},
+          value: {{template_data2.value| safe}},
+          color: {{template_data2.link_color| safe}}
+      }
+      }
+  
+      var data = [data]
+      var layout = {
+      title: "",
+      font: {
+      size: 10
+      }
+      }
+      Plotly.react('impact_control_b', data, layout)
+
+    var data = [{
+    values: [16, 15, 12, 6, 5, 4, 42],
+    labels: ['Off-shore', 'Hydro', 'Bio', 'On-shore', 'Roof panels', 'Existing', 'Rest' ],
+    domain: {column: 0},
+    name: 'Power generation',
+    hoverinfo: 'label+percent+name',
+    hole: .4,
+    type: 'pie'
+    }];
+
+    var layout = {
+    title: 'Power generation technologies',
+    annotations: [
+        {
+            showarrow:false,
+            text:''
+        },
+    ],
+
+    height: 400,
+    width: 500,
+    showlegend: false,
+    };
+
+
+    Plotly.newPlot('power_generation', data, layout);
+
+    var trace1 = {
+    y: ['Power'],
+    x: [20],
+    name: 'Battery',
+    type: 'bar',
+    orientation: 'h'
+    };
+
+
+    var trace2 = {
+    y: ['Power'],
+    x: [12],
+    name: 'Hydro',
+    type: 'bar',
+    orientation: 'h'
+    };
+
+
+    var data = [trace1, trace2];
+    var layout = {
+    barmode: 'stack',
+    xaxis:{
+        range:[0,60]
+    },
+    height: 220,
+    width: 400,
+    showlegend: false,
+    };
+    Plotly.newPlot('power_storage', data, layout);
+    Plotly.newPlot('system_balance', data, layout);
+    {% endblock%}

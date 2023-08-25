@@ -1,0 +1,207 @@
+{% extends 'base_inspect.html'%}
+{%load static%}
+{%block body%}
+<style>
+  a.active {
+    font-weight: bold;
+    border-bottom: #007bff;
+  }
+
+  .al-range-slider__input {
+    display: none;
+  }
+</style>
+<div class='d-flex px-4 mx-4 justify-content-between'>
+  <div>
+    <h2> Scenario A </h2>
+  </div>
+  {{scenario}}
+  <div class='d-flex flex-row-reverse p-2 m-2'>
+    <i class="fa fa-folder  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i>
+    <i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i>
+    <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"></i>
+  </div>
+</div>
+<div class="p-2 m-5">
+  <div class='row'>
+    <div class='col col-8 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
+      <p class='small text-muted font-weight-bold'>Scenario Impact</p>
+
+      <div class='' id='impact_control'></div>
+    </div>
+    <div class='col col-4'>
+      <div class='p-4 rounded-top rounded-bottom bg-white'>
+        <p class='small text-muted font-weight-bold'>Total Energy Supply</p>
+        <p class='h4 font-weight-bold'> 200 TWh/year</p>
+
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2'> <img src="{% static 'images/photo_voltic.png'%}"></div>
+          <div class='p-2'>
+            <div class='px-2 small' style='font-size:.5rem;'>Photovoltic</div>
+            <div class='h5 px-2'> {{data.total_pv |floatformat:2 }} TWh/year</div>
+          </div>
+        </a>
+        <div class="collapse py-2 pl-5" id="collapseOne">
+          <div class='bg-light m-2 rounded-top rounded-bottom'>
+            <p class='small pl-4 pt-2'> Roof PV </p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.roof_mounted_pv |floatformat:2}}%</p>
+          </div>
+          <div class='bg-light m-2 rounded-top rounded-bottom'>
+            <p class='small pl-4 pt-2'> Open field PV </p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.open_field_pv |floatformat:2}}</p>
+          </div>
+        </div>
+
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2'> <img src="{% static 'images/wind.png'%}"></div>
+          <div class='p-2'>
+            <div class='px-2 small' style='font-size:.5rem;'>Wind</div>
+            <div class='h5 px-2'>{{data.total_wind |floatformat:2 }} TWh/year</div>
+          </div>
+        </a>
+        <div class="collapse py-2 pl-5" id="collapseTwo">
+          <div class='bg-light m-2 rounded-top rounded-bottom'>
+            <p class='small pl-4 pt-2'> Off-shore </p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.wind_offshore |floatformat:2}}</p>
+          </div>
+          <div class='bg-light m-2 rounded-top rounded-bottom'>
+            <p class='small pl-4 pt-2'> On-shore </p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.wind_offshore |floatformat:2}}</p>
+          </div>
+        </div>
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2'> <img src="{% static 'images/bio.png'%}"></div>
+          <div class='p-2'>
+            <div class='px-2 small' style='font-size:.5rem;'>Biofuels</div>
+            <div class='h5 px-2'>{{data.bio_fuel |floatformat:2 }} TWh/year</div>
+          </div>
+        </a>
+
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2'> <img src="{% static 'images/hydro.png'%}"></div>
+          <div class='p-2'>
+            <div class='px-2 small' style='font-size:.5rem;'>Hydro</div>
+            <div class='h5 px-2'>16 TWh/year</div>
+          </div>
+        </a>
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2'> <img src="{% static 'images/import.png'%}"></div>
+          <div class='p-2'>
+            <div class='px-2 small' style='font-size:.5rem;'>Electricity Import</div>
+            <div class='h5 px-2'>16 TWh/year</div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+  <div class='row mt-3 pr-3'>
+    <div class='col mr-3 p-4 shadow-sm border-light bg-light rounded rounded-bottom bg-white'>
+      <p class='small text-muted font-weight-bold'>System Balancing Capacity</p>
+      <p class='h4 font-weight-bold'> 42.3 GW</p>
+      <div class='h-25' id='system_balance'></div>
+    </div>
+    <div class='col p-4  bg-light shadow-sm border-light mr-3 rounded-top rounded-bottom bg-white'>
+      <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
+      <p class='h4 font-weight-bold'> 42.3 GW</p>
+      <div class='p-0' id='power_generation'></div>
+    </div>
+    <div class='col p-4 bg-light shadow-sm border-light rounded-top rounded-bottom bg-white'>
+      <p class='small text-muted font-weight-bold'>Power Storage Capacity</p>
+      <p class='h4 font-weight-bold'> 42.3 GW</p>
+      <div class='h-25' id='power_storage'></div>
+    </div>
+
+  </div>
+
+  <div </div>
+    {% endblock%}
+    {% block scr %}
+    var data = {
+    type: "sankey",
+    orientation: "h",
+    node: {
+        pad: 15,
+        thickness: 30,
+        line: {
+        color: "black",
+        width: 0.5
+        },
+        label: {{nodes | safe}},
+        color: {{nodes_color| safe}},
+    },
+    link: {
+        source: {{source| safe}},
+        target: {{target| safe}},
+        value: {{value| safe}},
+        color: {{link_color| safe}}
+    }
+    }
+    console.log({{nodes | safe}});
+    var data = [data]
+    var layout = {
+    title: "",
+    font: {
+    size: 10
+    }
+    }
+
+    Plotly.react('impact_control', data, layout)
+    var data = [{
+    values: [16, 15, 12, 6, 5, 4, 42],
+    labels: ['Off-shore', 'Hydro', 'Bio', 'On-shore', 'Roof panels', 'Existing', 'Rest' ],
+    domain: {column: 0},
+    name: 'Power generation',
+    hoverinfo: 'label+percent+name',
+    hole: .4,
+    type: 'pie'
+    }];
+
+    var layout = {
+    title: 'Power generation technologies',
+    annotations: [
+        {
+            showarrow:false,
+            text:''
+        },
+    ],
+
+    height: 400,
+    width: 500,
+    showlegend: false,
+    };
+
+
+    Plotly.newPlot('power_generation', data, layout);
+
+    var trace1 = {
+    y: ['Power'],
+    x: [20],
+    name: 'Battery',
+    type: 'bar',
+    orientation: 'h'
+    };
+
+
+    var trace2 = {
+    y: ['Power'],
+    x: [12],
+    name: 'Hydro',
+    type: 'bar',
+    orientation: 'h'
+    };
+
+
+    var data = [trace1, trace2];
+    var layout = {
+    barmode: 'stack',
+    xaxis:{
+        range:[0,60]
+    },
+    height: 220,
+    width: 400,
+    showlegend: false,
+    };
+    Plotly.newPlot('power_storage', data, layout);
+    Plotly.newPlot('system_balance', data, layout);
+    {% endblock%}

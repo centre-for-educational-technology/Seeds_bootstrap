@@ -16,6 +16,92 @@ def index(request):
     form = reg_forms.LoginForm()
     return render(request,'index.html',{'form':form})
 
+def get_sankey_data(scenario_id):
+    available_color_code_index = 0
+    data = {}
+    scenario = Scenario.objects.get(id=scenario_id)
+    tech_sto = TechStorage.objects.all().filter(scenario=scenario)
+    tech_gen = TechGeneration.objects.all().filter(scenario=scenario)
+    impact = Impact.objects.all().filter(scenario=scenario)
+    data['total_pv'] = scenario.roof_mounted_pv + scenario.open_field_pv
+    data['total_wind'] = scenario.wind_onshore + scenario.wind_offshore
+    data['bio_fuel'] = scenario.bio_fuel
+    data['import_dependency'] = scenario.import_dependency
+    data['storage'] = {}
+    data['generation'] = {}
+    data['impact'] = {}
+    for ob in tech_gen:
+        data['generation'][ob.technology_type] = ob.energy_generation
+
+    for ob in tech_sto:
+        data['storage'][ob.technology_type] = ob.energy_storage
+
+    for ob in impact:
+        data['impact'][ob.technology_type] = {'land_occupation': ob.land_occupation,
+                                              'marine_toxicity': ob.marine_toxicity,
+                                              'human_toxicity': ob.human_toxicity,
+                                              'metal_depletion': ob.metal_depletion,
+                                              'fossil_depletion': ob.fossil_depletion}
+
+    nodes_labels = [item for item in data['impact'].keys()]
+    nodes_labels += ['land_occupation', 'marine_toxicity',
+                     'human_toxicity', 'metal_depletion',
+                     'fossil_depletion', 'total']
+
+    nodes_color = {}
+    for key in nodes_labels:
+        nodes_color[key] = COLOR_CODES[available_color_code_index]
+        available_color_code_index += 1
+
+    link = []
+
+    for key in data['impact'].keys():
+
+        link.append({'source': 'total',
+                     'target': key,
+                     'color': reduce_intensity(nodes_color[key]),
+                     'value': sum(list(data['impact'][key].values()))
+                     })
+
+        for impact_type, impact_value in data['impact'][key].items():
+
+            link.append({'source': key,
+                         'target': impact_type,
+                         'color': reduce_intensity(nodes_color[impact_type]),
+                         'value': impact_value
+                         })
+    source = []
+    target = []
+    link_value = []
+    link_color = []
+
+    for l in link:
+        source.append(nodes_labels.index(l['source']))
+        target.append(nodes_labels.index(l['target']))
+        link_value.append(float(l['value']))
+        link_color.append(l['color'])
+
+    return {'data': data,
+            'nodes': nodes_labels, 'source': source,
+            'target': target, 'value': link_value,
+            'nodes_color': list(nodes_color.values()),
+            'link_color': link_color}
+
+
+def compare(request):
+    scenario_id_1 = 18
+    scenario_id_2 = 27
+    template_data1 = get_sankey_data(scenario_id_1)
+    template_data2 = get_sankey_data(scenario_id_2)
+    return render(request, 'compare_scenario.html', {'template_data1': template_data1,
+                                                     'template_data2': template_data2})
+
+
+def inspect(request):
+    scenario_id = 18
+    template_data = get_sankey_data(scenario_id)
+    return render(request, 'inspect_scenario.html', template_data)
+
 
 def rescale(value,min,max):
     range = max - min
@@ -39,7 +125,7 @@ def selection(request):
 
     if request.method == 'POST':
         #fetching energy systems params
-        
+
         power_min = rescale(float(request.POST['power_0']),POWER_MIN,POWER_MAX)
         power_max = rescale(float(request.POST['power_1']),POWER_MIN,POWER_MAX)
         storage_min = rescale(float(request.POST['storage_0']),STORAGE_MIN,STORAGE_MAX)
@@ -75,7 +161,7 @@ def selection(request):
         hydro_pumped_max = request.POST['hydro-pumped_1']
         hydro_reservoir_min = request.POST['hydro-reservoir_0']
         hydro_reservoir_max = request.POST['hydro-reservoir_1']
-        
+
         wind_on_shore_min = request.POST['wind-on-shore_0']
         wind_on_shore_max = request.POST['wind-on-shore_1']
         wind_off_shore_min = request.POST['wind-off-shore_0']
@@ -87,7 +173,7 @@ def selection(request):
         bio_max = request.POST['bio_1']
         battery_min = request.POST['battery_0']
         battery_max = request.POST['battery_1']
-        
+
         #print('Power min:{} max:{}'.format(power_min,power_max))
         #print('Hyodro-river min:{} max:{}'.format(hydro_river_min,hydro_river_max))
         #print('wind-on-shore min:{} max:{}'.format(wind_on_shore_min,wind_on_shore_max))
@@ -99,8 +185,8 @@ def selection(request):
         scenarios_storage = scenarios_power.filter(storage_capacity__range=(storage_min,storage_max))
         scenarios_implementation = scenarios_storage.filter(implementation_pace__range=(implementation_min,implementation_max))
         scenarios_import = scenarios_implementation.filter(import_dependency__range=(import_min,import_max)).order_by('id')
-        
- 
+
+
         #scenarios_implementation = scenarios_storage
         paginator = Paginator(scenarios_import, 20, orphans=3)
         total_obs = len(scenarios_import)
