@@ -9,131 +9,201 @@
         display: none;
     }
 </style>
-<div class="m-5 p-5  border-top">
-    <h3> Results </h3>
-    <p class="'text-secondary"> </p>
-    <br />
-    <ul class="nav nav-tabs">
-        <li class="mx-5"><a class="active" data-toggle="tab" href="#home">Energy system settings</a></li>
-        <li class="mx-5"><a data-toggle="tab" href="#menu1">Impact control</a></li>
-        <li class="mx-5"><a data-toggle="tab" href="#menu2">Energy technologies</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="home" class="ml-5 pt-2 tab-pane fade in active show">
-            <p>These scenarios are selected based on selected parameters range.</p> <br />
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Scenario ID</th>
-                        <th>Power capacity (Tw)</th>
-                        <th>Storage capacity (Twh)</th>
-                        <th>Community infrastructure</th>
-                        <th>Implementation pace</th>
-                        <th>Import dependency</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for scenario in page_obj %}
-                    <tr>
-                        <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
-                        <td>{{scenario.id}}</td>
-                        <td>{{scenario.power_capacity |floatformat:2}}</td>
-                        <td>{{scenario.storage_capacity |floatformat:2}}</td>
-                        <td>{{scenario.community_infrastructure |floatformat:2}}</td>
-                        <td>{{scenario.implementation_pace |floatformat:2}}</td>
-                        <td>{{scenario.import_dependency |floatformat:2}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
 
-        </div>
-        <div id="menu1" class="ml-5  pt-5 tab-pane fade">
-            <p>
-                
-            </p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Scenario ID</th>
-                        <th>Climate change</th>
-                        <th>Land occupation</th>
-                        <th>Marince toxicity</th>
-                        <th>Metal depletion</th>
-                        <th>Human toxicity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for scenario in page_obj %}
-                    <tr>
-                        <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
-                        <td>{{scenario.id}}</td>
-                        <td>{{scenario.climate_change |floatformat:2}}</td>
-                        <td>{{scenario.land_occupation |floatformat:2}}</td>
-                        
-                        <td>{{scenario.marine_toxicity |floatformat:2}}</td>
-                        <td>{{scenario.metal_depletion |floatformat:2}}</td>
-                        <td>{{scenario.human_toxicity |floatformat:2}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="m-4 p-5">
 
-        </div>
-        <div id="menu2" class="ml-5 pt-5 tab-pane fade">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Scenario ID</th>
-                        <th>OnShore Wind</th>
-                        <th>Off-shore Wind</th>
-                        <th>Open-field Solar</th>
-                        <th>Roof-mounted Solar</th>
-                        <th>Hydro Run-of-River</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for scenario in page_obj %}
-                    <tr>
-                        <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
-                        <td>{{scenario.id}}</td>
-                        <td>{{scenario.wind_onshore |floatformat:2}}</td>
-                        <td>{{scenario.wind_offshore |floatformat:2}}</td>
-                        
-                        <td>{{scenario.open_field_pv |floatformat:2}}</td>
-                        <td>{{scenario.roof_mounted_pv |floatformat:2}}</td>
-                        <td>{{scenario.hydro_run_of_river |floatformat:2}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            </p>
-        </div>
+    <h3>  Scenario Insepction </h3>
+    <p class="'text-secondary"> In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.  </p>
+    <p class="'text-secondary"> The actions tab on the right allows you to perform comparisons and download scenario reports.</p>
+    <div class='d-flex flex-row-reverse p-2 m-2'>
+        <i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i>
+        <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"></i>
     </div>
-    <br />
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
+        <div class="row m-4 p-4 min-vh-100">
+            <div class="col-auto col-md-3 col-xl-2  mr-5">
+                <div class="d-flex flex-column align-items-center px-5 pt-2 ">
+                    <div id="accordion">
+                        <div class="card">
+                          <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Energy System Settings
+                              </button>
+                            </h5>
+                          </div>
 
+                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body p-1">
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <small>
+                                          Power generation
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <small>
+                                          Total Energy Supply
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <small>
+                                          Transmission
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <small>
+                                          Total Storage
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <small>
+                                          Pace of Implementation
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <small>
+                                          Community Structured
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <small>
+                                          Electrification (Heating)
+                                        </small>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex  border-bottom align-items-center">
+                                      <div class=''>
+                                        <label class="switch pt-1">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </div>
+                                      <div class='pl-2'>
+                                        <p class='small'>
+                                          Electrification (Transport)
+                                        </p>
+                                      </div>
+                                    </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Energy Technology
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Impact
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
 
-            {% for page_number in page_range %}
-            {% if page_number == page_obj.number %}
-            <li class="page-item active"><a class="page-link" href="?page={{ page_number }}">{{page_number}}</a>
-            </li>
-            {% else %}
-            <li class="page-item"><a class="page-link" href="#">{{page_number}}</a></li>
-            {% endif %}
-            {% endfor %}
+                            <th>Scenario ID</th>
+                            <th>Power capacity (Tw)</th>
+                            <th>Storage capacity (Twh)</th>
+                            <th>Community infrastructure</th>
+                            <th>Implementation pace</th>
+                            <th>Import dependency</th>
+                            <th>Details</th>
+                            <th>Compare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for scenario in page_obj %}
+                        <tr class='text-align-middle'>
 
-        </ul>
-    </nav>
+                            <td>{{scenario.id}}</td>
+                            <td>{{scenario.power_capacity |floatformat:2}}</td>
+                            <td>{{scenario.storage_capacity |floatformat:2}}</td>
+                            <td>{{scenario.community_infrastructure |floatformat:2}}</td>
+                            <td>{{scenario.implementation_pace |floatformat:2}}</td>
+                            <td>{{scenario.import_dependency |floatformat:2}}</td>
+                            <td> <a href='{% url 'inspect' %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
+                            <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 
 
 
