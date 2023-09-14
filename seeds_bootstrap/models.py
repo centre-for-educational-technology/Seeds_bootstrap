@@ -4,10 +4,20 @@ from django.contrib.auth.models import User
 import datetime
 
 
+class Project(models.Model):
+    """
+    Model for storing project details
+    """
+    name = models.TextField()
+    description = models.TextField(blank=True)
+    configuration = models.JSONField(blank=True)
+
+
 class Scenario(models.Model):
     """
     Model for storing each scenario information
     """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     power_capacity = models.DecimalField(max_digits=25, decimal_places=10)
     storage_capacity = models.DecimalField(max_digits=25, decimal_places=10)
     community_infrastructure = models.DecimalField(
@@ -15,14 +25,19 @@ class Scenario(models.Model):
     implementation_pace = models.DecimalField(max_digits=25, decimal_places=10)
     import_dependency = models.DecimalField(max_digits=25, decimal_places=10)
     bio_fuel = models.DecimalField(max_digits=25, decimal_places=10, default=0)
-    battery = models.DecimalField(max_digits=25, decimal_places=10,blank=True)
+    battery = models.DecimalField(max_digits=25, decimal_places=10, blank=True)
 
     # storing total energy generated for query params technology types
-    roof_mounted_pv = models.DecimalField(max_digits=25, decimal_places=10,null=True)
-    open_field_pv = models.DecimalField(max_digits=25, decimal_places=10,null=True)
-    wind_onshore = models.DecimalField(max_digits=25, decimal_places=10,null=True)
-    wind_offshore = models.DecimalField(max_digits=25, decimal_places=10,null=True)
-    hydro_run_of_river = models.DecimalField(max_digits=25, decimal_places=10,null=True)
+    roof_mounted_pv = models.DecimalField(
+        max_digits=25, decimal_places=10, null=True)
+    open_field_pv = models.DecimalField(
+        max_digits=25, decimal_places=10, null=True)
+    wind_onshore = models.DecimalField(
+        max_digits=25, decimal_places=10, null=True)
+    wind_offshore = models.DecimalField(
+        max_digits=25, decimal_places=10, null=True)
+    hydro_run_of_river = models.DecimalField(
+        max_digits=25, decimal_places=10, null=True)
 
     # storing total impact of scenario for electricity generation and storage
     land_occupation = models.DecimalField(max_digits=25, decimal_places=10)
@@ -33,25 +48,91 @@ class Scenario(models.Model):
     climate_change = models.DecimalField(max_digits=25, decimal_places=10)
 
 
-
 class Vote(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     submitted_user = models.ForeignKey(User, on_delete=models.CASCADE)
     sub_date = models.DateField(default=datetime.date.today)
+    response = models.BooleanField(blank=True)
+
+
+class UserScenario(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    submitted_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    last_modified = models.DateField(default=datetime.date.today)
     label = models.TextField(blank=True)
+
 
 class ScenarioLocation(models.Model):
     """
     Model for storing each scenario location information
     """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     location = models.CharField(max_length=20)
     region_name = models.CharField(max_length=20)
+
+
+class Electrification(models.Model):
+    """
+    Model to store electrification data.
+    """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    location = models.CharField(max_length=10)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    carriers_type = models.CharField(max_length=20)
+    electrification_rate = models.DecimalField(
+        max_digits=25, decimal_places=10)
+
+    class Meta:
+        models.UniqueConstraint(fields=[
+                                'location_id',
+                                'scenario_id',
+                                'carriers_type'],
+                                name='unique_location_carrier')
+
+
+class EnergySupply(models.Model):
+    """
+    Model to store energy supply.
+    """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    technology_type = models.CharField(max_length=20)
+    energy_supply = models.DecimalField(max_digits=25, decimal_places=10)
+
+    class Meta:
+        models.UniqueConstraint(fields=[
+                                'project_id',
+                                'location_id',
+                                'scenario_id',
+                                'technology_type'],
+                                name='unique_location_tech')
+
+
+class EnergyTransmission(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    from_location = models.CharField(max_length=10)
+    to_location = models.CharField(max_length=10)
+    transmission_capacity = models.DecimalField(
+        max_digits=25, decimal_places=10)
+
+    class Meta:
+        models.UniqueConstraint(fields=[
+                                'project_id',
+                                'from_location_id',
+                                'scenario_id',
+                                'to_location_id'],
+                                name='unique_from_to')
 
 
 class TechGeneration(models.Model):
     """
     Model to store technology wise energy generation and storage.
     """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     technology_type = models.CharField(max_length=20)
@@ -59,13 +140,18 @@ class TechGeneration(models.Model):
 
     class Meta:
         models.UniqueConstraint(fields=[
-                                'location_id', 'scenario_id', 'technology_type'], name='unique_location_tech')
+                                'project_id',
+                                'location_id',
+                                'scenario_id',
+                                'technology_type'],
+                                name='unique_location_tech')
 
 
 class TechStorage(models.Model):
     """
     Model to store technology wise energy storage.
     """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
     technology_type = models.CharField(max_length=20)
@@ -73,13 +159,17 @@ class TechStorage(models.Model):
 
     class Meta:
         models.UniqueConstraint(fields=[
-                                'location_id', 'scenario_id', 'technology_type'], name='unique_location_tech')
+                                'project_id',
+                                'location_id',
+                                'scenario_id',
+                                'technology_type'], name='unique_location_tech')
 
 
 class Impact(models.Model):
     """
     Single model class to store impact control of energy generation as well as energy storage.
     """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
     technology_type = models.CharField(max_length=20)
@@ -92,7 +182,11 @@ class Impact(models.Model):
     class Meta:
 
         models.UniqueConstraint(
-            fields=['location_id', 'technology_type'], name='unique_location_tech')
+            fields=[
+                'project_id',
+                'scenario_id',
+                'location_id',
+                'technology_type'], name='unique_location_tech')
 
 
 """
@@ -127,6 +221,7 @@ class ImpactStorage(models.Model):
             fields=['location_id', 'technology_type'], name='unique_location_tech')
 
 """
+
 
 class QueryParameters(models.Model):
     """
