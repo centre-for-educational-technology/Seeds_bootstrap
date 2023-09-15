@@ -54,15 +54,18 @@ urlpatterns = [
     path('account_activation_sent/', v.account_activation_sent,
          name='account_activation_sent'),
     path('activate/<slug:uidb64>/<slug:token>/', v.activate, name='activate'),
-
-    path('inspect/', views.inspect, name='inspect'),
+    path('inspect/<scenario_id>', views.inspect, name='inspect'),
     path('compare/', views.compare, name='compare'),
 
 
     path('login/', v.login, name='login'),
     path('logout/', v.logout, name='logout'),
 
+    path('project/', login_required(views.project_page),
+         name='project_select_page'),
     path('portfolio/', login_required(views.portfolio), name='project_home'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('interface/', login_required(views.selection), name='interface'),
+    path('location/', login_required(views.select_location), name='location'),
+
 ]

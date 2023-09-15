@@ -1,5 +1,7 @@
 {% extends 'base.html'%}
 {%block body%}
+
+</script>
 <style>
     a.active {
         font-weight: bold;
@@ -10,14 +12,14 @@
     }
 </style>
 
-<div class="m-4 p-5">
-
+<div class="m-4 p-5" x-data="{power:true, infra:true, pace:true, storage:true,wind_onshore:true,wind_offshore:false,roof_pv:false,field_pv:false,human:true,climate:false,land:false}">
+    
     <h3>  Scenario Insepction </h3>
     <p class="'text-secondary"> In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.  </p>
     <p class="'text-secondary"> The actions tab on the right allows you to perform comparisons and download scenario reports.</p>
     <div class='d-flex flex-row-reverse p-2 m-2'>
-        <i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i>
-        <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"></i>
+        <i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> 
+        <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"></i> 
     </div>
         <div class="row m-4 p-4 min-vh-100">
             <div class="col-auto col-md-3 col-xl-2  mr-5">
@@ -31,13 +33,13 @@
                               </button>
                             </h5>
                           </div>
-
+                      
                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body p-1">
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
-                                          <input type="checkbox">
+                                          <input type="checkbox" x-model="power" @click="power = !power">
                                           <span class="slider round"></span>
                                         </label>
                                       </div>
@@ -46,11 +48,11 @@
                                           Power generation
                                         </small>
                                       </div>
-                                    </div>
+                                    </div> 
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
-                                          <input type="checkbox">
+                                          <input type="checkbox" >
                                           <span class="slider round"></span>
                                         </label>
                                       </div>
@@ -59,7 +61,7 @@
                                           Total Energy Supply
                                         </small>
                                       </div>
-                                    </div>
+                                    </div> 
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -72,11 +74,11 @@
                                           Transmission
                                         </small>
                                       </div>
-                                    </div>
+                                    </div> 
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
-                                          <input type="checkbox">
+                                          <input type="checkbox" x-model="storage" @click="storage = !storage">
                                           <span class="slider round"></span>
                                         </label>
                                       </div>
@@ -85,11 +87,11 @@
                                           Total Storage
                                         </small>
                                       </div>
-                                    </div>
+                                    </div> 
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
-                                          <input type="checkbox">
+                                          <input type="checkbox" x-model="pace" @click="pace = !pace">
                                           <span class="slider round"></span>
                                         </label>
                                       </div>
@@ -98,11 +100,11 @@
                                           Pace of Implementation
                                         </small>
                                       </div>
-                                    </div>
+                                    </div> 
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
-                                          <input type="checkbox">
+                                          <input type="checkbox" x-model="infra" @click="infra = !infra">>
                                           <span class="slider round"></span>
                                         </label>
                                       </div>
@@ -111,7 +113,7 @@
                                           Community Structured
                                         </small>
                                       </div>
-                                    </div>
+                                    </div> 
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -124,7 +126,7 @@
                                           Electrification (Heating)
                                         </small>
                                       </div>
-                                    </div>
+                                    </div> 
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -137,7 +139,7 @@
                                           Electrification (Transport)
                                         </p>
                                       </div>
-                                    </div>
+                                    </div>  
                             </div>
                           </div>
                         </div>
@@ -150,8 +152,62 @@
                             </h5>
                           </div>
                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                            </div>
+                            <div class="card-body p-1">
+                              <div class="d-flex  border-bottom align-items-center">
+                                <div class=''>
+                                  <label class="switch pt-1">
+                                    <input type="checkbox" x-model="wind_onshore" @click="wind_onshore = !wind_onshore">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                                <div class='pl-2'>
+                                  <small>
+                                    Wind Onshore
+                                  </small>
+                                </div>
+                              </div> 
+                              <div class="d-flex  border-bottom align-items-center">
+                                <div class=''>
+                                  <label class="switch pt-1">
+                                    <input type="checkbox" x-model="wind_offshore" @click="wind_offshore = !wind_offshore">
+        
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                                <div class='pl-2'>
+                                  <small>
+                                    Wind Offshore
+                                  </small>
+                                </div>
+                              </div> 
+                              <div class="d-flex  border-bottom align-items-center">
+                                <div class=''>
+                                  <label class="switch pt-1">
+                                    <input type="checkbox" x-model="roof_pv" @click="roof_pv = !roof_pv">
+                                   
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                                <div class='pl-2'>
+                                  <small>
+                                    Roof Mounted PV
+                                  </small>
+                                </div>
+                              </div> 
+                              <div class="d-flex  border-bottom align-items-center">
+                                <div class=''>
+                                  <label class="switch pt-1">
+                                    <input type="checkbox" x-model="field_pv" @click="field_pv = !field_pv">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                                <div class='pl-2'>
+                                  <small>
+                                    Open Field PV
+                                  </small>
+                                </div>
+                              </div>    
+                      </div>
                           </div>
                         </div>
                         <div class="card">
@@ -164,39 +220,94 @@
                           </div>
                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                             <div class="card-body">
+                              <div class="d-flex  border-bottom align-items-center">
+                                <div class=''>
+                                  <label class="switch pt-1">
+                                    <input type="checkbox" x-model="human" @click="human = !human">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                                <div class='pl-2'>
+                                  <small>
+                                    Human Toxicity
+                                  </small>
+                                </div>
+                              </div> 
+                              <div class="d-flex  border-bottom align-items-center">
+                                <div class=''>
+                                  <label class="switch pt-1">
+                                    <input type="checkbox"x-model="climate" @click="climate = !climate">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                                <div class='pl-2'>
+                                  <small>
+                                    Climate Change
+                                  </small>
+                                </div>
+                              </div> 
+                              <div class="d-flex  border-bottom align-items-center">
+                                <div class=''>
+                                  <label class="switch pt-1">
+                                    <input type="checkbox" x-model="land" @click="land = !land">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                                <div class='pl-2'>
+                                  <small>
+                                    Land occupation
+                                  </small>
+                                </div>
+                              </div> 
+                                
                             </div>
                           </div>
                         </div>
                       </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col table-responsive" x-data = "{ selected_scenarios:[]}">
                 <table class="table">
                     <thead>
                         <tr>
-
+                            
                             <th>Scenario ID</th>
-                            <th>Power capacity (Tw)</th>
-                            <th>Storage capacity (Twh)</th>
-                            <th>Community infrastructure</th>
-                            <th>Implementation pace</th>
+                            <th x-show="power">Power capacity (Tw)</th>
+                            <th x-show="storage">Storage capacity (Twh)</th>
+                            <th x-show="pace">Community infrastructure</th>
+                            <th x-show="infra">Implementation pace</th>
                             <th>Import dependency</th>
-                            <th>Details</th>
+                            
+                            <th x-show="wind_onshore">Wind onshore </th>
+                            <th x-show="wind_offshore">Wind offshore </th>
+                            <th x-show="roof_pv">Roof mounted pv</th>
+                            <th x-show="field_pv">Open field pv </th>
+                            <th x-show="human">Human toxicity</th>
+                            <th x-show="climate">Climate change</th>
+                            <th x-show="land">Land occupation</th>
+                            <th >Details</th>
                             <th>Compare</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for scenario in page_obj %}
                         <tr class='text-align-middle'>
-
-                            <td>{{scenario.id}}</td>
-                            <td>{{scenario.power_capacity |floatformat:2}}</td>
-                            <td>{{scenario.storage_capacity |floatformat:2}}</td>
-                            <td>{{scenario.community_infrastructure |floatformat:2}}</td>
-                            <td>{{scenario.implementation_pace |floatformat:2}}</td>
-                            <td>{{scenario.import_dependency |floatformat:2}}</td>
-                            <td> <a href='{% url 'inspect' %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
-                            <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
+                            
+                            <td >{{scenario.id}}</td>
+                            <td x-show="power">{{scenario.power_capacity |floatformat:2}}</td>
+                            <td x-show="storage">{{scenario.storage_capacity |floatformat:2}}</td>
+                            <td x-show="infra">{{scenario.community_infrastructure |floatformat:2}}</td>
+                            <td x-show="pace">{{scenario.implementation_pace |floatformat:2}}</td>
+                            <td >{{scenario.import_dependency |floatformat:2}}</td>
+                            <td x-show="wind_onshore">{{scenario.wind_onshore |floatformat:2}}</td>
+                            <td x-show="wind_offshore">{{scenario.wind_offshore |floatformat:2}}</td>
+                            <td x-show="roof_pv">{{scenario.roof_mounted_pv |floatformat:2}}</td>
+                            <td x-show="field_pv">{{scenario.open_field_pv |floatformat:2}}</td>
+                            <td x-show="human">{{scenario.human_toxicity |floatformat:2}}</td>
+                            <td x-show="climate">{{scenario.climate_change |floatformat:2}}</td>
+                            <td x-show="climate">{{scenario.land_occupation |floatformat:2}}</td>
+                            <td > <a href='{% url 'inspect' scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
+                            <td ><input type='checkbox' x-on:click="if ($event.target.value == True) { selected_scenarios.push({{scenario.id}})}" value='{{scenario.id}}' name='scenario'></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -210,6 +321,9 @@
 </div>
 {% endblock%}
 {% block scr %}
+
+
+
 const options = {
 range: { min: 0, max: 100, step: 10 },
 initialSelectedValues: { from: 0, to: 20 },
