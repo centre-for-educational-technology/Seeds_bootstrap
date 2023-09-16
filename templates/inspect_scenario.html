@@ -23,9 +23,8 @@
 {% endif %}
 <div class='d-flex px-4 mx-4 justify-content-between'>
   <div>
-    <h2> Scenario A </h2> 
+    <h2> Scenario  {{scenario}} </h2> 
   </div>
-  {{scenario}} 
   <div class='d-flex flex-row-reverse p-2 m-2'>
     <i class="fa fa-folder  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
@@ -80,6 +79,39 @@ aria-hidden="true">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+<div class="p-2 m-5 bg-white shadow-sm border-light rounded rounded-bottom text-center">
+  <p class='p-1 h5'> Would you be willing to accept this scenario?</p> 
+  <p class="p-1">
+    Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system
+  </p>
+  <div class="flex p-4">
+    <button class='rounded bg-light btn  px-5'> <i class="fa fa-check text-success" data-toggle='modal' data-placement='top' data-target="#vote_modal"></i> </button>
+    <button class='rounded bg-light btn  px-5'> <span class='font-weight-bold text-danger'>X</span> </button>
+  </div>
+</div>
+<div class="modal fade" id="vote_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+    aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Cofirm
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+               <p  class="form-text text-muted">Your vote selection will be saved permanently. Are you sure?</p>
+                
+            </div>
+            <div class="modal-footer">
+              <a href="{% url 'vote' selection='up' scenario=scenario%}" class="btn btn-primary">Yes</a>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
       </div>
     </div>

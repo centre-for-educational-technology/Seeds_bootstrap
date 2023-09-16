@@ -60,7 +60,7 @@ urlpatterns = [
 
     path('login/', v.login, name='login'),
     path('logout/', v.logout, name='logout'),
-
+    path('vote/<selection>/<scenario>/', views.vote, name='vote'),
     path('project/', login_required(views.project_page),
          name='project_select_page'),
     path('portfolio/<project_id>',

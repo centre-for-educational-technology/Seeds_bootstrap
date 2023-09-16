@@ -416,6 +416,7 @@ def get_sankey_data(scenario_id):
         link_color.append(l['color'])
 
     return {'data': data,
+            'scenario': scenario_id,
             'nodes': nodes_labels, 'source': source,
             'target': target, 'value': link_value,
             'nodes_color': list(nodes_color.values()),
@@ -462,6 +463,19 @@ def select_location(request):
 
 def aboutus(request):
     return render(request, 'index.html', {})
+
+
+def vote(request, selection, scenario):
+    project_obj = Project.objects.get(id=request.session['project'])
+    response = True if selection == 'up' else False
+    submitted_user = request.user
+    scenario_obj = Scenario.objects.get(id=scenario)
+
+    obj = Vote(project=project_obj, response=response,
+               submitted_user=submitted_user, scenario=scenario_obj)
+    obj.save()
+    messages.success(request, "Your vote has been saved")
+    return redirect('inspect', scenario_id=scenario)
 
 
 def portfolio(request, project_id):
