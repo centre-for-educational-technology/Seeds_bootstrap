@@ -63,7 +63,8 @@ urlpatterns = [
 
     path('project/', login_required(views.project_page),
          name='project_select_page'),
-    path('portfolio/', login_required(views.portfolio), name='project_home'),
+    path('portfolio/<project_id>',
+         login_required(views.portfolio), name='portfolio'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('interface/', login_required(views.selection), name='interface'),
     path('location/', login_required(views.select_location), name='location'),

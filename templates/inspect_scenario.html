@@ -11,17 +11,78 @@
     display: none;
   }
 </style>
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" id="message">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+       <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+{% endif %}
 <div class='d-flex px-4 mx-4 justify-content-between'>
   <div>
-    <h2> Scenario A </h2>
+    <h2> Scenario A </h2> 
   </div>
-  {{scenario}}
+  {{scenario}} 
   <div class='d-flex flex-row-reverse p-2 m-2'>
-    <i class="fa fa-folder  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i>
-    <i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i>
-    <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"></i>
+    <i class="fa fa-folder  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
+    <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
+    <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#back_modal"></i>
   </div>
 </div>
+<div class="modal fade" id="back_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class='modal-body'>
+            Confirming this choice will erase all settings defined for these scenarios.
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'interface' %}" type="button" class="btn btn-primary">Confirm</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="save_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+    aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <form action="" method="post">
+            {% csrf_token %}
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Save this scenario in your portfolio
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+              
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Label</label>
+                  <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="Enter label">
+                  <small  class="form-text text-muted">Scenario will be saved with the label.</small>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 <div class="p-2 m-5">
   <div class='row'>
     <div class='col col-8 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
@@ -31,8 +92,8 @@
     </div>
     <div class='col col-4'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
-        <p class='small text-muted font-weight-bold'>Total Energy Supply</p>
-        <p class='h4 font-weight-bold'> 200 TWh/year</p>
+        <p class='small text-muted font-weight-bold'>Total Energy </p>
+        <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} TWh/year</p>
 
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2'> <img src="{% static 'images/photo_voltic.png'%}"></div>
@@ -77,18 +138,18 @@
           </div>
         </a>
 
-        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2'> <img src="{% static 'images/hydro.png'%}"></div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Hydro</div>
-            <div class='h5 px-2'>16 TWh/year</div>
+            <div class='h5 px-2'>{{data.total_hydro |floatformat:2 }}  TWh/year</div>
           </div>
         </a>
-        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2'> <img src="{% static 'images/import.png'%}"></div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>Electricity Import</div>
-            <div class='h5 px-2'>16 TWh/year</div>
+            <div class='px-2 small' style='font-size:.5rem;'>Electrification</div>
+            <div class='h5 px-2'>{{data.total_electrification |floatformat:2 }} TWh/year</div>
           </div>
         </a>
       </div>
@@ -97,18 +158,18 @@
   </div>
   <div class='row mt-3 pr-3'>
     <div class='col mr-3 p-4 shadow-sm border-light bg-light rounded rounded-bottom bg-white'>
-      <p class='small text-muted font-weight-bold'>System Balancing Capacity</p>
-      <p class='h4 font-weight-bold'> 42.3 GW</p>
+      <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
+      <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} GW</p>
       <div class='h-25' id='system_balance'></div>
     </div>
     <div class='col p-4  bg-light shadow-sm border-light mr-3 rounded-top rounded-bottom bg-white'>
-      <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
-      <p class='h4 font-weight-bold'> 42.3 GW</p>
+      <p class='small text-muted font-weight-bold'>Power Storage Capacity</p>
+      <p class='h4 font-weight-bold'> {{data.total_storage |floatformat:2 }}</p>
       <div class='p-0' id='power_generation'></div>
     </div>
     <div class='col p-4 bg-light shadow-sm border-light rounded-top rounded-bottom bg-white'>
-      <p class='small text-muted font-weight-bold'>Power Storage Capacity</p>
-      <p class='h4 font-weight-bold'> 42.3 GW</p>
+      <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
+      <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} GW</p>
       <div class='h-25' id='power_storage'></div>
     </div>
 
@@ -147,18 +208,50 @@
     }
 
     Plotly.react('impact_control', data, layout)
-    var data = [{
-    values: [16, 15, 12, 6, 5, 4, 42],
-    labels: ['Off-shore', 'Hydro', 'Bio', 'On-shore', 'Roof panels', 'Existing', 'Rest' ],
+
+    var degrees = 115, radius = .6;
+    var radians = degrees * Math.PI / 180;
+    var x = -1 * radius * Math.cos(radians);
+    var y = radius * Math.sin(radians);
+    
+    var layout = {
+        title: 'Number of Printers Sold in a Week',
+        xaxis: {visible: false, range: [-1, 1]},
+        yaxis: {visible: false, range: [-1, 1]}
+    };
+    
+    var traceA = {
+        type: "pie",
+        showlegend: false,
+        hole: 0.4,
+        rotation: 90,
+        values: {{ data.power_pie_data.values | safe}},
+        text: {{ data.power_pie_data.labels | safe}},
+        direction: "clockwise",
+        textinfo: "text",
+        textposition: "inside",
+        marker: {colors:{{ data.power_pie_data.markers | safe}}},
+        labels: {{ data.power_pie_data.values | safe}},
+        hoverinfo: "label"
+    };
+
+    var data = [traceA];
+    
+
+
+    var data2 = [{
+    values: [16, 15, 12, 6, 5, 4, 42,100],
+    labels: ['Off-shore', 'Hydro', 'Bio', 'On-shore', 'Roof panels', 'Existing', 'Rest','remove' ],
     domain: {column: 0},
-    name: 'Power generation',
+    name: 'Power storage',
     hoverinfo: 'label+percent+name',
     hole: .4,
+    rotation: 90,
     type: 'pie'
     }];
 
     var layout = {
-    title: 'Power generation technologies',
+    title: 'Power storage',
     annotations: [
         {
             showarrow:false,
@@ -172,36 +265,19 @@
     };
 
 
-    Plotly.newPlot('power_generation', data, layout);
+    
+    Plotly.newPlot('power_generation', data, layout, {staticPlot: true});
 
-    var trace1 = {
-    y: ['Power'],
-    x: [20],
-    name: 'Battery',
-    type: 'bar',
-    orientation: 'h'
-    };
-
-
-    var trace2 = {
-    y: ['Power'],
-    x: [12],
-    name: 'Hydro',
-    type: 'bar',
-    orientation: 'h'
-    };
-
-
-    var data = [trace1, trace2];
+    var power_data = {{data.power_bar_data | safe}};
     var layout = {
     barmode: 'stack',
     xaxis:{
-        range:[0,60]
+        range:[0,{{data.total_generation}} + 20]
     },
-    height: 220,
+    height: 240,
     width: 400,
     showlegend: false,
     };
-    Plotly.newPlot('power_storage', data, layout);
-    Plotly.newPlot('system_balance', data, layout);
+    Plotly.newPlot('power_storage', power_data, layout);
+    Plotly.newPlot('system_balance', power_data, layout);
     {% endblock%}
