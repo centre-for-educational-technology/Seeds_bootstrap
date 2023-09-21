@@ -1,255 +1,171 @@
+
+{% extends 'base.html'%}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{%block body%}
 
-<head>
-  <title>SEEDS</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
-  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
-  <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
-  <link rel="stylesheet" href="{% static 'css/aos.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
+<div class='row mt-4 p-4 h-100 justify-content-around'>
+  <div class="px-5 col col-6">
+    <div class="d-flex align-items-center">
+      <div class="text-dark display-3 font-weight-bold">
+        SEEDS
       </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-
-
-    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
-
-      <div class="container">
-        <div class="d-flex">
-          <div class="site-logo mr-auto"><a href="index.html">SEEDS</a></div>
-
-          <div class="mx-auto text-center">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
-                <li><a href="#home-section" class="nav-link">Home</a></li>
-                <li><a href="#team-section" class="nav-link">About us</a></li>
-                <li><a href="#documentation-section" class="nav-link">Documentation</a></li>
-                <li><a href="#faq-section" class="nav-link">FAQs</a></li>
-                <li><a href="#contact-section" class="nav-link">Contact</a></li>
-              </ul>
-            </nav>
-          </div>
-
-          <div class="ml-auto w-25">
-            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span
-                class="icon-menu h3"></span></a>
-          </div>
-        </div>
-      </div>
-
-    </header>
-
-    <div class="intro-section" id="home-section">
-
-      <div class="slide-1" data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-12">
-              <div class="row align-items-center">
-                <div class="col-lg-6 mb-4">
-                  <h1 data-aos="fade-up" data-aos-delay="100">SEEDS TOOL</h1>
-                  <h4 data-aos="fade-up" data-aos-delay="200"> Stakeholder-Based Sustainable and Economically Doable
-                    Scenarios for the Energy Transition </h4>
-                  <p class='mt-4' data-aos="fade-up" data-aos-delay="300"><a href="#"
-                      class="btn btn-primary py-3 px-5 btn-pill">Try now</a></p>
-
-                </div>
-                <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                  <form action="login/" method="post" class="form-box">
-                    {% csrf_token %}
-                    <h3 class="h4 text-black mb-4">Log in</h3>
-                    <div class="form-group">
-                      {{form.email }}
-                    </div>
-                    <div class="form-group">
-                      {{form.password }}
-                    </div>
-                    <div class="form-group">
-                      <input type="submit" class="btn btn-primary btn-pill" value="Log in">
-                    </div>
-                  </form>
-
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
+      <div class="px-5 text-align-middle">
+        Stakeholder-Based Environmentally-sustainable and Economically Doable Scenarios for the Energy Transition
       </div>
     </div>
+    <div class="pt-5 mt-2">
+      In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. 
+    </div>
 
+    <div class="p-4 ">
+      <button class=" float-right rounded btn px-5 btn-primary btn-md waves-effect text-center m-b-20"> Try tool </button>
+    </div>
 
+      <div class=" mt-5 pt-5 accordion" id="accordionExample">
+        <div class="card" style="border:0px;">
 
-
-    <div class="site-section" id="team-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 mb-5 text-center" data-aos="fade-up" data-aos-delay="">
-            <h2 class="section-title">Our Team</h2>
-            <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque!
-              Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam,
-              illum sed veniam!</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="teacher text-center">
-              <img src="images/person_1.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
-              <div class="py-2">
-                <h3 class="text-black">Benjamin Stone</h3>
-                <p class="position">Researcher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto
-                  tempora, adipisci at provident.</p>
+          <div class="card-header border border-white" id="headingOne" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
+            <div class='d-flex align-items-center justify-content-between'>
+              <div class="p-2 ml-auto">
+                <img src ="{% static 'images/plant-2.png'%}">
               </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="teacher text-center">
-              <img src="images/person_2.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
-              <div class="py-2">
-                <h3 class="text-black">Katleen Stone</h3>
-                <p class="position">Researcher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto
-                  tempora, adipisci at provident.</p>
+              <div class=" p-2">
+                <p class="p-0 m-0 font-weight-bold">How does SEEDS tool help you to find optimal solutions for the Portuguese Energy system?</p>
+                <p class="p-0 m-0 small text-muted"> Learn more in video tutorils </p>
               </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="teacher text-center">
-              <img src="images/person_3.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
-              <div class="py-2">
-                <h3 class="text-black">Sadie White</h3>
-                <p class="position">Developer</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto
-                  tempora, adipisci at provident.</p>
+              <div class="ml-auto p-2">
+                <button class="btn btn-primary rounded-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> + 
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-
-    <div class="site-section " id="documentation-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
-            <h2 class="section-title">Documentation</h2>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <img class='img img-responsive' src="{% static 'images/Video.png' %}"/>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="site-section" id="faq-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="site-section bg-light" id="contact-section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-7">
-            <h2 class="section-title mb-3">Message Us</h2>
-            <p class="mb-5">Natus totam voluptatibus animi aspernatur ducimus quas obcaecati mollitia quibusdam
-              temporibus culpa dolore molestias blanditiis consequuntur sunt nisi.</p>
-            <form method="post" data-aos="fade">
-              <div class="form-group row">
-                <div class="col-md-6 mb-3 mb-lg-0">
-                  <input type="text" class="form-control" placeholder="First name">
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Last name">
-                </div>
+
+        <div class="card" style="border:0px;">
+          <div class="card-header bg-white" style="border:0px;" id="headingTwo" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
+            <div class='d-flex align-items-center'>
+              <div class="p-2">
+                <img src ="{% static 'images/power-2.png'%}">
               </div>
-
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="text" class="form-control" placeholder="Subject">
-                </div>
+              <div class="font-weight-bold p-2">
+                <p class="p-0 m-0 font-weight-bold"> What's behind our model calculation?</p>
+                <p class="p-0 m-0 small text-muted"> Learn more about the SEEDS research project </p>             
               </div>
-
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="email" class="form-control" placeholder="Email">
-                </div>
+              <div class="ml-auto p-2">
+                <button class="btn btn-primary rounded-circle " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne"> + 
+                </button>
               </div>
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <textarea class="form-control" id="" cols="30" rows="10"
-                    placeholder="Write your message here."></textarea>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="col-md-6">
-
-                  <input type="submit" class="btn btn-primary py-3 px-5 btn-block btn-pill" value="Send Message">
-                </div>
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <footer class="footer-section bg-white">
-      <div class="container">
-        <div class="row pt-1 text-center">
-          <div class="col-md-12">
-            <div class="border-top pt-5">
-              <p>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                Copyright &copy;
-                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
-                by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              </p>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
-  </div> <!-- .site-wrap -->
-  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-  <script src="{% static 'js/jquery-ui.js' %}"></script>
-  <script src="{% static 'js/popper.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-  <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
-  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-  <script src="{% static 'js/aos.js' %}"></script>
-  <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
-  <script src="{% static 'js/jquery.sticky.js' %}"></script>
-  <script src="{% static 'js/main.js' %}"></script>
-</body>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            It is an easy to use online service that measure perceived trust of product or service. It enables researchers, designers and anyone else interested to run studies to understand to what extent users trust digital technologies.
+          </div>
+          </div>
 
-</html>
+
+        <div class="card" style="border:0px;border-bottom:0px;">
+          <div class="card-header bg-white" style="border:0px;" id="headingTwo" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
+            <div class='d-flex align-items-center'>
+              <div class="p-2">
+                <img src ="{% static 'images/people.png'%}">
+              </div>
+              <div class="font-weight-bold p-2">
+                <p class="p-0 m-0 font-weight-bold"> How do we include the local stakeholders into the design project?</p>
+                <p class="p-0 m-0 small text-muted"> Learn more about the SEEDS research project </p>             
+              
+              </div>
+              <div class="ml-auto p-2">
+                <button class="btn btn-primary rounded-circle " type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseOne"> + 
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+       
+        <div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            It is an easy to use online service that measure perceived trust of product or service. It enables researchers, designers and anyone else interested to run studies to understand to what extent users trust digital technologies.
+          </div>
+          </div>
+        
+
+      </div>
+        
+      </div>
+
+
+
+
+  <div class=" mr-4 col col-3">
+    <div class="px-3">
+      <div class="btn-group d-flex" role="group" aria-label="Basic example">
+          <button type="button" class="btn rounded-left border-left border-top border-bottom border-right border-right-5 border-5 border-gray bg-light text-muted px-3 w-100">Guest User</button>
+          <button type="button" class="btn rounded-right border-right border-top border-bottom border-5  border-gray bg-light  text-muted px-3 w-100">Login</button>
+      </div>
+    </div>
+    <div class='text-muted  text-center small'> Access all resources in the tool </div>
+    <form class= "mt-2 p-4" method="post">
+      {% csrf_token %}
+      <div class="form-group form-primary font-weight-bold">
+       Email address  {{form.email }} 
+      </div>
+      <div class="form-group pass_show  font-weight-bold pt-2"> 
+        Password
+        {{form.password}}
+      </div>
+      <br/>
+      <small class='text-right'>
+        <a href="{% url 'password_reset' %}">I forgot my password</a>
+      </small>
+      <div class="py-3">
+          <input type="submit" class="rounded btn btn-primary btn-md btn-block waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> 
+      </div>
+      
+    </form>
+    <p class="py-1 small text-center text-muted">
+      If you don't have account, <a class='text-un text-muted font-weight-bold' href="{% url 'register' %}">Register here</a>.
+    </p>
+    <div class="mt-5 p-2">
+      <div class='d-flex aling-items-center border-bottom'>
+        <div class='p-2'>
+          <img class='img img-responsive' src ="{% static 'images/avatar.png'%}"/>
+        </div>
+        <div class='p-2 px-3 text-center'>
+          Using the tool, our team gets a clear picture of the possible solutions for the national energy system.
+        </div>
+      </div>
+
+      <div class='mt-4 d-flex aling-items-center border-bottom'>
+        <div class='p-2 px-3 text-center'>
+          Using the tool, our team gets a clear picture of the possible solutions for the national energy system
+        </div>
+        <div class='p-2'>
+          <img class='img img-responsive' src ="{% static 'images/avatar-2.png'%}"/>
+        </div>
+      </div>
+
+      <div class='mt-4 d-flex aling-items-center border-bottom'>
+        <div class='p-2'>
+          <img class='img img-responsive' src ="{% static 'images/avatar-3.png'%}"/>
+        </div>
+        <div class='p-2 px-3 text-center'>
+          I've been recommending it to my students and using the suggested scenarios as starting points for class discussions.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
