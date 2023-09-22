@@ -60,7 +60,7 @@ def login(request):
                     user.backend = 'django.contrib.auth.backends.ModelBackend'
                     auth_login(request,user)
                     messages.info(request, 'Successfully logged in!')
-                    return redirect('project_home')
+                    return redirect('portfolio')
                 else:
                     messages.error(request, 'Entered password is wrong.')
                     return redirect('login')
@@ -139,7 +139,7 @@ def register(request):
     else:
         c = get_current_site(request)
         form = RegisterForm()
-        
+
     #return render(request, "register.html", {"form":form})
     return render(request, "sign_up.html", {"form":form})
 # Create your views here.
