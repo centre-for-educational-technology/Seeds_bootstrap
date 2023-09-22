@@ -61,12 +61,17 @@ urlpatterns = [
     path('login/', v.login, name='login'),
     path('logout/', v.logout, name='logout'),
     path('vote/<selection>/<scenario>/', views.vote, name='vote'),
+
+    path('portfolio/',
+         login_required(views.portfolio), name='portfolio'),
     path('project/', login_required(views.project_page),
          name='project_select_page'),
-    path('portfolio/<project_id>',
-         login_required(views.portfolio), name='portfolio'),
+    path('interface/<project_id>',
+         login_required(views.interface), name='interface'),
+
+
     path('aboutus/', views.aboutus, name='aboutus'),
-    path('interface/', login_required(views.selection), name='interface'),
+    path('maps/', views.map, name='map'),
     path('location/', login_required(views.select_location), name='location'),
 
 ]

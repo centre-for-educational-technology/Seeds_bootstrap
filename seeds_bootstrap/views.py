@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 
+from register import views as rv
+
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -95,13 +97,20 @@ COLOR_CODES = ["rgba(31, 119, 180, 0.8)",
                "magenta"]
 
 
+def map(request):
+    return render(request, 'map.html')
+
+
 def reduce_intensity(c, intensity=.2):
     return c.replace('0.8', '0.2')
 
 
 def index(request):
-    form = reg_forms.LoginForm()
-    return render(request, 'index.html', {'form': form})
+    if request.method == "POST":
+        return rv.login(request)
+    else:
+        form = reg_forms.LoginForm()
+        return render(request, 'index.html', {'form': form})
 
 
 def project_page(request):
@@ -114,7 +123,7 @@ def rescale(value, min, max):
     return min + float(value) * range
 
 
-def selection(request):
+def interface(request, project_id):
     if request.method == 'POST':
         # fetching energy systems params
         power_min = request.POST['power_0']
@@ -478,9 +487,7 @@ def vote(request, selection, scenario):
     return redirect('inspect', scenario_id=scenario)
 
 
-def portfolio(request, project_id):
-    request.session['project'] = project_id
+def portfolio(request):
 
     scenarios = UserScenario.objects.all().filter(submitted_user=request.user)
-
     return render(request, 'portfolio.html', {'scenarios': scenarios})
