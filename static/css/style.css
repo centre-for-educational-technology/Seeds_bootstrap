@@ -24,6 +24,7 @@ h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
   font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
 
+
 .border-2 {
   border-width: 2px; }
 
@@ -62,6 +63,15 @@ h1, h2, h3, h4, h5,
   .offcanvas-menu .site-wrap:before {
     opacity: 1;
     visibility: visible; }
+html, body {
+      height: 100%;
+      margin: 0;
+    }
+.site-wrap{
+ 
+ min-height: 100%;
+}
+
 
 .btn {
   font-size: 12px;
@@ -139,10 +149,10 @@ h1, h2, h3, h4, h5,
   border-top: 1px solid #edf0f5 !important; }
 
 .site-footer {
-  background: #333333; }
+}
   @media (min-width: 768px) {
     .site-footer {
-      padding: 8em 0; } }
+  } }
   .site-footer .border-top {
     border-top: 1px solid rgba(255, 255, 255, 0.1) !important; }
   .site-footer p {
@@ -866,9 +876,12 @@ h1, h2, h3, h4, h5,
 
 .footer-section {
   padding: 2rem 0;
-  background-color: #fafafa; }
+  background-color: #fafafa;
+
+
+}
   .footer-section p {
-    font-size: .5rem; }
+    font-size: .2rem; }
   .footer-section h3 {
     font-size: .9rem;
     letter-spacing: .1rem;
