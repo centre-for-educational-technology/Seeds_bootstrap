@@ -10,8 +10,6 @@
 
   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
@@ -26,8 +24,7 @@
   <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
 
   <link rel="stylesheet" href="{% static 'css/aos.css' %}">
-  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'al-range-slider.css' %}">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
@@ -35,9 +32,10 @@
 
 </head>
 
-<body class=" min-vh-100" data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
   <div class="site-wrap">
+
     <div class="site-mobile-menu site-navbar-target">
       <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-close mt-3">
@@ -49,13 +47,12 @@
 
 
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+
       <div class="container-fluid">
-        <div class="d-flex align-items-center">
-          <div class="mr-auto text-dark pt-1 ">
-            <a href="index.html">
-              <h4><a href="{%url 'home'%}"><img class='img img-responsive' src="{% static 'images/home.png' %}"></a></h4>
-            </a>
-          </div>
+        <div class="d-flex">
+          <div class="mr-auto text-dark pt-1"><a href="index.html">
+              <h4><a href="{%url 'home'%}">SEEDS</a></h4>
+            </a></div>
 
           <div class="mx-auto text-center">
             <nav class="site-navigation position-relative text-right" role="navigation">
@@ -77,12 +74,11 @@
       </div>
 
     </header>
-    <div class="site-section">
-      <div class="container-fluid" style="height:100%">
-
+    <div class="site-section  h-100">
+      <div class="w-100 bg-light p-4">
         {% if messages %}
         {% for message in messages %}
-        <div class="p-5 mt-5 alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" id="message">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" id="message">
           {{ message }}
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -97,25 +93,7 @@
 
       </div>
     </div>
-    <div class='site-footer'>
-    <footer class="footer-section bg-light px-4">
-      <div class="container-fluid px-4 text-muted">
-        <div class='row pl-5'>
-            <div class="col col-6">
-              <p class='p-0'>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                &copy;
-                <script>document.write(new Date().getFullYear());</script> SEEDS Project
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              </p>
-              <p class='small' style="font-size:4px!;">
-                The SEEDS project is supported by the CHIST-ERA grant CHIST-ERA-19-CES-004, the Swiss National Science Foundation grant number 195537, the Fundação para a Ciência e Tecnologia (FCT) grant number CHIST-ERA/0005/2019, the Spanish Agencia Estatal de Investigación with grant PCI2020-120710-2, and the Estonian Research Council grant number 4-8/20/26
-              </p>
-            </div>
-        </div>
-      </div>
-    </footer>
-  </div>
+   
 
 
 
@@ -138,8 +116,7 @@
   <script src="{% static 'al-range-slider.js' %}"></script>
   <script src="{% static 'alpine.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script>
 
   <script>
     {% block scr %}
