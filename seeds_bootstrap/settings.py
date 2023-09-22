@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-6o8s_(%8iu(5ngpz$!e8tif4f!mp)jtk#%j$=gea&1vme9u4ni
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','86.107.197.103']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '86.107.197.103']
 LOGIN_URL = 'login'
 
 # Application definition
@@ -119,6 +119,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -126,7 +127,7 @@ STATICFILES_DIRS = [
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 STATIC_URL = os.path.join(SETTINGS_PATH, '/static/')
 
