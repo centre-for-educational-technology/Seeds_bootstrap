@@ -1,62 +1,87 @@
 {% extends 'base.html'%}
 {%block body%}
 
-    <div class="row flex-nowrap m-4 p-4 min-vh-100">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 pr-4">
+    <div class="row flex-nowrap m-4 p-4 h-100">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 pr-4 h-100">
             <div class="d-flex flex-column align-items-center px-5 pt-2 ">
                 
                 <ul class="nav nav-pills flex-column mb-sm-auto mt-3 mb-2 align-items-center pt-5 " id="menu">
-                    <li class="btn btn-primary py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20">
-                        <a href="{% url 'interface'%}" class="align-middle px-0 text-white  ">
+                    <li class="btn btn-primary py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20">
+                        <a href="{% url 'project_select_page' %}" class="align-middle px-0 text-white  ">
                             <i class="fa fa-plus pr-2"></i>  <span class="ms-1 d-none  d-sm-inline">New Scenario</span>
                         </a>
                     </li>
-                    <li class="btn btn-primary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
+                    <li class="btn btn-primary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
                         <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
-                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Your Projects</span> 
+                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Portfolio</span> 
                         </a>
                     </li>
-                    <li class="btn btn-secondary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
+                    <li class="btn btn-secondary mt-4 mb-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
                         <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
                             <i class="fa fa-save pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Saved Search</span> 
                         </a>
                     </li>
+                    <!--
                     <li class="btn btn-secondary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
                         <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
                             <i class="fa fa-comment pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Notifications</span> 
                         </a>
                     </li>
-                    <li class="btn btn-secondary mt-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-center m-b-20" pt-2>
+                    -->
+                    <li class="btn btn-secondary mt-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
                         <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
-                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Team Projects</span> 
+                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Account settings</span> 
                         </a>
                     </li>
-
+                    
                     
                 </ul>
+                <div class='mt-5 p-2'>
+                    <p class='mx-3'><a href="#">Terms of Use</a></p>
+                    <p class='mx-3'><a href="#">Privacy policy</a></p>
+
+                </div>
                 <hr>
                 
             </div>
         </div>
-        <div class="col px-5">
-            <div class = 'd-flex p-3 mb-4 row bg-light'>
+        <div class="col px-5 h-75">
+            <div class = 'd-flex px-3 row'>
                 <div>
-                    <h3 class='px-3 font-weight-bold'> Your projects </h3>
+                    <h3 class='px-3 font-weight-bold'> Your Portfolio </h3>
                 </div>
                 <div class='ml-auto'>
                     <h3><a title='Logout' class='text-muted' href="/logout/"><i class="fa fa-sign-out-alt"></i></a></h3>
                 </div>
-
-
             </div>
-            <div class='row p-4 row rounded-pill bg-light'>
-                <div class='d-flex flex-column'>
-                    <div> <p class='h3 font-weight-bold '> Start a new project </p></div>
-                    <div> <p class='text-muted mb-5'> Click on below button to start a new project. </p></div> 
-                    <div> <p class="btn btn-success py-1 text-white px-4 btn-pill btn-md"> New Project</p></div>
-
-                </div>
-                
+            <p class='text-muted px-3 mb-4'> Store and organise your favourite scenarios </p>
+            <div class='text-center text-lg py-5 align-middle h-75'>
+                 {% if scenarios|length == 0 %}
+                    <div class='text-muted'> It seems like your portfolio is still empty. </div>
+                    <div class='text-muted mb-5'>    
+                        Click <b>Start</b> to begin selecting your favourite energy transition scenarios. 
+                    </div> 
+                    <div> <a href="{% url 'project_select_page'%}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md"> Start</a></div>
+                {% else %}
+                <table class="table ">
+                    <thead>
+                        <tr> 
+                            <th class='text-left'>Name</th>
+                            <th>Scenario</th>
+                            <th>Last Modified</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for scenario in scenarios %}
+                        <tr class='text-align-middle'>
+                            <td class='text-left'><a href="{% url 'inspect' scenario_id=scenario.scenario.id%}">{{scenario.label}}</td>
+                            <td>{{scenario.scenario.id}}</td>
+                            <td>{{scenario.last_modified}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
             </div>
 
             

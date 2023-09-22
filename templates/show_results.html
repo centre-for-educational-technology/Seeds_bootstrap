@@ -13,14 +13,31 @@
     
 </style>
 
-<div class="m-4 p-5" x-data="{power:true, infra:true, pace:true, storage:true,wind_onshore:true,wind_offshore:false,roof_pv:false,field_pv:false,human:true,climate:false,land:false}">
+<div x-data = "{ selected_scenarios:[], compare:false,
+  toggle(id) {
+      if (this.selected_scenarios.includes(id)) {
+          const index = this.selected_scenarios.indexOf(id);
+          this.selected_scenarios.splice(index, 1)
+      } else {
+          this.selected_scenarios.push(id);
+      }
+  },
+  check(){
+    if (this.selected_scenarios.length == 2){
+      return true;
+    }else{
+      return false;
+    }
+  }
+}" class="m-4 p-5" >
     
-    <h3>  Scenario Insepction </h3>
+    <h3 >  Scenario Insepction </h3>
     <p class="'text-secondary"> In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.  </p>
     <p class="'text-secondary"> The actions tab on the right allows you to perform comparisons and download scenario reports.</p>
     <div class='d-flex flex-row-reverse p-2 m-2'>
-        <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2 btn btn-primary" data-toggle='modal' data-placement='top' data-target="#save_modal"></i> -->
-        <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i> 
+        <i title="download" class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2 btn btn-primary"></i> 
+        <i title="compare"   class="fa fa-exchange-alt  px-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2 btn btn-primary" data-toggle='modal' data-placement='top' data-target="#compare_modal"></i> 
+        <i title="restart"  class="fa fa-undo  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i> 
     </div>
     <div class="modal fade" id="back_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -37,40 +54,51 @@
                 Confirming this choice will erase all settings defined for these scenarios.
             </div>
             <div class="modal-footer">
-              <a href="{% url 'interface' %}" type="button" class="btn btn-primary">Confirm</a>
+              <a href="{% url 'interface' project_id=1 %}" type="button" class="btn btn-primary">Confirm</a>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="save_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+    <div class="modal fade" id="compare_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
     aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Save this scenario in your portfolio
+                <h5 class="modal-title" id="exampleModalLabel">Compare two scenarios
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <p x-text='check()'></p>
             <div class='modal-body'>
-              <form>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Label</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter label">
-                  <small id="emailHelp" class="form-text text-muted">Scenario will be saved with the label.</small>
+              <template class='align-text-center' x-if="check()">
+                <h5> Compare </h5>
+                <p> Scenarios selected for side-by-side comparison </p>
+                <div class="p-2">
+                  <button class='mr-3 px-4 btn btn-secondary bg-ligth text-muted'>B</button>
+                  <button class=' btn px-4 btn-secondary bg-ligth text-muted'>C</button>
                 </div>
-              </form>
+              </template>
+              <template x-if="!check()">
+                You need to select two scenarios for comparison.
+              </template>
             </div>
             <div class="modal-footer">
+              <template x-if="check()">
+                <button type="submit" class="btn btn-primary">Confirm</button>
+
+              </template>
+              <template x-if="!compare">
               <button type="submit" class="btn btn-primary">Save</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </template>
             </div>
         </div>
     </div>
   </div>
-        <div class="row m-4 p-4 min-vh-100">
+        <div x-data="{power:true, infra:true, pace:true, storage:true,wind_onshore:true,wind_offshore:false,roof_pv:false,field_pv:false,human:true,climate:false,land:false}" class="row m-4 p-4 min-vh-100">
             <div class="col-auto col-md-3 col-xl-2  mr-5">
                 <div class="d-flex flex-column align-items-center px-5 pt-2 ">
                     <div id="accordion">
@@ -315,7 +343,7 @@
                       </div>
                 </div>
             </div>
-            <div class="col table-responsive" x-data = "{ selected_scenarios:[]}">
+            <div class="col table-responsive" >
                 <table class="table">
                     <thead>
                         <tr>
@@ -338,6 +366,7 @@
                             <th>Compare</th>
                         </tr>
                     </thead>
+                    <p x-text='selected_scenarios.length'></p>
                     <tbody>
                         {% for scenario in page_obj %}
                         <tr class='text-align-middle'>
@@ -356,7 +385,7 @@
                             <td x-show="climate">{{scenario.climate_change |floatformat:2}}</td>
                             <td x-show="climate">{{scenario.land_occupation |floatformat:2}}</td>
                             <td > <a href='{% url 'inspect' scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
-                            <td ><input type='checkbox' x-on:click="if ($event.target.value == True) { selected_scenarios.push({{scenario.id}})}" value='{{scenario.id}}' name='scenario'></td>
+                            <td ><input type='checkbox' x-on:click="toggle({{scenario.id}})" value='{{scenario.id}}' name='scenario'></td>
                         </tr>
                         {% endfor %}
                     </tbody>

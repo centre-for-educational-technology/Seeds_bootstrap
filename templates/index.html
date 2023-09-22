@@ -18,12 +18,11 @@
     </div>
 
     <div class="p-4 ">
-      <button class=" float-right rounded btn px-5 btn-primary btn-md waves-effect text-center m-b-20"> Try tool </button>
+      <button class=" float-right btn btn-primary py-2 px-5 btn-pill btn-md  waves-effect text-center m-b-20"> Try tool </button>
     </div>
 
       <div class=" mt-5 pt-5 accordion" id="accordionExample">
         <div class="card" style="border:0px;">
-
           <div class="card-header border border-white" id="headingOne" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
             <div class='d-flex align-items-center justify-content-between'>
               <div class="p-2 ml-auto">
@@ -31,10 +30,10 @@
               </div>
               <div class=" p-2">
                 <p class="p-0 m-0 font-weight-bold">How does SEEDS tool help you to find optimal solutions for the Portuguese Energy system?</p>
-                <p class="p-0 m-0 small text-muted"> Learn more in video tutorils </p>
+                <p class="p-0 m-0 small text-muted"> Learn more in video tutorials </p>
               </div>
               <div class="ml-auto p-2">
-                <button class="btn btn-primary rounded-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> + 
+                <button class="expand btn btn-primary rounded-circle btn-lg fa fa-minus p-2" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
                 </button>
               </div>
             </div>
@@ -58,13 +57,13 @@
                 <p class="p-0 m-0 small text-muted"> Learn more about the SEEDS research project </p>             
               </div>
               <div class="ml-auto p-2">
-                <button class="btn btn-primary rounded-circle " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne"> + 
+                <button class="expand btn btn-primary rounded-circle btn-lg fa fa-plus p-2 " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
           <div class="card-body">
             It is an easy to use online service that measure perceived trust of product or service. It enables researchers, designers and anyone else interested to run studies to understand to what extent users trust digital technologies.
           </div>
@@ -72,7 +71,7 @@
 
 
         <div class="card" style="border:0px;border-bottom:0px;">
-          <div class="card-header bg-white" style="border:0px;" id="headingTwo" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
+          <div class="card-header bg-white" style="border:0px;" id="headingThree" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
             <div class='d-flex align-items-center'>
               <div class="p-2">
                 <img src ="{% static 'images/people.png'%}">
@@ -83,7 +82,7 @@
               
               </div>
               <div class="ml-auto p-2">
-                <button class="btn btn-primary rounded-circle " type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseOne"> + 
+                <button class="expand btn btn-primary rounded-circle btn-lg fa fa-plus p-2" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                 </button>
               </div>
             </div>
@@ -92,7 +91,7 @@
         
         
        
-        <div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
           <div class="card-body">
             It is an easy to use online service that measure perceived trust of product or service. It enables researchers, designers and anyone else interested to run studies to understand to what extent users trust digital technologies.
           </div>
@@ -128,7 +127,7 @@
         <a href="{% url 'password_reset' %}">I forgot my password</a>
       </small>
       <div class="py-3">
-          <input type="submit" class="rounded btn btn-primary btn-md btn-block waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> 
+          <input type="submit" class="btn btn-primary py-2 px-3 btn-pill btn-md btn-block waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> 
       </div>
       
     </form>
@@ -168,4 +167,17 @@
 </div>
 
 
+{% endblock %}
+
+{% block scr %}
+$(document).on('click', '.expand', function () {
+  if($(this).hasClass('collapsed')){
+    $(this).removeClass('fa fa-minus');
+    $(this).addClass('fa fa-plus');
+  } else {
+    $(this).removeClass('fa fa-plus');
+    $(this).addClass('fa fa-minus');
+  }
+  
+});
 {% endblock %}
