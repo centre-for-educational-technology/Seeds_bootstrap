@@ -1,0 +1,851 @@
+{
+  "name": "calliope-seeds-model-runs",
+  "description": "Calliope output dataset for SENTINEL intercomparison free model run scenarios",
+  "keywords": [
+    "calliope",
+    "seeds",
+    "model-runs"
+  ],
+  "licenses": "CC-BY-4.0",
+  "resources": [
+    {
+      "path": "nameplate_capacity.csv",
+      "name": "nameplate_capacity",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "techs",
+            "type": "string",
+            "alias": "technology"
+          },
+          {
+            "name": "locs",
+            "type": "string",
+            "alias": "region"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "nameplate_capacity",
+            "type": "number",
+            "format": "default",
+            "constraints": {
+              "minimum": 0
+            },
+            "description": "The nameplate capacity of a technology, for example, the power generation capacity of a power plant in MW."
+          }
+        ],
+        "primaryKey": [
+          "spores"
+        ]
+      }
+    },
+    {
+      "path": "transmission_capacity.csv",
+      "name": "transmission_capacity",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "techs",
+            "type": "string",
+            "alias": "technology"
+          },
+          {
+            "name": "exporting_region",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "importing_region",
+            "type": "string"
+          },
+          {
+            "name": "transmission_capacity",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores"
+        ]
+      }
+    },
+    {
+      "path": "energy_supply.csv",
+      "name": "energy_supply",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "techs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "battery",
+                "biofuel_boiler",
+                "biofuel_supply",
+                "biofuel_to_diesel",
+                "biofuel_to_liquids",
+                "biofuel_to_methane",
+                "biofuel_to_methanol",
+                "ccgt",
+                "chp_biofuel_extraction",
+                "chp_hydrogen",
+                "chp_methane_extraction",
+                "chp_wte_back_pressure",
+                "dac",
+                "demand_cooking",
+                "demand_elec",
+                "demand_heat",
+                "demand_heavy_transport",
+                "demand_industry_diesel",
+                "demand_industry_kerosene",
+                "demand_industry_methane",
+                "demand_industry_methanol",
+                "demand_light_transport",
+                "el_export",
+                "el_import",
+                "electric_heater",
+                "electric_hob",
+                "electrolysis",
+                "existing_pv",
+                "existing_wind",
+                "gas_hob",
+                "h2_export",
+                "h2_import",
+                "heat_storage_big",
+                "heat_storage_small",
+                "heavy_transport_ev",
+                "heavy_transport_ice",
+                "hp",
+                "hydro_reservoir",
+                "hydro_run_of_river",
+                "hydrogen_storage",
+                "hydrogen_to_liquids",
+                "hydrogen_to_methane",
+                "hydrogen_to_methanol",
+                "light_transport_ev",
+                "light_transport_ice",
+                "methane_boiler",
+                "methane_storage",
+                "open_field_pv",
+                "pumped_hydro",
+                "roof_mounted_pv",
+                "waste_supply",
+                "wind_offshore",
+                "wind_onshore"
+              ]
+            },
+            "description": "Descriptor or name of the technology.",
+            "alias": "technology"
+          },
+          {
+            "name": "locs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "ESP-sink",
+                "PRT-10_1",
+                "PRT-11_1",
+                "PRT-12_1",
+                "PRT-14_1",
+                "PRT-15_1",
+                "PRT-16_1",
+                "PRT-17_1",
+                "PRT-18_1",
+                "PRT-19_1",
+                "PRT-1_1",
+                "PRT-20_1",
+                "PRT-3_1",
+                "PRT-4_1",
+                "PRT-5_1",
+                "PRT-6_1",
+                "PRT-7_1",
+                "PRT-8_1",
+                "PRT-9_1",
+                "PRT_1",
+                "PRT_2"
+              ]
+            },
+            "description": "The region the data corresponds to.  This index column is needed when converting a data package to the IAMC format.",
+            "alias": "region"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "100kt",
+                "billion_km",
+                "twh"
+              ]
+            },
+            "description": "This column is used to fill in the \"unit\" column when converting a data package to the IAMC format."
+          },
+          {
+            "name": "energy_supply",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores",
+          "techs",
+          "locs",
+          "carriers",
+          "unit"
+        ]
+      }
+    },
+    {
+      "path": "generated_building_heat.csv",
+      "name": "generated_building_heat",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "techs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "battery",
+                "biofuel_boiler",
+                "biofuel_supply",
+                "biofuel_to_diesel",
+                "biofuel_to_liquids",
+                "biofuel_to_methane",
+                "biofuel_to_methanol",
+                "ccgt",
+                "chp_biofuel_extraction",
+                "chp_hydrogen",
+                "chp_methane_extraction",
+                "chp_wte_back_pressure",
+                "dac",
+                "demand_cooking",
+                "demand_elec",
+                "demand_heat",
+                "demand_heavy_transport",
+                "demand_industry_diesel",
+                "demand_industry_kerosene",
+                "demand_industry_methane",
+                "demand_industry_methanol",
+                "demand_light_transport",
+                "el_export",
+                "el_import",
+                "electric_heater",
+                "electric_hob",
+                "electrolysis",
+                "existing_pv",
+                "existing_wind",
+                "gas_hob",
+                "h2_export",
+                "h2_import",
+                "heat_storage_big",
+                "heat_storage_small",
+                "heavy_transport_ev",
+                "heavy_transport_ice",
+                "hp",
+                "hydro_reservoir",
+                "hydro_run_of_river",
+                "hydrogen_storage",
+                "hydrogen_to_liquids",
+                "hydrogen_to_methane",
+                "hydrogen_to_methanol",
+                "light_transport_ev",
+                "light_transport_ice",
+                "methane_boiler",
+                "methane_storage",
+                "open_field_pv",
+                "pumped_hydro",
+                "roof_mounted_pv",
+                "waste_supply",
+                "wind_offshore",
+                "wind_onshore"
+              ]
+            },
+            "description": "Descriptor or name of the technology.",
+            "alias": "technology"
+          },
+          {
+            "name": "locs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "ESP-sink",
+                "PRT-10_1",
+                "PRT-11_1",
+                "PRT-12_1",
+                "PRT-14_1",
+                "PRT-15_1",
+                "PRT-16_1",
+                "PRT-17_1",
+                "PRT-18_1",
+                "PRT-19_1",
+                "PRT-1_1",
+                "PRT-20_1",
+                "PRT-3_1",
+                "PRT-4_1",
+                "PRT-5_1",
+                "PRT-6_1",
+                "PRT-7_1",
+                "PRT-8_1",
+                "PRT-9_1",
+                "PRT_1",
+                "PRT_2"
+              ]
+            },
+            "description": "The region the data corresponds to.  This index column is needed when converting a data package to the IAMC format.",
+            "alias": "region"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "100kt",
+                "billion_km",
+                "twh"
+              ]
+            },
+            "description": "This column is used to fill in the \"unit\" column when converting a data package to the IAMC format."
+          },
+          {
+            "name": "generated_building_heat",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores",
+          "techs",
+          "locs",
+          "carriers",
+          "unit"
+        ]
+      }
+    },
+    {
+      "path": "generated_district_heat.csv",
+      "name": "generated_district_heat",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "techs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "battery",
+                "biofuel_boiler",
+                "biofuel_supply",
+                "biofuel_to_diesel",
+                "biofuel_to_liquids",
+                "biofuel_to_methane",
+                "biofuel_to_methanol",
+                "ccgt",
+                "chp_biofuel_extraction",
+                "chp_hydrogen",
+                "chp_methane_extraction",
+                "chp_wte_back_pressure",
+                "dac",
+                "demand_cooking",
+                "demand_elec",
+                "demand_heat",
+                "demand_heavy_transport",
+                "demand_industry_diesel",
+                "demand_industry_kerosene",
+                "demand_industry_methane",
+                "demand_industry_methanol",
+                "demand_light_transport",
+                "el_export",
+                "el_import",
+                "electric_heater",
+                "electric_hob",
+                "electrolysis",
+                "existing_pv",
+                "existing_wind",
+                "gas_hob",
+                "h2_export",
+                "h2_import",
+                "heat_storage_big",
+                "heat_storage_small",
+                "heavy_transport_ev",
+                "heavy_transport_ice",
+                "hp",
+                "hydro_reservoir",
+                "hydro_run_of_river",
+                "hydrogen_storage",
+                "hydrogen_to_liquids",
+                "hydrogen_to_methane",
+                "hydrogen_to_methanol",
+                "light_transport_ev",
+                "light_transport_ice",
+                "methane_boiler",
+                "methane_storage",
+                "open_field_pv",
+                "pumped_hydro",
+                "roof_mounted_pv",
+                "waste_supply",
+                "wind_offshore",
+                "wind_onshore"
+              ]
+            },
+            "description": "Descriptor or name of the technology.",
+            "alias": "technology"
+          },
+          {
+            "name": "locs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "ESP-sink",
+                "PRT-10_1",
+                "PRT-11_1",
+                "PRT-12_1",
+                "PRT-14_1",
+                "PRT-15_1",
+                "PRT-16_1",
+                "PRT-17_1",
+                "PRT-18_1",
+                "PRT-19_1",
+                "PRT-1_1",
+                "PRT-20_1",
+                "PRT-3_1",
+                "PRT-4_1",
+                "PRT-5_1",
+                "PRT-6_1",
+                "PRT-7_1",
+                "PRT-8_1",
+                "PRT-9_1",
+                "PRT_1",
+                "PRT_2"
+              ]
+            },
+            "description": "The region the data corresponds to.  This index column is needed when converting a data package to the IAMC format.",
+            "alias": "region"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "100kt",
+                "billion_km",
+                "twh"
+              ]
+            },
+            "description": "This column is used to fill in the \"unit\" column when converting a data package to the IAMC format."
+          },
+          {
+            "name": "generated_district_heat",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores",
+          "techs",
+          "locs",
+          "carriers",
+          "unit"
+        ]
+      }
+    },
+    {
+      "path": "generated_road_transport.csv",
+      "name": "generated_road_transport",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "techs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "battery",
+                "biofuel_boiler",
+                "biofuel_supply",
+                "biofuel_to_diesel",
+                "biofuel_to_liquids",
+                "biofuel_to_methane",
+                "biofuel_to_methanol",
+                "ccgt",
+                "chp_biofuel_extraction",
+                "chp_hydrogen",
+                "chp_methane_extraction",
+                "chp_wte_back_pressure",
+                "dac",
+                "demand_cooking",
+                "demand_elec",
+                "demand_heat",
+                "demand_heavy_transport",
+                "demand_industry_diesel",
+                "demand_industry_kerosene",
+                "demand_industry_methane",
+                "demand_industry_methanol",
+                "demand_light_transport",
+                "el_export",
+                "el_import",
+                "electric_heater",
+                "electric_hob",
+                "electrolysis",
+                "existing_pv",
+                "existing_wind",
+                "gas_hob",
+                "h2_export",
+                "h2_import",
+                "heat_storage_big",
+                "heat_storage_small",
+                "heavy_transport_ev",
+                "heavy_transport_ice",
+                "hp",
+                "hydro_reservoir",
+                "hydro_run_of_river",
+                "hydrogen_storage",
+                "hydrogen_to_liquids",
+                "hydrogen_to_methane",
+                "hydrogen_to_methanol",
+                "light_transport_ev",
+                "light_transport_ice",
+                "methane_boiler",
+                "methane_storage",
+                "open_field_pv",
+                "pumped_hydro",
+                "roof_mounted_pv",
+                "waste_supply",
+                "wind_offshore",
+                "wind_onshore"
+              ]
+            },
+            "description": "Descriptor or name of the technology.",
+            "alias": "technology"
+          },
+          {
+            "name": "locs",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "ESP-sink",
+                "PRT-10_1",
+                "PRT-11_1",
+                "PRT-12_1",
+                "PRT-14_1",
+                "PRT-15_1",
+                "PRT-16_1",
+                "PRT-17_1",
+                "PRT-18_1",
+                "PRT-19_1",
+                "PRT-1_1",
+                "PRT-20_1",
+                "PRT-3_1",
+                "PRT-4_1",
+                "PRT-5_1",
+                "PRT-6_1",
+                "PRT-7_1",
+                "PRT-8_1",
+                "PRT-9_1",
+                "PRT_1",
+                "PRT_2"
+              ]
+            },
+            "description": "The region the data corresponds to.  This index column is needed when converting a data package to the IAMC format.",
+            "alias": "region"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "constraints": {
+              "enum": [
+                "100kt",
+                "billion_km",
+                "twh"
+              ]
+            },
+            "description": "This column is used to fill in the \"unit\" column when converting a data package to the IAMC format."
+          },
+          {
+            "name": "generated_road_transport",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores",
+          "techs",
+          "locs",
+          "carriers",
+          "unit"
+        ]
+      }
+    },
+    {
+      "path": "max_regional_share.csv",
+      "name": "max_regional_share",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "field1",
+            "type": "integer"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "max_regional_share",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          null
+        ]
+      }
+    },
+    {
+      "path": "electrification_rate_heat_building.csv",
+      "name": "electrification_rate_heat_building",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "locs",
+            "type": "string",
+            "alias": "region"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "electrification_rate_heat_building",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores"
+        ]
+      }
+    },
+    {
+      "path": "electrification_rate_road_transport.csv",
+      "name": "electrification_rate_road_transport",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "locs",
+            "type": "string",
+            "alias": "region"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "electrification_rate_road_transport",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores"
+        ]
+      }
+    },
+    {
+      "path": "biofuel_use_rate.csv",
+      "name": "biofuel_use_rate",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "techs",
+            "type": "string",
+            "alias": "technology"
+          },
+          {
+            "name": "carriers",
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "biofuel_use_rate",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores"
+        ]
+      }
+    },
+    {
+      "path": "deployment_acceleration_rate.csv",
+      "name": "deployment_acceleration_rate",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "field1",
+            "type": "integer"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "deployment_acceleration_rate",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          null
+        ]
+      }
+    },
+    {
+      "path": "import_dependency.csv",
+      "name": "import_dependency",
+      "profile": "tabular-data-resource",
+      "scheme": "file",
+      "format": "csv",
+      "hashing": "md5",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "spores",
+            "type": "integer"
+          },
+          {
+            "name": "unit",
+            "type": "string"
+          },
+          {
+            "name": "import_dependency",
+            "type": "number"
+          }
+        ],
+        "primaryKey": [
+          "spores"
+        ]
+      }
+    }
+  ]
+}

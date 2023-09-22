@@ -1,0 +1,100 @@
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  name: nameplate_capacity
+  path: nameplate_capacity.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  name: transmission_capacity
+  path: transmission_capacity.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  - techs
+  - locs
+  - carriers
+  - unit
+  name: energy_supply
+  path: energy_supply.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  - techs
+  - locs
+  - carriers
+  - unit
+  name: generated_building_heat
+  path: generated_building_heat.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  - techs
+  - locs
+  - carriers
+  - unit
+  name: generated_district_heat
+  path: generated_district_heat.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  - techs
+  - locs
+  - carriers
+  - unit
+  name: generated_road_transport
+  path: generated_road_transport.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - null
+  name: max_regional_share
+  path: max_regional_share.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  name: electrification_rate_heat_building
+  path: electrification_rate_heat_building.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  name: electrification_rate_road_transport
+  path: electrification_rate_road_transport.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  name: biofuel_use_rate
+  path: biofuel_use_rate.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - null
+  name: deployment_acceleration_rate
+  path: deployment_acceleration_rate.csv
+- alias:
+    locs: region
+    techs: technology
+  idxcols:
+  - spores
+  name: import_dependency
+  path: import_dependency.csv
