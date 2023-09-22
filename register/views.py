@@ -26,7 +26,6 @@ from django.utils.translation import gettext as _
 from django.contrib.auth.hashers import check_password
 
 
-
 from . import tokens as t
 from mailjet_rest import Client
 import os
@@ -38,27 +37,28 @@ user_number = 1
 
 
 def login(request):
-    #messages.add_message(request, messages.INFO, 'Hello world.')
-    if request.method=="POST":
-        form=LoginForm(request.POST)
+    # messages.add_message(request, messages.INFO, 'Hello world.')
+    if request.method == "POST":
+        form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             pwd = form.cleaned_data['password']
 
             try:
                 user = User.objects.get(email=email)
-                print('user exists:',user.username,' pwd:',pwd)
+                print('user exists:', user.username, ' pwd:', pwd)
                 if not user.is_active:
                     messages.warning(request, 'Your account is not activated.')
                     return redirect('login')
 
-                user_login_status = authenticate(username=user.username,password=pwd)
+                user_login_status = authenticate(
+                    username=user.username, password=pwd)
 
                 print(user_login_status)
 
                 if user_login_status is not None:
                     user.backend = 'django.contrib.auth.backends.ModelBackend'
-                    auth_login(request,user)
+                    auth_login(request, user)
                     messages.info(request, 'Successfully logged in!')
                     return redirect('portfolio')
                 else:
@@ -68,29 +68,30 @@ def login(request):
                 messages.error(request, 'User does not exists.')
                 return redirect('login')
 
-
-
         else:
             print('not valid')
             form = LoginForm()
     else:
         if request.user.is_authenticated:
-            return redirect('project_home')
+            return redirect('portfolio')
         else:
             form = LoginForm()
-    return render(request, "sign_in.html", {"form":form,"title":'Login',"button":'Login'})
+    return render(request, "sign_in.html", {"form": form, "title": 'Login', "button": 'Login'})
 
 # Create your views here.
+
+
 def register(request):
     errors = {}
     if request.method == "POST":
-        form=RegisterForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             print('form is valid')
             user = form.save(commit=False)
             email = user.email
             user.is_active = True
-            user.username = user.email.split('@')[0] +':' + str(random.randint(0,100000))
+            user.username = user.email.split(
+                '@')[0] + ':' + str(random.randint(0, 100000))
             user.save()
             current_site = get_current_site(request)
             """
@@ -129,7 +130,8 @@ def register(request):
             messages.info(request, 'An email with instructions to activate your account has been sent.')
             """
 
-            messages.info(request, 'An account has been created. You can login now')
+            messages.info(
+                request, 'An account has been created. You can login now')
             return redirect('login')
         else:
             print('Form is not valid')
@@ -140,9 +142,10 @@ def register(request):
         c = get_current_site(request)
         form = RegisterForm()
 
-    #return render(request, "register.html", {"form":form})
-    return render(request, "sign_up.html", {"form":form})
+    # return render(request, "register.html", {"form":form})
+    return render(request, "sign_up.html", {"form": form})
 # Create your views here.
+
 
 def activate(request, uidb64, token):
     print(uidb64)
@@ -159,17 +162,21 @@ def activate(request, uidb64, token):
     if user is not None and t.account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, 'Your account is activated successfully!.You can login now.')
+        messages.success(
+            request, 'Your account is activated successfully!.You can login now.')
         return redirect('login')
     else:
-        return render(request,'base_page.html',{"title":'Expired link',"content":"The confirmation link is not valid."})
+        return render(request, 'base_page.html', {"title": 'Expired link', "content": "The confirmation link is not valid."})
+
 
 def account_activation_sent(request):
-    return render(request,'base_page.html',{"title":'Confirmation email sent',"content":'A email with confirmation link has been sent.'})
+    return render(request, 'base_page.html', {"title": 'Confirmation email sent', "content": 'A email with confirmation link has been sent.'})
+
 
 def logout(request):
     auth_logout(request)
     return redirect('login')
+
 
 def password_reset_request(request):
     if request.method == "POST":
@@ -183,38 +190,37 @@ def password_reset_request(request):
                 current_site = get_current_site(request)
                 for user in associated_users:
 
-
                     subject = "TrustedUX Password Reset"
                     message = render_to_string('password_reset_email.html', {
                         'user': user,
-                        'domain': 'trustedux.herokuapp.com', #current_site.domain,
+                        'domain': 'trustedux.herokuapp.com',  # current_site.domain,
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'token': default_token_generator.make_token(user),
                         'protocol': 'http'
-                        })
+                    })
                     try:
                         data = {
-                          'Messages': [
-                            {
-                              "From": {
-                                "Email": "pankajchejara23@gmail.com",
-                                "Name": "TrustedUX Team "
-                              },
-                              "To": [
+                            'Messages': [
                                 {
-                                  "Email": user.email,
+                                    "From": {
+                                        "Email": "pankajchejara23@gmail.com",
+                                        "Name": "TrustedUX Team "
+                                    },
+                                    "To": [
+                                        {
+                                            "Email": user.email,
+                                        }
+                                    ],
+                                    "Subject": "TrustedUX Password Reset",
+                                    "TextPart": message,
                                 }
-                              ],
-                              "Subject": "TrustedUX Password Reset",
-                              "TextPart": message,
-                            }
-                          ]
+                            ]
                         }
                         result = mailjet.send.create(data=data)
                     except:
                         return HttpResponse('Error')
-                    messages.info(request,'We have emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly. If you do not receive an email, please make sure you have entered the address you registered with, and check your spam folder.')
+                    messages.info(request, 'We have emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly. If you do not receive an email, please make sure you have entered the address you registered with, and check your spam folder.')
                     return redirect('login')
     else:
         password_reset_form = PasswordResetForm()
-        return render(request,'sign_pwd_reset.html',{'form':password_reset_form})
+        return render(request, 'sign_pwd_reset.html', {'form': password_reset_form})
