@@ -98,7 +98,7 @@
         </div>
     </div>
   </div>
-        <div x-data="{power:true, infra:true, pace:true, storage:true,wind_onshore:true,wind_offshore:false,roof_pv:false,field_pv:false,human:true,climate:false,land:false}" class="row m-4 p-4 min-vh-100">
+        <div x-data="{power:true, infra:true, pace:true, storage:true,wind_onshore:true,wind_offshore:false,roof_pv:false,field_pv:false,global:true,water:false,land:false}" class="row m-4 p-4 min-vh-100">
             <div class="col-auto col-md-3 col-xl-2  mr-5">
                 <div class="d-flex flex-column align-items-center px-5 pt-2 ">
                     <div id="accordion">
@@ -300,26 +300,26 @@
                               <div class="d-flex  border-bottom align-items-center">
                                 <div class=''>
                                   <label class="switch pt-1">
-                                    <input type="checkbox" x-model="human" @click="human = !human">
+                                    <input type="checkbox" x-model="global" @click="global = !global">
                                     <span class="slider round"></span>
                                   </label>
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Human Toxicity
+                                    Global Warming
                                   </small>
                                 </div>
                               </div> 
                               <div class="d-flex  border-bottom align-items-center">
                                 <div class=''>
                                   <label class="switch pt-1">
-                                    <input type="checkbox"x-model="climate" @click="climate = !climate">
+                                    <input type="checkbox"x-model="water" @click="water = !water">
                                     <span class="slider round"></span>
                                   </label>
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Climate Change
+                                    Water Consumption
                                   </small>
                                 </div>
                               </div> 
@@ -359,11 +359,11 @@
                             <th x-show="wind_offshore">Wind offshore </th>
                             <th x-show="roof_pv">Roof mounted pv</th>
                             <th x-show="field_pv">Open field pv </th>
-                            <th x-show="human">Human toxicity</th>
-                            <th x-show="climate">Climate change</th>
+                            <th x-show="global">Global warming</th>
+                            <th x-show="water">Water consumption</th>
                             <th x-show="land">Land occupation</th>
                             <th >Details</th>
-                            <th>Compare</th>
+                           
                         </tr>
                     </thead>
                     <p x-text='selected_scenarios.length'></p>
@@ -371,7 +371,7 @@
                         {% for scenario in page_obj %}
                         <tr class='text-align-middle'>
                             
-                            <td >{{scenario.id}}</td>
+                            <td ><input type='checkbox' x-on:click="toggle({{scenario.id}})" value='{{scenario.id}}' name='scenario'> {{scenario.id}}</td>
                             <td x-show="power">{{scenario.power_capacity |floatformat:2}}</td>
                             <td x-show="storage">{{scenario.storage_capacity |floatformat:2}}</td>
                             <td x-show="infra">{{scenario.community_infrastructure |floatformat:2}}</td>
@@ -381,11 +381,11 @@
                             <td x-show="wind_offshore">{{scenario.wind_offshore |floatformat:2}}</td>
                             <td x-show="roof_pv">{{scenario.roof_mounted_pv |floatformat:2}}</td>
                             <td x-show="field_pv">{{scenario.open_field_pv |floatformat:2}}</td>
-                            <td x-show="human">{{scenario.human_toxicity |floatformat:2}}</td>
-                            <td x-show="climate">{{scenario.climate_change |floatformat:2}}</td>
-                            <td x-show="climate">{{scenario.land_occupation |floatformat:2}}</td>
+                            <td x-show="global">{{scenario.global_warming |floatformat:2}}</td>
+                            <td x-show="water">{{scenario.water_consumption |floatformat:2}}</td>
+                            <td x-show="land">{{scenario.land_occupation |floatformat:2}}</td>
                             <td > <a href='{% url 'inspect' scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
-                            <td ><input type='checkbox' x-on:click="toggle({{scenario.id}})" value='{{scenario.id}}' name='scenario'></td>
+                           
                         </tr>
                         {% endfor %}
                     </tbody>

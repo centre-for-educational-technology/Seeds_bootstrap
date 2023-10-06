@@ -100,7 +100,7 @@ aria-hidden="true">
                 
             </div>
             <div class="modal-footer">
-              <a href="{% url 'vote' selection='up' scenario=scenario%}" class="btn btn-primary">Yes</a>
+              <a href="{% url 'vote' selection='up' scenario=data.scenario.id%}" class="btn btn-primary">Yes</a>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -109,17 +109,26 @@ aria-hidden="true">
 <div class="p-2 m-5">
   <div class='row'>
     <div class='col col-8 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
-      <p class='small text-muted font-weight-bold'>Scenario Impact</p>
-
-      <div class='' id='impact_control'></div>
+      <p class='small text-muted font-weight-bold'>Scenario Performance</p>
+      <div class='d-flex flex-row'>
+        <div class="px-2 py-2 w-25">
+          The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).
+        </div>
+        <div class="px-5 py-2">
+          <div class='' id='impact_control'></div>
+        </div>
+      </div>
+      
     </div>
     <div class='col col-4'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
         <p class='small text-muted font-weight-bold'>Total Energy </p>
         <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} TWh/year</p>
 
-        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2'> <img src="{% static 'images/photo_voltic.png'%}"></div>
+        <a class="m-3  d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2 m-2 bg-light rounded'> 
+            <img width="50px" src="{% static 'images/PHOTOVOLTAIC.png'%}">
+          </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Photovoltic</div>
             <div class='h5 px-2'> {{data.total_pv |floatformat:2 }} TWh/year</div>
@@ -137,7 +146,9 @@ aria-hidden="true">
         </div>
 
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2'> <img src="{% static 'images/wind.png'%}"></div>
+          <div class='p-2 m-2 bg-light rounded'> 
+            <img width="50px" src="{% static 'images/wind.png'%}">
+          </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Wind</div>
             <div class='h5 px-2'>{{data.total_wind |floatformat:2 }} TWh/year</div>
@@ -154,7 +165,9 @@ aria-hidden="true">
           </div>
         </div>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2'> <img src="{% static 'images/bio.png'%}"></div>
+          <div class='p-2 m-2 bg-light rounded'> 
+            <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
+          </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Biofuels</div>
             <div class='h5 px-2'>{{data.bio_fuel |floatformat:2 }} TWh/year</div>
@@ -162,14 +175,18 @@ aria-hidden="true">
         </a>
 
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2'> <img src="{% static 'images/hydro.png'%}"></div>
+          <div class='p-2 m-2 bg-light rounded'> 
+            <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
+          </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Hydro</div>
             <div class='h5 px-2'>{{data.total_hydro |floatformat:2 }}  TWh/year</div>
           </div>
         </a>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2'> <img src="{% static 'images/import.png'%}"></div>
+          <div class='p-2 m-2 bg-light rounded'> 
+            <img width="50px" src="{% static 'images/ELECTRIC.png'%}">
+          </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Electrification</div>
             <div class='h5 px-2'>{{data.total_electrification |floatformat:2 }} TWh/year</div>
@@ -179,58 +196,47 @@ aria-hidden="true">
 
     </div>
   </div>
-  <div class='row mt-3 pr-3'>
-    <div class='col mr-3 p-4 shadow-sm border-light bg-light rounded rounded-bottom bg-white'>
+  <div class='row mt-3 pr-3 col-8 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
+    <div class='col mr-3 p-4 '>
       <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
       <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} GW</p>
       <div class='h-25' id='system_balance'></div>
     </div>
-    <div class='col p-4  bg-light shadow-sm border-light mr-3 rounded-top rounded-bottom bg-white'>
+    <div class='col p-4  '>
       <p class='small text-muted font-weight-bold'>Power Storage Capacity</p>
       <p class='h4 font-weight-bold'> {{data.total_storage |floatformat:2 }}</p>
       <div class='p-0' id='power_generation'></div>
     </div>
-    <div class='col p-4 bg-light shadow-sm border-light rounded-top rounded-bottom bg-white'>
+    <div class='col p-4 '>
       <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
       <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} GW</p>
-      <div class='h-25' id='power_storage'></div>
+      <div  id='power_storage'></div>
     </div>
-
   </div>
 
   <div </div>
     {% endblock%}
     {% block scr %}
-    var data = {
-    type: "sankey",
-    orientation: "h",
-    node: {
-        pad: 15,
-        thickness: 30,
-        line: {
-        color: "black",
-        width: 0.5
-        },
-        label: {{nodes | safe}},
-        color: {{nodes_color| safe}},
-    },
-    link: {
-        source: {{source| safe}},
-        target: {{target| safe}},
-        value: {{value| safe}},
-        color: {{link_color| safe}}
-    }
-    }
-    console.log({{nodes | safe}});
-    var data = [data]
-    var layout = {
-    title: "",
-    font: {
-    size: 10
-    }
-    }
 
-    Plotly.react('impact_control', data, layout)
+    data = [{
+      type: 'scatterpolar',
+      r: {{ data.radial_r | safe}},
+      theta: {{ data.radial_theta | safe }},
+      fill: 'toself'
+    }]
+    
+    layout = {
+      polar: {
+        radialaxis: {
+          visible: true,
+          range: [0,1]
+        }
+      },
+      showlegend: false
+    }
+    
+    Plotly.newPlot("impact_control", data, layout)
+    
 
     var degrees = 115, radius = .6;
     var radians = degrees * Math.PI / 180;
@@ -253,7 +259,6 @@ aria-hidden="true">
         direction: "clockwise",
         textinfo: "text",
         textposition: "inside",
-        marker: {colors:{{ data.power_pie_data.markers | safe}}},
         labels: {{ data.power_pie_data.values | safe}},
         hoverinfo: "label"
     };

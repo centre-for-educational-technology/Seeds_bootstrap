@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from register import forms as reg_forms
 from django.contrib.sessions.models import Session
-from .models import Scenario, TechGeneration, TechStorage, Impact, ScenarioLocation, Project
+from .models import Scenario, TechGeneration, TechStorage, ScenarioLocation, Project
 from .models import EnergySupply, EnergyTransmission, Vote, UserScenario, Electrification
 import pandas as pd
 import pprint as pp
@@ -21,25 +21,24 @@ import json
 # param configurations
 param_config = {'battery': {'max': 0.0444797482359873, 'min': 2.6183049409038122e-08},
                 'bio': {'max': 1.0009737770934894, 'min': 4.134278090390732e-06},
-                'climate_change': {'max': 338832867477.77576, 'min': 2264742966.7965508},
-                'fossil_depletion': {'max': 112827098948.31766, 'min': 650723782.6809278},
-                'human_toxicity': {'max': 1474318376277.4277, 'min': 761711160.4220799},
+                'freshwater_eutrophication': {'max': 1447977268.6580737,
+                                              'min': 40539809.033321954},
+                'global_warming': {'max': 3550705057804.7417, 'min': 89357470400.92726},
                 'hydro_run_of_river': {'max': 1.6155, 'min': 1.6155},
-                'id': {'max': 260.0, 'min': 0.0},
                 'import': {'max': 0.1561112495614454, 'min': 0.0003012119877652},
-                'index': {'max': 0, 'min': 0},
+                'import_dep': {'max': 0.1561112495614454, 'min': 0.0003012119877652},
                 'infra': {'max': 1.0, 'min': 0.1881200008807587},
-                'land_occupation': {'max': 36406755938.34204, 'min': 369864152.73830664},
-                'marine_toxicity': {'max': 212202658532.00342, 'min': 28266978.716299444},
-                'metal_depletion': {'max': 1126183171754.4175, 'min': 48075986.27911644},
-                'open_field_pv': {'max': 121.84232420443843, 'min': 2.231546741630743},
+                'land_occupation': {'max': 216513993113.64584, 'min': 20280814758.748016},
+                'open_field_pv': {'max': 121.84232420443844, 'min': 2.231546741630743},
                 'pace': {'max': 13.096833998642731, 'min': 3.729211861614511},
                 'power': {'max': 159.63839465280677, 'min': 40.8581235544374},
                 'roof_mounted_pv': {'max': 31.87839696159167, 'min': 0.0006874053401419},
+                'scenario': {'max': 260.0, 'min': 0.0},
                 'storage': {'max': 6.303784879568456, 'min': 5.898367317341074},
+                'surplus_ore': {'max': 655458310608.2251, 'min': 9926424157.968464},
+                'water_consumption': {'max': 61979898600.96115, 'min': 859061013.8176432},
                 'wind_offshore': {'max': 12.2881549166774, 'min': 0.003085515351798},
                 'wind_onshore': {'max': 44.36655376398457, 'min': 1.5571043872453}}
-
 
 POWER_TECHS = ['chp_biofuel_extraction',
                'chp_hydrogen',
@@ -57,44 +56,6 @@ POWER_TECHS = ['chp_biofuel_extraction',
                'ccgt',
                'roof_mounted_pv',
                'wind_offshore']
-
-
-COLOR_CODES = ["rgba(31, 119, 180, 0.8)",
-               "rgba(255, 127, 14, 0.8)",
-               "rgba(44, 160, 44, 0.8)",
-               "rgba(214, 39, 40, 0.8)",
-               "rgba(148, 103, 189, 0.8)",
-               "rgba(140, 86, 75, 0.8)",
-               "rgba(227, 119, 194, 0.8)",
-               "rgba(127, 127, 127, 0.8)",
-               "rgba(188, 189, 34, 0.8)",
-               "rgba(23, 190, 207, 0.8)",
-               "rgba(31, 119, 180, 0.8)",
-               "rgba(255, 127, 14, 0.8)",
-               "rgba(44, 160, 44, 0.8)",
-               "rgba(214, 39, 40, 0.8)",
-               "rgba(148, 103, 189, 0.8)",
-               "rgba(140, 86, 75, 0.8)",
-               "rgba(227, 119, 194, 0.8)",
-               "rgba(127, 127, 127, 0.8)",
-               "rgba(188, 189, 34, 0.8)",
-               "rgba(23, 190, 207, 0.8)",
-               "rgba(31, 119, 180, 0.8)",
-               "rgba(255, 127, 14, 0.8)",
-               "rgba(44, 160, 44, 0.8)",
-               "rgba(214, 39, 40, 0.8)",
-               "rgba(148, 103, 189, 0.8)",
-               "rgba(140, 86, 75, 0.8)",
-               "rgba(227, 119, 194, 0.8)",
-               "rgba(127, 127, 127, 0.8)",
-               "rgba(188, 189, 34, 0.8)",
-               "rgba(23, 190, 207, 0.8)",
-               "rgba(31, 119, 180, 0.8)",
-               "rgba(255, 127, 14, 0.8)",
-               "rgba(44, 160, 44, 0.8)",
-               "rgba(214, 39, 40, 0.8)",
-               "rgba(148, 103, 189, 0.8)",
-               "magenta"]
 
 
 def map(request):
@@ -121,6 +82,11 @@ def project_page(request):
 def rescale(value, min, max):
     range = max - min
     return min + float(value) * range
+
+
+def standardise(value, min, max):
+    range = float(max) - float(min)
+    return (float(value) - float(min)) / range
 
 
 def interface(request, project_id):
@@ -153,20 +119,24 @@ def interface(request, project_id):
                            ['min'], param_config['land_occupation']['max'])
         land_max = rescale(request.POST['land_1'], param_config['land_occupation']
                            ['min'], param_config['land_occupation']['max'])
-        metal_min = rescale(request.POST['metal_0'], param_config['metal_depletion']
-                            ['min'], param_config['metal_depletion']['max'])
-        metal_max = rescale(request.POST['metal_1'], param_config['metal_depletion']
-                            ['min'], param_config['metal_depletion']['max'])
-        human_min = rescale(request.POST['human_0'], param_config['human_toxicity']
-                            ['min'], param_config['human_toxicity']['max'])
-        human_max = rescale(request.POST['human_1'], param_config['human_toxicity']
-                            ['min'], param_config['human_toxicity']['max'])
-        climate_min = rescale(
-            request.POST['climate_0'], param_config['climate_change']['min'], param_config['climate_change']['max'])
-        climate_max = rescale(
-            request.POST['climate_1'], param_config['climate_change']['min'], param_config['climate_change']['max'])
+        global_min = rescale(request.POST['global_0'], param_config['global_warming']
+                             ['min'], param_config['global_warming']['max'])
+        global_max = rescale(request.POST['global_1'], param_config['global_warming']
+                             ['min'], param_config['global_warming']['max'])
+        water_min = rescale(request.POST['water_0'], param_config['water_consumption']
+                            ['min'], param_config['water_consumption']['max'])
+        water_max = rescale(request.POST['water_1'], param_config['water_consumption']
+                            ['min'], param_config['water_consumption']['max'])
 
-        print('Metal:', metal_min, metal_max)
+        fresh_min = rescale(request.POST['fresh_0'], param_config['freshwater_eutrophication']
+                            ['min'], param_config['freshwater_eutrophication']['max'])
+        fresh_max = rescale(request.POST['fresh_1'], param_config['freshwater_eutrophication']
+                            ['min'], param_config['freshwater_eutrophication']['max'])
+
+        surplus_min = rescale(
+            request.POST['surplus_0'], param_config['surplus_ore']['min'], param_config['surplus_ore']['max'])
+        surplus_max = rescale(
+            request.POST['surplus_1'], param_config['surplus_ore']['min'], param_config['surplus_ore']['max'])
 
         # fetching energy technologies params
         photo_roof_min = rescale(
@@ -210,9 +180,6 @@ def interface(request, project_id):
         battery_max = rescale(
             request.POST['battery_1'], param_config['battery']['min'], param_config['battery']['max'])
 
-        # Location
-        selected_location = request.POST['location']
-
         # print('Power min:{} max:{}'.format(power_min,power_max))
         # print('Hyodro-river min:{} max:{}'.format(hydro_river_min,hydro_river_max))
         # print('wind-on-shore min:{} max:{}'.format(wind_on_shore_min,wind_on_shore_max))
@@ -237,20 +204,23 @@ def interface(request, project_id):
         scenarios_land = scenarios_import.filter(
             land_occupation__range=(land_min, land_max)).order_by('id')
         print('land objects:', len(scenarios_land))
-        scenarios_metal = scenarios_land.filter(
-            metal_depletion__range=(metal_min, metal_max)).order_by('id')
-        print('metal objects:', len(scenarios_metal))
-        scenarios_human = scenarios_metal.filter(
-            human_toxicity__range=(human_min, human_max)).order_by('id')
-        print('human objects:', len(scenarios_human))
-        scenarios_climate = scenarios_human.filter(
-            climate_change__range=(climate_min, climate_max)).order_by('id')
+        scenarios_global = scenarios_land.filter(
+            global_warming__range=(global_min, global_max)).order_by('id')
+        print('global objects:', len(scenarios_global))
+        scenarios_surplus = scenarios_global.filter(
+            surplus_ore__range=(surplus_min, surplus_max)).order_by('id')
+        print('human objects:', len(scenarios_surplus))
+        scenarios_water = scenarios_surplus.filter(
+            water_consumption__range=(water_min, water_max)).order_by('id')
+
+        scenarios_fresh = scenarios_water.filter(
+            freshwater_eutrophication__range=(fresh_min, fresh_max)).order_by('id')
 
         # scenarios_implementation = scenarios_storage
-        paginator = Paginator(scenarios_climate, 20, orphans=3)
+        paginator = Paginator(scenarios_land, 20, orphans=3)
         page_obj = paginator.get_page(1)
         page_range = list(paginator.get_elided_page_range(1))
-        print('Final objects:', len(scenarios_climate))
+        print('Final objects:', len(scenarios_land))
         return render(request, 'show_results.html', {'page_obj': page_obj, 'page_range': page_range})
     else:
         locations = ScenarioLocation.objects.all()
@@ -262,21 +232,35 @@ def get_scenario_details(scenario_id):
     scenario = Scenario.objects.get(id=scenario_id)
     tech_sto = TechStorage.objects.all().filter(scenario=scenario)
     tech_gen = TechGeneration.objects.all().filter(scenario=scenario)
-    impact = Impact.objects.all().filter(scenario=scenario)
     energy = EnergySupply.objects.all().filter(scenario=scenario)
     electrification = Electrification.objects.all().filter(scenario=scenario)
     transmission = EnergyTransmission.objects.all().filter(scenario=scenario)
 
-    data['bio_fuel'] = scenario.bio_fuel
-    data['import_dependency'] = scenario.import_dependency
     data['storage'] = {}
     data['generation'] = {}
-    data['impact'] = {}
     data['energy'] = {}
     data['electrification'] = {}
     data['transmission'] = {}
 
+    radial_chart_r = [scenario.land_occupation, scenario.global_warming,
+                      scenario.water_consumption, scenario.surplus_ore, scenario.freshwater_eutrophication]
+    radial_chart_theta = ['Land Occupation', 'Global Warming',
+                          'Water Consumption', 'Surplus Ore', 'FreshWater Eutrophication']
     # data for bar chart of power generation
+
+    impact_names = [('_'.join(item.split(' '))).lower()
+                    for item in radial_chart_theta]
+
+    tmp = []
+    for ind, val in enumerate(radial_chart_r):
+        print(param_config[impact_names[ind]]['min'],
+              param_config[impact_names[ind]]['max'])
+        tmp.append(standardise(
+            val, param_config[impact_names[ind]]['min'], param_config[impact_names[ind]]['max']))
+
+    data['radial_r'] = tmp
+    data['radial_theta'] = radial_chart_theta
+
     bar_chart_data = []
 
     total_hydro = 0
@@ -318,21 +302,11 @@ def get_scenario_details(scenario_id):
     count_storage_tech = len(pie_chart_data['labels'])
     sum_storage = sum(pie_chart_data['values'])
 
-    markers = COLOR_CODES[:count_storage_tech] + ['white']
-
     # pie_chart_data['values'] = [item/count_storage_tech for item in pie_chart_data['values']]
     pie_chart_data['values'].append(float(pie_chart_data['values'][0]))
     pie_chart_data['labels'].append('a')
-    pie_chart_data['markers'] = markers
 
     data['power_pie_data'] = pie_chart_data
-
-    for ob in impact:
-        data['impact'][ob.technology_type] = {'land_occupation': ob.land_occupation,
-                                              'marine_toxicity': ob.marine_toxicity,
-                                              'human_toxicity': ob.human_toxicity,
-                                              'metal_depletion': ob.metal_depletion,
-                                              'fossil_depletion': ob.fossil_depletion}
 
     total_supply = 0
     for ob in energy:
@@ -380,6 +354,21 @@ def get_scenario_details(scenario_id):
     data['total_wind'] = onshore + offshore
 
     return data
+
+
+def get_energy_supply(scenario_id):
+
+    scenario = Scenario.objects.get(id=scenario_id)
+    supply = EnergySupply.objects.all().filter(scenario=scenario)
+
+    energy = {}
+
+    for ob in supply:
+        energy[ob.technology_type] = float(ob.energy_supply)
+
+    print(energy)
+
+    return energy
 
 
 def get_sankey_data(scenario_id):
@@ -442,8 +431,10 @@ def compare(request):
 
 
 def inspect(request, scenario_id):
-    template_data = get_sankey_data(scenario_id)
-
+    scenario = Scenario.objects.get(id=scenario_id)
+    data = get_scenario_details(scenario_id)
+    sup = get_energy_supply(scenario_id)
+    data['scenario'] = scenario
     if request.method == 'POST':
         scenario = Scenario.objects.get(id=scenario_id)
         label = request.POST['label']
@@ -454,9 +445,9 @@ def inspect(request, scenario_id):
         print('Object saved', obj)
         request.session['selected_location'] = str(select_location)
         messages.success(request, "Scenario has been added to your portfolio")
-        return render(request, 'inspect_scenario.html', template_data)
+        return render(request, 'inspect_scenario.html', {'data': data})
     else:
-        return render(request, 'inspect_scenario.html', template_data)
+        return render(request, 'inspect_scenario.html', {'data': data})
 
 
 def select_location(request):

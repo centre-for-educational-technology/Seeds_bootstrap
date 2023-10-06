@@ -10,7 +10,10 @@
         display: none;
     }
 </style>
-<div class=" align-center m-4 p-5">
+<div class="mt-4 mx-4 px-5 ">
+    <a class="text-muted" href="{% url 'project_select_page' %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
+</div>
+<div class=" align-center mt-2 mx-4 px-5 mb-5 pb-5">
     <h3> Define Scenario Settings </h3>
     <p class="'text-secondary"> Parameters settings are available with the use of sliders.
         Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.</p>
@@ -19,7 +22,6 @@
         <li class="mx-5"><a class="active" data-toggle="tab" href="#home">Energy system settings</a></li>
         <li class="mx-5"><a data-toggle="tab" href="#menu1">Impact control</a></li>
         <li class="mx-5"><a data-toggle="tab" href="#menu2">Energy technologies</a></li>
-        <li class="mx-5"><a data-toggle="tab" href="#menu3">Location</a></li>
     </ul>
     <form action="" method="post">
         {% csrf_token %}
@@ -148,7 +150,7 @@
                     
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Land use (m2) </div>
+                            <div>Land Occupation (m2) </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -159,50 +161,50 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Metal depletion (Kg) </div>
+                            <div>Surplus Ore </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
-                                        data-toggle='modal' data-placement='top' data-target="#metal_help"></i></span>
+                                        data-toggle='modal' data-placement='top' data-target="#surplus_help"></i></span>
                             </div>
                         </div>
-                        <div id="metal"></div>
+                        <div id="surplus"></div>
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Human health toxicity</div>
+                            <div>Global Warming</div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
-                                        data-toggle='modal' data-placement='top' data-target="#human_help"></i></span>
+                                        data-toggle='modal' data-placement='top' data-target="#global_help"></i></span>
                             </div>
                         </div>
-                        <div id="human"></div>
+                        <div id="global"></div>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>CO2 Emission (kg) </div>
+                            <div>Water Comsumption </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
-                                        data-toggle='modal' data-placement='top' data-target="#co2_help"></i></span>
+                                        data-toggle='modal' data-placement='top' data-target="#water_help"></i></span>
                             </div>
                         </div>
-                        <div id="co2"></div>
+                        <div id="water"></div>
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Climate change (kg) </div>
+                            <div>Freshwater Eutrophication </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
-                                        data-toggle='modal' data-placement='top' data-target="#co2_help"></i></span>
+                                        data-toggle='modal' data-placement='top' data-target="#fresh_help"></i></span>
                             </div>
                         </div>
-                        <div id="climate"></div>
+                        <div id="fresh"></div>
                     </div>
                 </div>
 
@@ -349,16 +351,7 @@
                 </div>
             </div>
         </div>
-            <div id="menu3" class="ml-5 pt-5 tab-pane fade ">
-                <div class="form-group  w-25 ">
-                    <label class='font-weight-bold mb-4' for="exampleFormControlSelect1">Select your location</label>
-                    <select class="form-control" name='location' id="exampleFormControlSelect1">
-                        {% for location in locations %}
-                        <option value={{location.location}}>{{location.region_name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
+            
         </div>
         <br />
         <input type="submit" class="float-right btn btn-primary py-3 px-5 btn-pill"> 
@@ -411,10 +404,10 @@ $('#heat').alRangeSlider(fracOptions);
 $('#transport').alRangeSlider(fracOptions);
 
 $('#land').alRangeSlider(fracOptions);
-$('#metal').alRangeSlider(fracOptions);
-$('#human').alRangeSlider(fracOptions);
-$('#co2').alRangeSlider(fracOptions);
-$('#climate').alRangeSlider(fracOptions);
+$('#surplus').alRangeSlider(fracOptions);
+$('#global').alRangeSlider(fracOptions);
+$('#water').alRangeSlider(fracOptions);
+$('#fresh').alRangeSlider(fracOptions);
 
 $('#photo-roof').alRangeSlider(fracOptions);
 
