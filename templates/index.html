@@ -3,181 +3,98 @@
 {% load static %}
 {%block body%}
 
-<div class='row mt-4 p-4 h-100 justify-content-around'>
-  <div class="px-5 col col-6">
-    <div class="d-flex align-items-center">
-      <div class="text-dark display-3 font-weight-bold">
-        SEEDS
-      </div>
-      <div class="px-5 text-align-middle">
+<div class='row mt-4 p-4 h-100 justify-content-around mb-5'>
+  <div class="px-5 col col-md-6 col-sm-7">
+      <div class="h2 font-weight-bold text-dark w-75">
         Stakeholder-Based Environmentally-sustainable and Economically Doable Scenarios for the Energy Transition
       </div>
-    </div>
-    <div class="pt-5 mt-2">
-      In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. 
-    </div>
-
-    <div class="p-4 ">
-      <button class=" float-right btn btn-primary py-2 px-5 btn-pill btn-md  waves-effect text-center m-b-20"> Try tool </button>
-    </div>
-
-      <div class=" mt-5 pt-5 accordion" id="accordionExample">
-        <div class="card" style="border:0px;">
-          <div class="card-header border border-white" id="headingOne" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
-            <div class='d-flex align-items-center justify-content-between'>
-              <div class="p-2 ml-auto">
-                <img src ="{% static 'images/plant-2.png'%}">
-              </div>
-              <div class=" p-2">
-                <p class="p-0 m-0 font-weight-bold">How does SEEDS tool help you to find optimal solutions for the Portuguese Energy system?</p>
-                <p class="p-0 m-0 small text-muted"> Learn more in video tutorials </p>
-              </div>
-              <div class="ml-auto p-2">
-                <button class="expand btn btn-primary rounded-circle btn-lg fa fa-minus p-2" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-          <div class="card-body">
-            <img class='img img-responsive' src="{% static 'images/Video.png' %}"/>
-          </div>
-        </div>
-
-
-        <div class="card" style="border:0px;">
-          <div class="card-header bg-white" style="border:0px;" id="headingTwo" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
-            <div class='d-flex align-items-center'>
-              <div class="p-2">
-                <img src ="{% static 'images/power-2.png'%}">
-              </div>
-              <div class="font-weight-bold p-2">
-                <p class="p-0 m-0 font-weight-bold"> What's behind our model calculation?</p>
-                <p class="p-0 m-0 small text-muted"> Learn more about the SEEDS research project </p>             
-              </div>
-              <div class="ml-auto p-2">
-                <button class="expand btn btn-primary rounded-circle btn-lg fa fa-plus p-2 " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-          <div class="card-body">
-            It is an easy to use online service that measure perceived trust of product or service. It enables researchers, designers and anyone else interested to run studies to understand to what extent users trust digital technologies.
-          </div>
-          </div>
-
-
-        <div class="card" style="border:0px;border-bottom:0px;">
-          <div class="card-header bg-white" style="border:0px;" id="headingThree" style="background:white;font-weight: bold;font-size: 18px;line-height: 24px;letter-spacing: 0.2px;">
-            <div class='d-flex align-items-center'>
-              <div class="p-2">
-                <img src ="{% static 'images/people.png'%}">
-              </div>
-              <div class="font-weight-bold p-2">
-                <p class="p-0 m-0 font-weight-bold"> How do we include the local stakeholders into the design project?</p>
-                <p class="p-0 m-0 small text-muted"> Learn more about the SEEDS research project </p>             
-              
-              </div>
-              <div class="ml-auto p-2">
-                <button class="expand btn btn-primary rounded-circle btn-lg fa fa-plus p-2" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        
-       
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-          <div class="card-body">
-            It is an easy to use online service that measure perceived trust of product or service. It enables researchers, designers and anyone else interested to run studies to understand to what extent users trust digital technologies.
-          </div>
-          </div>
-        
-
+      <div class="pt-5 mt-2">
+        In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. Doing so involves methodological development, software development and implementation, and experimentation with a pilot study in Portugal. 
       </div>
-        
+      <div class="pt-2 mt-1">
+        This work is done in a focused consortium of four partners: ETHZ is a leading centre of high-resolution energy system modelling; ICTA-UAB is a leading centre in the development of integrated sustainability assessment methods; TLU provides expertise in participatory design of trustworthy interactive systems; and FC.ID contributes its unique expertise combining modelling with participatory action research. 
       </div>
-
-
-
-
-  <div class=" mr-4 col col-3">
+ 
+  </div>
+  <div class=" mr-4 col col-md-3 col-sm-5">
     <div class="px-3">
-      <div class="btn-group d-flex" role="group" aria-label="Basic example">
-          <button type="button" class="btn rounded-left border-left border-top border-bottom border-right border-right-5 border-5 border-gray bg-light text-muted px-3 w-100">Guest User</button>
-          <button type="button" class="btn rounded-right border-right border-top border-bottom border-5  border-gray bg-light  text-muted px-3 w-100">Login</button>
+      <div class="btn-group d-flex" id="myTabs" role="group" aria-label="Basic example">
+          <button type="button" id="signup-tab" class="btn rounded-left border-left border-top border-bottom border-right border-right-5 border-5 border-gray bg-light text-muted px-3 w-100">Sign up</button>
+          <button type="button" id="signin-tab"  class="btn rounded-right border-right border-top border-bottom border-5  border-gray bg-light  text-muted px-3 w-100">Sign in</button>
       </div>
     </div>
-    <div class='text-muted  text-center small'> Access all resources in the tool </div>
-    <form class= "mt-2 p-4" method="post">
-      {% csrf_token %}
-      <div class="form-group form-primary font-weight-bold">
-       Email address  {{form.email }} 
+    <div class="tab-content" id="signup_content">
+      <div  class='text-muted  text-center small p-1' > 
+        Create your account to access all app resources
       </div>
-      <div class="form-group pass_show  font-weight-bold pt-2"> 
-        Password
-        {{form.password}}
-      </div>
-      <br/>
-      <small class='text-right'>
-        <a href="{% url 'password_reset' %}">I forgot my password</a>
-      </small>
-      <div class="py-3">
-          <input type="submit" class="btn btn-primary py-2 px-3 btn-pill btn-md btn-block waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> 
-      </div>
-      
-    </form>
-    <p class="py-1 small text-center text-muted">
-      If you don't have account, <a class='text-un text-muted font-weight-bold' href="{% url 'register' %}">Register here</a>.
-    </p>
-    <div class="mt-5 p-2">
-      <div class='d-flex aling-items-center border-bottom'>
-        <div class='p-2'>
-          <img class='img img-responsive' src ="{% static 'images/avatar.png'%}"/>
+      <form class= "mt-2 p-4" method="post">
+        {% csrf_token %}
+        <div class="form-group form-primary font-weight-bold">
+        Email address  {{form.email }} 
         </div>
-        <div class='p-2 px-3 text-center'>
-          Using the tool, our team gets a clear picture of the possible solutions for the national energy system.
+        <br/>
+        <div class="py-3 d-flex justify-content-center">
+          <input type="submit" class="btn btn-primary py-2 px-5 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Create new account"> 
         </div>
-      </div>
+      </form>
+    </div>
+    <div  id="signin_content" style="display: none;">
+      <div  class='text-muted  text-center small p-1'> 
+        
 
-      <div class='mt-4 d-flex aling-items-center border-bottom'>
-        <div class='p-2 px-3 text-center'>
-          Using the tool, our team gets a clear picture of the possible solutions for the national energy system
-        </div>
-        <div class='p-2'>
-          <img class='img img-responsive' src ="{% static 'images/avatar-2.png'%}"/>
-        </div>
       </div>
-
-      <div class='mt-4 d-flex aling-items-center border-bottom'>
-        <div class='p-2'>
-          <img class='img img-responsive' src ="{% static 'images/avatar-3.png'%}"/>
+      <form class= "mt-2 " method="post">
+        {% csrf_token %}
+        <div class="form-group form-primary font-weight-bold">
+          Email address  {{form.email }} 
         </div>
-        <div class='p-2 px-3 text-center'>
-          I've been recommending it to my students and using the suggested scenarios as starting points for class discussions.
+        <div class="form-group pass_show  font-weight-bold pt-2"> 
+          Password
+          {{form.password}}
         </div>
-      </div>
-
+        <br/>
+        <small class='text-right'>
+          <a href="{% url 'password_reset' %}">I forgot my password</a>
+        </small>
+        <div class="py-3  d-flex justify-content-center">
+          <input type="submit" class="btn btn-primary py-2 px-5 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> 
+        </div>
+      </form>
     </div>
   </div>
-</div>
+  </div>
 
+  <div class=' d-flex justify-content-center' style="background-color: rgba(67,114,227,.2)">
+    <div class="p-5 text-dark d-flex flex-column">
+     <div class='h4 p-2 text-dark text-center'> START USING IT </div>
+     <div class='p-2 text-center'> <button class="text-white btn btn-info py-2 px-4 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"> Try SEEDS App </button></div>
+    </div>
+  <div>
+</div>
+</div>
 
 {% endblock %}
 
 {% block scr %}
-$(document).on('click', '.expand', function () {
-  if($(this).hasClass('collapsed')){
-    $(this).removeClass('fa fa-minus');
-    $(this).addClass('fa fa-plus');
-  } else {
-    $(this).removeClass('fa fa-plus');
-    $(this).addClass('fa fa-minus');
-  }
-  
+$(document).ready(function(){
+
+  $('#signin-tab').click(function() {
+    console.log('Clicked');
+    $('#signin_content').css('display','block');
+    $('#signup_content').css('display','none');
+    $('#signup_tab').removeClass('bg-gray');
+    $('#signup_tab').addClass('bg-light');
+    $('#signin_tab').addClass('bg-gray');
+
+
+  });
+  $('#signup-tab').click(function() {
+    console.log('Clicked');
+    $('#signup_content').css('display','block');
+    $('#signin_content').css('display','none');
+    $('#signin_tab').removeClass('bg-gray');
+    $('#signin_tab').addClass('bg-light');
+    $('#signup_tab').addClass('bg-gray');
+  });
 });
 {% endblock %}
