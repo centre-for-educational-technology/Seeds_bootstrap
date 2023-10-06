@@ -41,11 +41,11 @@ class Scenario(models.Model):
 
     # storing total impact of scenario for electricity generation and storage
     land_occupation = models.DecimalField(max_digits=25, decimal_places=10)
-    marine_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
-    human_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
-    fossil_depletion = models.DecimalField(max_digits=25, decimal_places=10)
-    metal_depletion = models.DecimalField(max_digits=25, decimal_places=10)
-    climate_change = models.DecimalField(max_digits=25, decimal_places=10)
+    surplus_ore = models.DecimalField(max_digits=25, decimal_places=10)
+    global_warming = models.DecimalField(max_digits=25, decimal_places=10)
+    water_consumption = models.DecimalField(max_digits=25, decimal_places=10)
+    freshwater_eutrophication = models.DecimalField(
+        max_digits=25, decimal_places=10)
 
 
 class Vote(models.Model):
@@ -165,19 +165,18 @@ class TechStorage(models.Model):
                                 'technology_type'], name='unique_location_tech')
 
 
+"""
 class Impact(models.Model):
-    """
-    Single model class to store impact control of energy generation as well as energy storage.
-    """
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
-    location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
-    technology_type = models.CharField(max_length=20)
+    # location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
+    # technology_type = models.CharField(max_length=20)
     land_occupation = models.DecimalField(max_digits=25, decimal_places=10)
-    marine_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
-    human_toxicity = models.DecimalField(max_digits=25, decimal_places=10)
-    fossil_depletion = models.DecimalField(max_digits=25, decimal_places=10)
-    metal_depletion = models.DecimalField(max_digits=25, decimal_places=10)
+    surplus_ore = models.DecimalField(max_digits=25, decimal_places=10)
+    global_warming = models.DecimalField(max_digits=25, decimal_places=10)
+    water_consumption = models.DecimalField(max_digits=25, decimal_places=10)
+    freshwater_eutrophication = models.DecimalField(
+        max_digits=25, decimal_places=10)
 
     class Meta:
 
@@ -185,11 +184,10 @@ class Impact(models.Model):
             fields=[
                 'project_id',
                 'scenario_id',
-                'location_id',
-                'technology_type'], name='unique_location_tech')
+                'location_id'], name='unique_location')
 
 
-"""
+
 class ImpactGeneration(models.Model):
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     location = models.ForeignKey(ScenarioLocation, on_delete=models.CASCADE)
@@ -288,7 +286,11 @@ admin.site.register(Scenario)
 admin.site.register(ScenarioLocation)
 admin.site.register(TechGeneration)
 admin.site.register(TechStorage)
-admin.site.register(Impact)
-
+admin.site.register(EnergySupply)
+admin.site.register(EnergyTransmission)
+admin.site.register(Electrification)
+admin.site.register(Project)
+admin.site.register(UserScenario)
+admin.site.register(Vote)
 
 # Function to check if item is in the list
