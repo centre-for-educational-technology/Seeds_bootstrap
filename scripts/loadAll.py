@@ -1,7 +1,6 @@
 from seeds_bootstrap.models import Scenario
 from seeds_bootstrap.models import ScenarioLocation, TechGeneration
 from seeds_bootstrap.models import TechStorage
-from seeds_bootstrap.models import Impact
 from seeds_bootstrap.models import Electrification
 from seeds_bootstrap.models import EnergySupply
 from seeds_bootstrap.models import EnergyTransmission
@@ -14,7 +13,8 @@ import numpy as np
 base = '/Users/htk/Documents/Work/Seeds_project/seeds_bootstrap copy/scripts'
 # Data files for Scenario table
 
-scenario = pd.read_csv('{}/Scenario_extended.csv'.format(base))
+scenario = pd.read_csv(
+    '{}/Scenario_with_impact_alex_data_ele_generation.csv'.format(base))
 impact = pd.read_csv('{}/Impact.csv'.format(base))
 tech_gen = pd.read_csv('{}/TechGeneration.csv'.format(base))
 tech_sto = pd.read_csv('{}/TechStorage.csv'.format(base))
@@ -38,9 +38,8 @@ power_tech = ['chp_biofuel_extraction',
 
 
 transmission = pd.read_csv('{}/energy/transmission_capacity.csv'.format(base))
-energy = pd.read_csv('{}/energy/energy_supply.csv'.format(base))
-energy_tech = energy.loc[energy['techs'].isin(power_tech), :]
-energy_tech.techs.unique()
+energy_tech = pd.read_csv('{}/energy/energy_supply.csv'.format(base))
+
 
 ele_heat = pd.read_csv(
     '{}/energy/electrification_rate_heat_building.csv'.format(base))
@@ -55,6 +54,7 @@ project = Project.objects.create(name="PT 2050 - Decarbonisation",
                                  configuration="{}")
 
 for g in geo.itertuples():
+    continue
     # print('inserting:',g.index,g.region_name)
     s = ScenarioLocation.objects.create(project=project,
                                         location=g.index, region_name=g.region_name)
@@ -64,7 +64,12 @@ print('Location data stored')
 
 def getLocation(location):
     l = ScenarioLocation.objects.filter(location=location)
-    return l[0]
+    if len(l) == 0:
+        s = ScenarioLocation.objects.create(project=project,
+                                            location=location, region_name=location)
+        return s
+    else:
+        return l[0]
 
 
 scenario['id'] = scenario.index
@@ -85,12 +90,11 @@ for s in scenario.itertuples():
                    open_field_pv=s.open_field_pv if s.open_field_pv else None,
                    roof_mounted_pv=s.roof_mounted_pv if s.roof_mounted_pv else None,
                    hydro_run_of_river=s.hydro_run_of_river if s.hydro_run_of_river else None,
-                   climate_change=s.climate_change,
+                   global_warming=s.global_warming,
                    land_occupation=s.land_occupation,
-                   fossil_depletion=s.fossil_depletion,
-                   marine_toxicity=s.marine_toxicity,
-                   human_toxicity=s.human_toxicity,
-                   metal_depletion=s.metal_depletion,
+                   surplus_ore=s.surplus_ore,
+                   water_consumption=s.water_consumption,
+                   freshwater_eutrophication=s.freshwater_eutrophication,
                    battery=s.battery
                    ))
         s_record = Scenario.objects.create(project=project, power_capacity=s.power,
@@ -104,12 +108,11 @@ for s in scenario.itertuples():
                                            open_field_pv=s.open_field_pv,
                                            roof_mounted_pv=s.roof_mounted_pv,
                                            hydro_run_of_river=s.hydro_run_of_river,
-                                           climate_change=s.climate_change,
+                                           global_warming=s.global_warming,
                                            land_occupation=s.land_occupation,
-                                           fossil_depletion=s.fossil_depletion,
-                                           marine_toxicity=s.marine_toxicity,
-                                           human_toxicity=s.human_toxicity,
-                                           metal_depletion=s.metal_depletion,
+                                           surplus_ore=s.surplus_ore,
+                                           water_consumption=s.water_consumption,
+                                           freshwater_eutrophication=s.freshwater_eutrophication,
                                            battery=s.battery
                                            )
 
@@ -139,6 +142,8 @@ for s in scenario.itertuples():
     print('------>Tech Sto done')
     impact_s = impact.loc[tech_gen['scenario'] == s.id, :]
 
+    """
+    # 
     for impact_s_record in impact_s.itertuples():
 
         iss = Impact.objects.create(project=project, scenario=s_record,
@@ -152,6 +157,8 @@ for s in scenario.itertuples():
                                     fossil_depletion=impact_s_record.fossil_depletion)
 
     print('------>Impact done')
+    """
+
     # Populating electrification tables
     ele_heat_s = ele_heat[ele_heat['spores'] == s.id]
     ele_road_s = ele_road[ele_road['spores'] == s.id]
@@ -185,16 +192,15 @@ for s in scenario.itertuples():
                                               energy_tech_record.locs),
                                           technology_type=energy_tech_record.techs,
                                           energy_supply=energy_tech_record.energy_supply)
+    print('------>Energy supply done')
 
     # Populating transmission table
     transmission_s = transmission[transmission['spores'] == s.id]
     for transmission_record in transmission_s.itertuples():
-
         tr = EnergyTransmission.objects.create(project=project, scenario=s_record,
                                                from_location=transmission_record.exporting_region,
                                                to_location=transmission_record.importing_region,
                                                transmission_capacity=transmission_record.transmission_capacity)
-
-    print('------>Impact done')
+    print('------>Transmission done')
 
 print('Data loading finished')
