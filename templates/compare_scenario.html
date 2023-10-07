@@ -24,141 +24,171 @@
   <div class='row justify-content-around'>
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
-        <p class='h3  font-weight-bold'>Scenario D</p>
-        <a href='{% url 'inspect' %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
+        <p class='h3  font-weight-bold'>Scenario {{data1.scenario.id}}</p>
+        <a href='{% url 'inspect' scenario_id=data1.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
       </div>
-      <div class='' id='impact_control_a'></div>
+      <div class='row mt-3 pr-3 col-12 p-4 '>
+        <div class='col mr-3 p-4 '>
+          <div class='m-2' id='power_generation_a'></div>
+        
+          <div class='p-0 m-2' id='power_storage_a'></div>
+        </div>
+        <div class='col p-4'>
+          <div  id='energy_supply_a'></div>
+        </div>
+      </div>
     </div>
 
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
-        <p class='h3  font-weight-bold'>Scenario A</p>
-        <a href='{% url 'inspect' %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
+        <p class='h3  font-weight-bold'>Scenario {{data2.scenario.id}}</p>
+        <a href='{% url 'inspect' scenario_id=data2.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
       </div>
-      <div class='' id='impact_control_b'></div>
+      <div class='row mt-3 pr-3 col-12 p-4 '>
+        <div class='col mr-3 p-4 '>
+          <div class='m-2' id='power_generation_b'></div>
+        
+          <div class='p-0 m-2' id='power_storage_b'></div>
+        </div>
+        <div class='col p-4'>
+          <div  id='energy_supply_b'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='row justify-content-around mt-4'>
+    <div class='col col-11 p-4 bg-white shadow-sm border-light rounded'>
+      <p class='small text-muted font-weight-bold'>Scenarios Performance</p>
+      <div class='d-flex flex-row'>
+        <div class="px-2 py-2 w-25">
+          The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).
+        </div>
+        <div class="px-5 py-2">
+          <div class='' id='impact_control'></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-  <div </div>
+  <div> </div>
     {% endblock%}
     {% block scr %}
-    var data = {
-    type: "sankey",
-    orientation: "h",
-    node: {
-        pad: 15,
-        thickness: 30,
-        line: {
-        color: "black",
-        width: 0.5
-        },
-        label: {{template_data1.nodes | safe}},
-        color: {{template_data1.nodes_color| safe}},
-    },
-    link: {
-        source: {{template_data1.source| safe}},
-        target: {{template_data1.target| safe}},
-        value: {{template_data1.value| safe}},
-        color: {{template_data1.link_color| safe}}
-    }
-    }
 
-    var data = [data]
-    var layout = {
-    title: "",
-    font: {
-    size: 10
-    }
-    }
-
-    Plotly.react('impact_control_a', data, layout)
-
-    var data = {
-      type: "sankey",
-      orientation: "h",
-      node: {
-          pad: 15,
-          thickness: 30,
-          line: {
-          color: "black",
-          width: 0.5
-          },
-          label: {{template_data2.nodes | safe}},
-          color: {{template_data2.nodes_color| safe}},
+    const config = {
+      displayModeBar: false, // this is the line that hides the bar.
+    };
+    data = [{
+      type: 'scatterpolar',
+      r: {{ data1.radial_r | safe}},
+      theta: {{ data1.radial_theta | safe }},
+      fill: 'toself',
+      name: 'Scenario:{{data1.scenario.id}}'
+    },{
+      type: 'scatterpolar',
+      r: {{ data2.radial_r | safe}},
+      theta: {{ data2.radial_theta | safe }},
+      fill: 'toself',
+      name: 'Scenario:{{data2.scenario.id}}'
+    }]
+    layout = {
+      polar: {
+        radialaxis: {
+          visible: true,
+          range: [0,1]
+        }
       },
-      link: {
-          source: {{template_data2.source| safe}},
-          target: {{template_data2.target| safe}},
-          value: {{template_data2.value| safe}},
-          color: {{template_data2.link_color| safe}}
+      showlegend: true
+    }
+    Plotly.newPlot("impact_control", data, layout,config)
+    
+    var data_supply = [{
+      type: "pie",
+      values: {{ data1.energy_supply_pie_values | safe}},
+      labels: {{ data1.energy_supply_pie_labels | safe}},
+      textinfo: "label+percent",
+      textposition: "outside",
+      automargin: true
+    }]
+    var layout_supply = {
+      title: 'Total energy supply',
+      height: 500,
+      width: 300,
+      showlegend: false
       }
-      }
-  
-      var data = [data]
-      var layout = {
-      title: "",
-      font: {
-      size: 10
-      }
-      }
-      Plotly.react('impact_control_b', data, layout)
+    Plotly.newPlot('energy_supply_a', data_supply, layout_supply,config)
 
-    var data = [{
-    values: [16, 15, 12, 6, 5, 4, 42],
-    labels: ['Off-shore', 'Hydro', 'Bio', 'On-shore', 'Roof panels', 'Existing', 'Rest' ],
-    domain: {column: 0},
-    name: 'Power generation',
-    hoverinfo: 'label+percent+name',
-    hole: .4,
-    type: 'pie'
-    }];
+    var data_supply = [{
+      type: "pie",
+      values: {{ data2.energy_supply_pie_values | safe}},
+      labels: {{ data2.energy_supply_pie_labels | safe}},
+      textinfo: "label+percent",
+      textposition: "outside",
+      automargin: true
+    }]
+    var layout_supply = {
+      title: 'Total energy supply',
+      height: 500,
+      width: 300,
+      showlegend: false
+      }
+    Plotly.newPlot('energy_supply_b', data_supply, layout_supply,config)
 
+    var power_data = {{data1.power_bar_data | safe}};
     var layout = {
-    title: 'Power generation technologies',
-    annotations: [
-        {
-            showarrow:false,
-            text:''
-        },
-    ],
-
-    height: 400,
-    width: 500,
-    showlegend: false,
-    };
-
-
-    Plotly.newPlot('power_generation', data, layout);
-
-    var trace1 = {
-    y: ['Power'],
-    x: [20],
-    name: 'Battery',
-    type: 'bar',
-    orientation: 'h'
-    };
-
-
-    var trace2 = {
-    y: ['Power'],
-    x: [12],
-    name: 'Hydro',
-    type: 'bar',
-    orientation: 'h'
-    };
-
-
-    var data = [trace1, trace2];
-    var layout = {
+    title: 'Power generation',
     barmode: 'stack',
     xaxis:{
-        range:[0,60]
+        range:[0,{{data1.total_generation}} + 20]
     },
-    height: 220,
-    width: 400,
+    height: 240,
+    width: 300,
     showlegend: false,
+    legend:{orientation: 'h', side:'top'}
     };
-    Plotly.newPlot('power_storage', data, layout);
-    Plotly.newPlot('system_balance', data, layout);
+    Plotly.newPlot('power_generation_a', power_data,layout,config);
+
+    var storage_data = {{data1.storage_bar_data | safe}};
+    var layout = {
+    title: 'Power storage',
+    barmode: 'stack',
+    xaxis:{
+        range:[0,{{data1.total_storage}} + 20]
+    },
+    height: 240,
+    width: 300,
+    showlegend: false,
+    legend:{orientation: 'h', side:'top'}
+    };
+    Plotly.newPlot('power_storage_a', storage_data,layout,config);
+
+    var power_data = {{data2.power_bar_data | safe}};
+    var layout = {
+    title: 'Power generation',
+    barmode: 'stack',
+    xaxis:{
+        range:[0,{{data2.total_generation}} + 20]
+    },
+    height: 240,
+    width: 300,
+    showlegend: false,
+    legend:{orientation: 'h', side:'top'}
+    };
+    Plotly.newPlot('power_generation_b', power_data,layout,config);
+
+    var storage_data = {{data2.storage_bar_data | safe}};
+    var layout = {
+    title: 'Power storage',
+    barmode: 'stack',
+    xaxis:{
+        range:[0,{{data2.total_storage}} + 20]
+    },
+    height: 240,
+    width: 300,
+    showlegend: false,
+    legend:{orientation: 'h', side:'top'}
+    };
+    Plotly.newPlot('power_storage_b', storage_data,layout,config);
+  
     {% endblock%}

@@ -35,9 +35,11 @@
     <p class="'text-secondary"> In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.  </p>
     <p class="'text-secondary"> The actions tab on the right allows you to perform comparisons and download scenario reports.</p>
     <div class='d-flex flex-row-reverse p-2 m-2'>
-        <i title="download" class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2 btn btn-primary"></i> 
-        <i title="compare"   class="fa fa-exchange-alt  px-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2 btn btn-primary" data-toggle='modal' data-placement='top' data-target="#compare_modal"></i> 
-        <i title="restart"  class="fa fa-undo  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i> 
+        <i title="download" class="fa fa-download  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary"></i> 
+        <i title="compare"   class="fa fa-exchange-alt  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary" data-toggle='modal' data-placement='top' data-target="#compare_modal"></i> 
+        <i title="save"  class="fa fa-save  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#save_modal"></i> 
+        <i title="restart"  class="fa fa-undo  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i> 
+        
     </div>
     <div class="modal fade" id="back_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -71,28 +73,32 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <p x-text='check()'></p>
             <div class='modal-body'>
               <template class='align-text-center' x-if="check()">
-                <h5> Compare </h5>
-                <p> Scenarios selected for side-by-side comparison </p>
                 <div class="p-2">
-                  <button class='mr-3 px-4 btn btn-secondary bg-ligth text-muted'>B</button>
-                  <button class=' btn px-4 btn-secondary bg-ligth text-muted'>C</button>
+                <p> Scenarios selected for side-by-side comparison </p>
+                <div class='d-flex justify-content-center'>
+                  <p class='px-4 py-1 mx-1  bg-light text-muted rounded'  x-text='selected_scenarios[0]'></p>
+                  <p class='px-4 py-1 mx-1 bg-light text-muted rounded'  x-text='selected_scenarios[1]'></p>
+                </div>
                 </div>
               </template>
               <template x-if="!check()">
-                You need to select two scenarios for comparison.
+                <div>
+                  <i class='px-2 py-1 rounded bg-danger text-white fa fa-exclamation '></i> You need to select two scenarios for comparison.
+                </div>
               </template>
             </div>
             <div class="modal-footer">
               <template x-if="check()">
-                <button type="submit" class="btn btn-primary">Confirm</button>
-
+                <div>
+                 
+                  <a x-bind:href="'/compare/' + selected_scenarios[0] + '/' + selected_scenarios[1] + '/'" class="btn btn-primary text-white">Confirm</a>
+                </div>
+                </form>
               </template>
-              <template x-if="!compare">
-              <button type="submit" class="btn btn-primary">Save</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <template x-if="!check()">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </template>
             </div>
         </div>
@@ -366,7 +372,7 @@
                            
                         </tr>
                     </thead>
-                    <p x-text='selected_scenarios.length'></p>
+                    
                     <tbody>
                         {% for scenario in page_obj %}
                         <tr class='text-align-middle'>

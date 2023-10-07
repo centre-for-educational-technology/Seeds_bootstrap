@@ -55,7 +55,7 @@ urlpatterns = [
          name='account_activation_sent'),
     path('activate/<slug:uidb64>/<slug:token>/', v.activate, name='activate'),
     path('inspect/<scenario_id>', views.inspect, name='inspect'),
-    path('compare/', views.compare, name='compare'),
+    path('compare/<sc_1>/<sc_2>/', views.compare, name='compare'),
 
 
     path('login/', v.login, name='login'),

@@ -4,7 +4,7 @@
     <div class="mt-4 mx-4 px-5 ">
         <a class="text-muted" href="{% url 'portfolio' %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
     </div>
-    <div class="mt-2 mx-4 px-5 h-100">
+    <div class="mt-2 mx-4 mb-5 px-5 h-100">
         
         <div class='mb-4'>
             <h2> Join a Project </h2>
@@ -14,7 +14,7 @@
         </div>
         {% for project in projects %}
         <div class='p-5 mt-5 d-flex align-items-center bg-light rounded-top rounded-bottom'>
-            <div class='p-2'> <img src ="{% static 'images/plant.png'%}"></div>
+            <div class='p-2'> <img width="100px" src ="{% static 'images/plant.png'%}"></div>
             <div class='p-3'>
                 <h4 class='font-weight-bold'> {{project.name}}</h4>
                 <p>

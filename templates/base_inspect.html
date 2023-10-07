@@ -34,7 +34,7 @@
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-  <div class="site-wrap">
+  <div class="site-wrap min-vh-100">
 
     <div class="site-mobile-menu site-navbar-target">
       <div class="site-mobile-menu-header">
@@ -74,8 +74,8 @@
       </div>
 
     </header>
-    <div class="site-section  h-100">
-      <div class="w-100 bg-light p-4">
+    <div class="site-section mb-0 pb-0">
+      <div class="w-100 bg-light">
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" id="message">
@@ -93,11 +93,43 @@
 
       </div>
     </div>
+    <div class='site-footer'>
+      <footer class="footer-section bg-light px-5 py-0">
+        <div class="container-fluid px-4 text-muted py-0">
+          <div class='row pl-5 align-items-center'>
+              <div class="col col-8 p-0">
+                <p class='p-0  pt-1'>
+                  &copy;
+                  <script>document.write(new Date().getFullYear());</script> SEEDS Project
+                </p>
+                <p class='small' style="font-size:3px!;">
+                  The SEEDS project is supported by the CHIST-ERA grant CHIST-ERA-19-CES-004, the Swiss National Science Foundation grant number 195537, the Fundação para a Ciência e Tecnologia (FCT) grant number CHIST-ERA/0005/2019, the Spanish Agencia Estatal de Investigación with grant PCI2020-120710-2, and the Estonian Research Council grant number 4-8/20/26
+                </p>
+              </div>
+              <div class="col col-4 d-flex flex-row align-items-center">
+                <div class='p-2 pr-4'>
+                  <img width="75px" class='img img-responsive' src="{% static 'images/partner_ethz.png' %}"/>
+                </div>
+                <div class='p-2 pr-4'>
+                  <img width="80px" class='img img-responsive' src="{% static 'images/partner_uab.png' %}"/>
+                </div>
+                <div class='p-2 pr-4'>
+                  <img width="100px" class='img img-responsive' src="{% static 'images/partner_fcid.png' %}"/>
+                </div>
+                <div class='p-2'>
+                  <img width="180px" class='img img-responsive' src="{% static 'images/partner_tlu.png' %}"/>
+                </div>
+              </div>
+          </div>
+        </div>
+      </footer>
+    </div>
    
 
 
 
-  </div> <!-- .site-wrap -->
+  </div>
+ 
 
   <script src="{% static 'jquery-3.6.4.min.js' %}" type="text/javascript"></script>
 

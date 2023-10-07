@@ -13,13 +13,13 @@
 </style>
 
 <div class='d-flex px-4 mx-4 justify-content-between'>
-  <div>
-    <h2> Scenario  {{scenario}} </h2> 
+  <div class='py-1'>
+    <h2> Scenario  {{data.scenario.id}} </h2> 
   </div>
-  <div class='d-flex flex-row-reverse p-2 m-2'>
-    <i class="fa fa-folder  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
+  <div class='d-flex  p-2 m-2'>
+    <i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
-    <i class="fa fa-arrow-alt-circle-left  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#back_modal"></i>
+    <i class="fa fa-star  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#vote_modal"></i>
   </div>
 </div>
 <div class="modal fade" id="back_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -73,7 +73,7 @@ aria-hidden="true">
         </div>
       </div>
     </div>
-
+<!--
 <div class="p-2 m-5 bg-white shadow-sm border-light rounded rounded-bottom text-center">
   <p class='p-1 h5'> Would you be willing to accept this scenario?</p> 
   <p class="p-1">
@@ -84,6 +84,7 @@ aria-hidden="true">
     <button class='rounded bg-light btn  px-5'> <span class='font-weight-bold text-danger'>X</span> </button>
   </div>
 </div>
+-->
 <div class="modal fade" id="vote_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
     aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -108,22 +109,33 @@ aria-hidden="true">
     </div>
 <div class="p-2 m-5">
   <div class='row'>
-    <div class='col col-8 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
-      <p class='small text-muted font-weight-bold'>Scenario Performance</p>
-      <div class='d-flex flex-row'>
-        <div class="px-2 py-2 w-25">
-          The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).
-        </div>
-        <div class="px-5 py-2">
-          <div class='' id='impact_control'></div>
+    <div class='col col-8'>
+      <div class='row mt-3 pr-3 col-12 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
+        <p class='small text-muted font-weight-bold'>Scenario Performance</p>
+        <div class='d-flex flex-row'>
+          <div class="px-2 py-2 w-25">
+            The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).
+          </div>
+          <div class="px-5 py-2">
+            <div class='' id='impact_control'></div>
+          </div>
         </div>
       </div>
-      
+      <div class='row mt-3 pr-3 col-12 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
+        <div class='col mr-3 p-4 '>
+          <div class='m-2' id='power_generation'></div>
+        
+          <div class='p-0 m-2' id='power_storage'></div>
+        </div>
+        <div class='col p-4'>
+          <div  id='energy_supply'></div>
+        </div>
+      </div>
     </div>
-    <div class='col col-4'>
+    <div class='col col-4 p-3'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
         <p class='small text-muted font-weight-bold'>Total Energy </p>
-        <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} TWh/year</p>
+        <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/year</p>
 
         <a class="m-3  d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2 m-2 bg-light rounded'> 
@@ -131,7 +143,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Photovoltic</div>
-            <div class='h5 px-2'> {{data.total_pv |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'> {{data.total_pv |floatformat:2 }} TWh/year</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseOne">
@@ -151,7 +163,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Wind</div>
-            <div class='h5 px-2'>{{data.total_wind |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_wind |floatformat:2 }} TWh/year</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseTwo">
@@ -170,7 +182,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Biofuels</div>
-            <div class='h5 px-2'>{{data.bio_fuel |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.bio_fuel |floatformat:2 }} TWh/year</div>
           </div>
         </a>
 
@@ -180,7 +192,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Hydro</div>
-            <div class='h5 px-2'>{{data.total_hydro |floatformat:2 }}  TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_hydro |floatformat:2 }}  TWh/year</div>
           </div>
         </a>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
@@ -189,42 +201,27 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Electrification</div>
-            <div class='h5 px-2'>{{data.total_electrification |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_electrification |floatformat:2 }} TWh/year</div>
           </div>
         </a>
       </div>
 
     </div>
   </div>
-  <div class='row mt-3 pr-3 col-8 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
-    <div class='col mr-3 p-4 '>
-      <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
-      <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} GW</p>
-      <div class='h-25' id='system_balance'></div>
-    </div>
-    <div class='col p-4  '>
-      <p class='small text-muted font-weight-bold'>Power Storage Capacity</p>
-      <p class='h4 font-weight-bold'> {{data.total_storage |floatformat:2 }}</p>
-      <div class='p-0' id='power_generation'></div>
-    </div>
-    <div class='col p-4 '>
-      <p class='small text-muted font-weight-bold'>Power Generation Capacity</p>
-      <p class='h4 font-weight-bold'> {{data.total_generation |floatformat:2 }} GW</p>
-      <div  id='power_storage'></div>
-    </div>
-  </div>
+  
 
   <div </div>
     {% endblock%}
     {% block scr %}
-
+    const config = {
+      displayModeBar: false, // this is the line that hides the bar.
+    };
     data = [{
       type: 'scatterpolar',
       r: {{ data.radial_r | safe}},
       theta: {{ data.radial_theta | safe }},
       fill: 'toself'
     }]
-    
     layout = {
       polar: {
         radialaxis: {
@@ -234,78 +231,53 @@ aria-hidden="true">
       },
       showlegend: false
     }
+    Plotly.newPlot("impact_control", data, layout,config)
     
-    Plotly.newPlot("impact_control", data, layout)
-    
-
-    var degrees = 115, radius = .6;
-    var radians = degrees * Math.PI / 180;
-    var x = -1 * radius * Math.cos(radians);
-    var y = radius * Math.sin(radians);
-    
-    var layout = {
-        title: 'Number of Printers Sold in a Week',
-        xaxis: {visible: false, range: [-1, 1]},
-        yaxis: {visible: false, range: [-1, 1]}
-    };
-    
-    var traceA = {
-        type: "pie",
-        showlegend: false,
-        hole: 0.4,
-        rotation: 90,
-        values: {{ data.power_pie_data.values | safe}},
-        text: {{ data.power_pie_data.labels | safe}},
-        direction: "clockwise",
-        textinfo: "text",
-        textposition: "inside",
-        labels: {{ data.power_pie_data.values | safe}},
-        hoverinfo: "label"
-    };
-
-    var data = [traceA];
-    
+    var data_supply = [{
+      type: "pie",
+      values: {{ data.energy_supply_pie_values | safe}},
+      labels: {{ data.energy_supply_pie_labels | safe}},
+      textinfo: "label+percent",
+      textposition: "outside",
+      automargin: true
+    }]
+    var layout_supply = {
+      title: 'Total energy supply: {{data.energy_supply_total}} Twh/year',
+      height: 400,
+      width: 400,
+      showlegend: false
+      }
+    Plotly.newPlot('energy_supply', data_supply, layout_supply,config)
 
 
-    var data2 = [{
-    values: [16, 15, 12, 6, 5, 4, 42,100],
-    labels: ['Off-shore', 'Hydro', 'Bio', 'On-shore', 'Roof panels', 'Existing', 'Rest','remove' ],
-    domain: {column: 0},
-    name: 'Power storage',
-    hoverinfo: 'label+percent+name',
-    hole: .4,
-    rotation: 90,
-    type: 'pie'
-    }];
-
-    var layout = {
-    title: 'Power storage',
-    annotations: [
-        {
-            showarrow:false,
-            text:''
-        },
-    ],
-
-    height: 400,
-    width: 500,
-    showlegend: false,
-    };
-
-
-    
-    Plotly.newPlot('power_generation', data, layout, {staticPlot: true});
+  
 
     var power_data = {{data.power_bar_data | safe}};
     var layout = {
+    title: 'Power generation',
     barmode: 'stack',
     xaxis:{
         range:[0,{{data.total_generation}} + 20]
     },
     height: 240,
-    width: 400,
+    width: 600,
     showlegend: false,
+    legend:{orientation: 'h', side:'top'}
     };
-    Plotly.newPlot('power_storage', power_data, layout);
-    Plotly.newPlot('system_balance', power_data, layout);
+    Plotly.newPlot('power_generation', power_data,layout,config);
+
+    var storage_data = {{data.storage_bar_data | safe}};
+    var layout = {
+    title: 'Power storage',
+    barmode: 'stack',
+    xaxis:{
+        range:[0,{{data.total_storage}} + 20]
+    },
+    height: 240,
+    width: 600,
+    showlegend: false,
+    legend:{orientation: 'h', side:'top'}
+    };
+    Plotly.newPlot('power_storage', storage_data,layout,config);
+  
     {% endblock%}

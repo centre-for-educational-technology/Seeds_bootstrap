@@ -235,7 +235,7 @@ def get_scenario_details(scenario_id):
     energy = EnergySupply.objects.all().filter(scenario=scenario)
     electrification = Electrification.objects.all().filter(scenario=scenario)
     transmission = EnergyTransmission.objects.all().filter(scenario=scenario)
-
+    data['scenario'] = scenario
     data['storage'] = {}
     data['generation'] = {}
     data['energy'] = {}
@@ -271,7 +271,7 @@ def get_scenario_details(scenario_id):
         total_generation += ob.energy_generation
         trace = {
             "y": ['Power'],
-            "x": [int(ob.energy_generation)],
+            "x": [float(ob.energy_generation)],
             "name": ob.technology_type,
             "type": 'bar',
             "orientation": 'h'
@@ -280,6 +280,7 @@ def get_scenario_details(scenario_id):
         if 'hydro_' in ob.technology_type:
             total_hydro += ob.energy_generation
 
+    print(data['generation'])
     data['power_bar_data'] = bar_chart_data
 
     pie_chart_data = {}
@@ -287,14 +288,21 @@ def get_scenario_details(scenario_id):
 
     total_storage = 0
 
+    storage_chart_data = []
     for ob in tech_sto:
-        data['storage'][ob.technology_type] = ob.energy_storage
-        if ob.energy_storage in pie_values.keys():
-            pie_values[ob.technology_type] += float(ob.energy_storage)
-        else:
-            pie_values[ob.technology_type] = float(ob.energy_storage)
 
+        data['storage'][ob.technology_type] = float(ob.energy_storage)
         total_storage += ob.energy_storage
+        trace = {
+            "y": ['Storage'],
+            "x": [float(ob.energy_storage)],
+            "name": ob.technology_type,
+            "type": 'bar',
+            "orientation": 'h'
+        }
+        storage_chart_data.append(trace)
+    print(data['storage'])
+    data['storage_bar_data'] = storage_chart_data
 
     pie_chart_data['labels'] = list(pie_values.keys())
     pie_chart_data['values'] = list(pie_values.values())
@@ -302,9 +310,14 @@ def get_scenario_details(scenario_id):
     count_storage_tech = len(pie_chart_data['labels'])
     sum_storage = sum(pie_chart_data['values'])
 
-    # pie_chart_data['values'] = [item/count_storage_tech for item in pie_chart_data['values']]
-    pie_chart_data['values'].append(float(pie_chart_data['values'][0]))
-    pie_chart_data['labels'].append('a')
+    energy_data, total_supply = get_energy_supply(scenario_id)
+    generation_labels, generation_values = get_power_generation(scenario_id)
+    data['energy_supply_pie_labels'] = list(energy_data.keys())
+    data['energy_supply_pie_values'] = list(energy_data.values())
+    data['energy_supply_total'] = total_supply
+
+    data['generation_labels'] = generation_labels
+    data['generation_values'] = [float(item) for item in generation_values]
 
     data['power_pie_data'] = pie_chart_data
 
@@ -360,15 +373,43 @@ def get_energy_supply(scenario_id):
 
     scenario = Scenario.objects.get(id=scenario_id)
     supply = EnergySupply.objects.all().filter(scenario=scenario)
-
     energy = {}
-
     for ob in supply:
         energy[ob.technology_type] = float(ob.energy_supply)
 
-    print(energy)
+    total_supply = '{0:.2f}'.format(sum(list(energy.values())))
 
-    return energy
+    pie_energy_supply_data = {}
+    pie_energy_supply_data['Solar'] = 0
+    pie_energy_supply_data['Biofuel_waste'] = 0
+    pie_energy_supply_data['Electricity_import'] = 0
+    pie_energy_supply_data['Hydro'] = 0
+    pie_energy_supply_data['Wind'] = 0
+
+    pie_energy_supply_data['Biofuel_waste'] += energy['biofuel_supply'] + \
+        energy['waste_supply']
+    pie_energy_supply_data['Solar'] += energy['open_field_pv'] + \
+        energy['roof_mounted_pv'] + energy['existing_pv']
+    pie_energy_supply_data['Electricity_import'] += energy['el_import']
+    pie_energy_supply_data['Hydro'] += energy['hydro_reservoir'] + \
+        energy['hydro_run_of_river']
+    pie_energy_supply_data['Wind'] += energy['existing_wind'] + \
+        energy['wind_offshore'] + energy['wind_onshore']
+
+    return pie_energy_supply_data, total_supply
+
+
+def get_power_generation(scenario_id):
+    scenario = Scenario.objects.get(id=scenario_id)
+    generation = {}
+    tech_gen_obs = TechGeneration.objects.all().filter(scenario=scenario)
+    for tech_gen_ob in tech_gen_obs:
+        generation[tech_gen_ob.technology_type] = tech_gen_ob.energy_generation
+
+    generation_labels = list(generation.keys())
+    generation_values = list(generation.values())
+
+    return generation_labels, generation_values
 
 
 def get_sankey_data(scenario_id):
@@ -421,20 +462,17 @@ def get_sankey_data(scenario_id):
             'link_color': link_color}
 
 
-def compare(request):
-    scenario_id_1 = 18
-    scenario_id_2 = 27
-    template_data1 = get_sankey_data(scenario_id_1)
-    template_data2 = get_sankey_data(scenario_id_2)
-    return render(request, 'compare_scenario.html', {'template_data1': template_data1,
-                                                     'template_data2': template_data2})
+def compare(request, sc_1, sc_2):
+    data1 = get_scenario_details(sc_1)
+    data2 = get_scenario_details(sc_2)
+    return render(request, 'compare_scenario.html', {'data1': data1,
+                                                     'data2': data2})
 
 
 def inspect(request, scenario_id):
     scenario = Scenario.objects.get(id=scenario_id)
     data = get_scenario_details(scenario_id)
-    sup = get_energy_supply(scenario_id)
-    data['scenario'] = scenario
+
     if request.method == 'POST':
         scenario = Scenario.objects.get(id=scenario_id)
         label = request.POST['label']
