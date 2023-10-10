@@ -2,7 +2,7 @@
 {% load static %}
 {%block body%}
     <div class="mt-4 mx-4 px-5 ">
-        <a class="text-muted" href="{% url 'portfolio' %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
+        <a class="text-muted" href="{% url 'portfolio' query='saved_scenarios' %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
     </div>
     <div class="mt-2 mx-4 mb-5 px-5 h-100">
         
@@ -25,7 +25,7 @@
                 </p>
             </div>
             <div class='p-2 align-center'>
-                <a href="{%url 'interface' project_id=project.id  %}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md"> Join</a>
+                <a href="{%url 'interface' project_id=project.id   %}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md"> Join</a>
             </div>
         </div>
         {% endfor %}

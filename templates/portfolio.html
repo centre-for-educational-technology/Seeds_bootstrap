@@ -6,18 +6,18 @@
             <div class="d-flex flex-column align-items-center px-5 pt-2 ">
                 
                 <ul class="nav nav-pills flex-column mb-sm-auto mt-3 mb-2 align-items-center pt-5 " id="menu">
-                    <li class="btn btn-primary py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20">
+                    <li class="btn btn-info py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20">
                         <a href="{% url 'project_select_page' %}" class="align-middle px-0 text-white  ">
                             <i class="fa fa-plus pr-2"></i>  <span class="ms-1 d-none  d-sm-inline">New Scenario</span>
                         </a>
                     </li>
                     <li class="btn btn-primary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
+                        <a href="{% url 'portfolio' query='saved_scenarios'%}" data-bs-toggle="collapse" class="text-white ">
                             <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Portfolio</span> 
                         </a>
                     </li>
-                    <li class="btn btn-secondary mt-4 mb-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
+                    <li class="btn btn-primary mt-4 mb-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
+                        <a href="{% url 'portfolio' query='saved_searches'%}" data-bs-toggle="collapse" class="text-white ">
                             <i class="fa fa-save pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Saved Search</span> 
                         </a>
                     </li>
@@ -30,7 +30,7 @@
                     -->
                     <li class="btn btn-secondary mt-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
                         <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
-                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Account settings</span> 
+                            <i class="fa fa-cog pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Account settings</span> 
                         </a>
                     </li>
                     
@@ -63,20 +63,35 @@
                     </div> 
                     <div> <a href="{% url 'project_select_page'%}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md"> Start</a></div>
                 {% else %}
+                <div class='text-left'>
+                {% if query == 'saved_scenarios' %}
+                <h4> Your saved scenarios </h4>
+                {% endif %}
+                {% if query == 'saved_searches' %}
+                <h4> Your saved scenarios </h4> 
+                {% endif %}
+                </div>
                 <table class="table ">
                     <thead>
                         <tr> 
                             <th class='text-left'>Name</th>
-                            <th>Scenario</th>
+                            
                             <th>Last Modified</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for scenario in scenarios %}
                         <tr class='text-align-middle'>
+                            {% if query == 'saved_scenarios' %}
                             <td class='text-left'><a href="{% url 'inspect' scenario_id=scenario.scenario.id%}">{{scenario.label}}</td>
-                            <td>{{scenario.scenario.id}}</td>
+                            
                             <td>{{scenario.last_modified}}</td>
+                            {% endif %}
+                            {% if query == 'saved_searches' %}
+                            <td class='text-left'><a href="{% url 'inspect' scenario_id=scenario.id%}">{{scenario.label}}</td>
+                            
+                            <td>{{scenario.sub_date}}</td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>
