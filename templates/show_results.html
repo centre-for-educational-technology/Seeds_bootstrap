@@ -12,7 +12,12 @@
     }
     
 </style>
-
+<div id='save_confirmation' class="p-2 mt-5 alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
+  Your search parameters have been saved in your searches.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <div x-data = "{ selected_scenarios:[], compare:false,
   toggle(id) {
       if (this.selected_scenarios.includes(id)) {
@@ -35,9 +40,11 @@
     <p class="'text-secondary"> In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.  </p>
     <p class="'text-secondary"> The actions tab on the right allows you to perform comparisons and download scenario reports.</p>
     <div class='d-flex flex-row-reverse p-2 m-2'>
-        <i title="download" class="fa fa-download  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary"></i> 
+      {% if user.is_authenticated %}
+        <i x-on:click="downloadCSV" title="download"  class="fa fa-download  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary"></i> 
         <i title="compare"   class="fa fa-exchange-alt  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary" data-toggle='modal' data-placement='top' data-target="#compare_modal"></i> 
         <i title="save"  class="fa fa-save  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#save_modal"></i> 
+       {% endif %}
         <i title="restart"  class="fa fa-undo  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i> 
         
     </div>
@@ -59,6 +66,57 @@
               <a href="{% url 'interface' project_id=1 %}" type="button" class="btn btn-primary">Confirm</a>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+    aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+       
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel1"> Saved successsfully !
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'> 
+              <p> Your search parameters have been saved in your saved search.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="save_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+    aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+       
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Save the search parameters in your portfolio
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+              
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Label</label>
+                  <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="Enter label">
+                  <small  class="form-text text-muted">Search parameters will be saved with the specified label.</small>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+              <button id='save_params' type="submit" class="btn btn-primary">Save</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+
         </div>
       </div>
     </div>
@@ -405,40 +463,44 @@
 </div>
 {% endblock%}
 {% block scr %}
+function downloadCSV(e){
+  var scenarios = {{ json_format | safe}};
+  let csvContent = "data:text/csv;charset=utf-8,";
+  let headers = '';
+  for(var key in scenarios) {
+    data = scenarios[key];
+    if (headers == ''){
+      for(var f in data.fields){
+        headers += f + ',';
+      }
+      csvContent +=  headers + "\r\n";
+    }
+    row = "";
+    for(var f in data.fields){
+    row += data.fields[f] + ',';
+  }
+    csvContent +=  row + "\r\n";
+    
+  } 
+  var encodedUri = encodeURI(csvContent);
+  window.open(encodedUri);    
+}
 
-const options = {
-range: { min: 0, max: 100, step: 10 },
-initialSelectedValues: { from: 0, to: 20 },
-grid: { minTicksStep: 1, marksStep: 1 },
-theme: "light",
-showInputs: false,
-};
-const fracOptions = {
-range: { min: 0, max: 1, step: .05 },
-initialSelectedValues: { from: .1, to: .5 },
-grid: { minTicksStep: 2, marksStep: 2 },
-theme: "light",
+$(document).ready(function () {
+  $("#save_params").click(function (event) {
+    $.ajax({
+      type: "POST",
+      url: "/save/",
+      data: {{ search_params | safe }},
+      success: function () {
+        console.log('Data is saved');
+        $('#save_modal').modal('toggle')
+        $('#save_confirmation').css('display','block');
+      }
+    });
+    return false; //<---- move it here
+  });
 
-};
-
-const paceOptions = {
-range: { min: 0, max: 13, step: 1 },
-initialSelectedValues: { from: 1, to: 3 },
-grid: { minTicksStep: 2, marksStep: 2 },
-theme: "light",
-showInputs: false,
-};
-
-$('#power').alRangeSlider(fracOptions);
-$('#storage').alRangeSlider(fracOptions);
-$('#community').alRangeSlider(fracOptions);
-$('#implement').alRangeSlider(paceOptions);
-$('#import').alRangeSlider(fracOptions);
-$('#heat').alRangeSlider(fracOptions);
-
-$('#land').alRangeSlider(options);
-$('#marine').alRangeSlider(fracOptions);
-$('#human').alRangeSlider(fracOptions);
-$('#co2').alRangeSlider(fracOptions);
+});
 
 {% endblock%}

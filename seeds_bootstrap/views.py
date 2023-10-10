@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
-
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 from register import views as rv
-
+from register.forms import RegisterForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -12,7 +13,7 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from register import forms as reg_forms
 from django.contrib.sessions.models import Session
-from .models import Scenario, TechGeneration, TechStorage, ScenarioLocation, Project
+from .models import Scenario, TechGeneration, TechStorage, ScenarioLocation, Project, QueryParameters
 from .models import EnergySupply, EnergyTransmission, Vote, UserScenario, Electrification
 import pandas as pd
 import pprint as pp
@@ -68,7 +69,12 @@ def reduce_intensity(c, intensity=.2):
 
 def index(request):
     if request.method == "POST":
-        return rv.login(request)
+        if request.POST.get("form_type") == 'signup':
+            email = request.POST['email']
+            form = RegisterForm()
+            return render(request, "sign_up.html", {"form": form, 'email': email})
+        else:
+            return rv.login(request)
     else:
         form = reg_forms.LoginForm()
         return render(request, 'index.html', {'form': form})
@@ -89,9 +95,45 @@ def standardise(value, min, max):
     return (float(value) - float(min)) / range
 
 
+def filter_scenarios(search_params):
+    scenarios_community = Scenario.objects.all().filter(
+        community_infrastructure__range=(search_params['community_min'], search_params['community_max']))
+    print('community objects:', len(scenarios_community))
+    scenarios_power = scenarios_community.filter(
+        power_capacity__range=(search_params['power_min'], search_params['power_max']))
+    print('power objects:', len(scenarios_power))
+    scenarios_storage = scenarios_power.filter(
+        storage_capacity__range=(search_params['storage_min'], search_params['storage_max']))
+    print('storage objects:', len(scenarios_storage))
+    scenarios_implementation = scenarios_storage.filter(
+        implementation_pace__range=(search_params['implementation_min'], search_params['implementation_max']))
+    print('impl objects:', len(scenarios_implementation))
+    scenarios_import = scenarios_implementation.filter(
+        import_dependency__range=(search_params['import_min'], search_params['import_max'])).order_by('id')
+
+    scenarios_land = scenarios_import.filter(
+        land_occupation__range=(search_params['land_min'], search_params['land_max'])).order_by('id')
+    print('land objects:', len(scenarios_land))
+    scenarios_global = scenarios_land.filter(
+        global_warming__range=(search_params['global_min'], search_params['global_max'])).order_by('id')
+    print('global objects:', len(scenarios_global))
+    scenarios_surplus = scenarios_global.filter(
+        surplus_ore__range=(search_params['surplus_min'], search_params['surplus_max'])).order_by('id')
+    print('human objects:', len(scenarios_surplus))
+    scenarios_water = scenarios_surplus.filter(
+        water_consumption__range=(search_params['water_min'], search_params['water_max'])).order_by('id')
+
+    scenarios_fresh = scenarios_water.filter(
+        freshwater_eutrophication__range=(search_params['fresh_min'], search_params['fresh_max'])).order_by('id')
+
+    return scenarios_fresh
+
+
 def interface(request, project_id):
+
     if request.method == 'POST':
         # fetching energy systems params
+        search_params = {}
         power_min = request.POST['power_0']
         power_max = request.POST['power_1']
         storage_min = request.POST['storage_0']
@@ -113,6 +155,20 @@ def interface(request, project_id):
 
         ele_road_min = request.POST['transport_0']
         ele_road_max = request.POST['transport_1']
+
+        # search_params['project'] = project_id
+        search_params['power_min'] = power_min
+        search_params['power_max'] = power_max
+        search_params['storage_min'] = storage_min
+        search_params['storage_max'] = storage_max
+        search_params['community_min'] = community_min
+        search_params['community_max'] = community_max
+        search_params['implementation_min'] = implementation_min
+        search_params['implementation_max'] = implementation_max
+        search_params['import_min'] = import_min
+        search_params['import_max'] = import_max
+        search_params['ele_heat_min'] = ele_heat_min
+        search_params['ele_heat_max'] = ele_heat_max
 
         # fetching impact controls params
         land_min = rescale(request.POST['land_0'], param_config['land_occupation']
@@ -137,6 +193,17 @@ def interface(request, project_id):
             request.POST['surplus_0'], param_config['surplus_ore']['min'], param_config['surplus_ore']['max'])
         surplus_max = rescale(
             request.POST['surplus_1'], param_config['surplus_ore']['min'], param_config['surplus_ore']['max'])
+
+        search_params['land_min'] = land_min
+        search_params['land_max'] = land_max
+        search_params['global_min'] = global_min
+        search_params['global_max'] = global_max
+        search_params['water_min'] = water_min
+        search_params['water_max'] = water_max
+        search_params['fresh_min'] = fresh_min
+        search_params['fresh_max'] = fresh_max
+        search_params['surplus_min'] = surplus_min
+        search_params['surplus_max'] = surplus_max
 
         # fetching energy technologies params
         photo_roof_min = rescale(
@@ -180,51 +247,61 @@ def interface(request, project_id):
         battery_max = rescale(
             request.POST['battery_1'], param_config['battery']['min'], param_config['battery']['max'])
 
+        search_params['photo_roof_min'] = photo_roof_min
+        search_params['photo_roof_max'] = photo_roof_max
+        search_params['photo_open_field_min'] = photo_open_field_min
+        search_params['photo_open_field_max'] = photo_open_field_max
+        search_params['hydrogen_min'] = hydrogen_min
+        search_params['hydrogen_max'] = hydrogen_max
+        search_params['wind_onshore_min'] = wind_on_shore_min
+        search_params['wind_onshore_max'] = wind_on_shore_max
+        search_params['wind_offshore_min'] = wind_off_shore_min
+        search_params['wind_offshore_max'] = wind_off_shore_max
+        search_params['transmission_min'] = transmission_min
+        search_params['transmission_max'] = transmission_max
+        search_params['bio_min'] = bio_min
+        search_params['bio_max'] = bio_max
+        search_params['battery_min'] = battery_min
+        search_params['battery_max'] = battery_max
+
         # print('Power min:{} max:{}'.format(power_min,power_max))
         # print('Hyodro-river min:{} max:{}'.format(hydro_river_min,hydro_river_max))
         # print('wind-on-shore min:{} max:{}'.format(wind_on_shore_min,wind_on_shore_max))
         # print('Human min:{} max:{}'.format(human_min,human_max))
 
         # Scale of parameters in database
-        scenarios_community = Scenario.objects.all().filter(
-            community_infrastructure__range=(community_min, community_max))
-        print('community objects:', len(scenarios_community))
-        scenarios_power = scenarios_community.filter(
-            power_capacity__range=(power_min, power_max))
-        print('power objects:', len(scenarios_power))
-        scenarios_storage = scenarios_power.filter(
-            storage_capacity__range=(storage_min, storage_max))
-        print('storage objects:', len(scenarios_storage))
-        scenarios_implementation = scenarios_storage.filter(
-            implementation_pace__range=(implementation_min, implementation_max))
-        print('impl objects:', len(scenarios_implementation))
-        scenarios_import = scenarios_implementation.filter(
-            import_dependency__range=(import_min, import_max)).order_by('id')
 
-        scenarios_land = scenarios_import.filter(
-            land_occupation__range=(land_min, land_max)).order_by('id')
-        print('land objects:', len(scenarios_land))
-        scenarios_global = scenarios_land.filter(
-            global_warming__range=(global_min, global_max)).order_by('id')
-        print('global objects:', len(scenarios_global))
-        scenarios_surplus = scenarios_global.filter(
-            surplus_ore__range=(surplus_min, surplus_max)).order_by('id')
-        print('human objects:', len(scenarios_surplus))
-        scenarios_water = scenarios_surplus.filter(
-            water_consumption__range=(water_min, water_max)).order_by('id')
-
-        scenarios_fresh = scenarios_water.filter(
-            freshwater_eutrophication__range=(fresh_min, fresh_max)).order_by('id')
+        scenarios_filtered = filter_scenarios(search_params)
 
         # scenarios_implementation = scenarios_storage
-        paginator = Paginator(scenarios_land, 20, orphans=3)
-        page_obj = paginator.get_page(1)
-        page_range = list(paginator.get_elided_page_range(1))
-        print('Final objects:', len(scenarios_land))
-        return render(request, 'show_results.html', {'page_obj': page_obj, 'page_range': page_range})
+
+        return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
+                                                     'search_params': search_params,
+                                                     'json_format': serializers.serialize('json', scenarios_filtered),
+                                                     'project': project_id})
     else:
         locations = ScenarioLocation.objects.all()
         return render(request, 'param_selection.html', {'locations': locations})
+
+
+@csrf_exempt
+def save_search_params(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+
+            data = {}
+            data['submitted_user'] = request.user
+            data['label'] = 'demo pankaj'
+            for key in request.POST:
+                if 'key' == 'project':
+                    project = Project.objects.get(id=request.POST[key])
+                    # data['project'] = project
+                else:
+                    data[key] = request.POST[key]
+            print(data)
+            q = QueryParameters(**data)
+            q.save()
+    return HttpResponse('success')
 
 
 def get_scenario_details(scenario_id):
@@ -516,7 +593,11 @@ def vote(request, selection, scenario):
     return redirect('inspect', scenario_id=scenario)
 
 
-def portfolio(request):
-
-    scenarios = UserScenario.objects.all().filter(submitted_user=request.user)
-    return render(request, 'portfolio.html', {'scenarios': scenarios})
+def portfolio(request, query):
+    if query in ['saved_scenarios', 'saved_searches']:
+        if query == 'saved_scenarios':
+            scenarios = UserScenario.objects.all().filter(submitted_user=request.user)
+            return render(request, 'portfolio.html', {'scenarios': scenarios, 'title': 'Your scenarios'})
+        else:
+            params = QueryParameters.objects.all().filter(submitted_user=request.user)
+            return render(request, 'portfolio.html', {'scenarios': params, 'title': 'Your saved searches'})
