@@ -16,11 +16,13 @@
   <div class='py-1'>
     <h2> Scenario  {{data.scenario.id}} </h2> 
   </div>
+  {% if user.is_authenticated %}
   <div class='d-flex  p-2 m-2'>
     <i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
     <i class="fa fa-star  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#vote_modal"></i>
   </div>
+  {% endif %}
 </div>
 <div class="modal fade" id="back_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
@@ -177,8 +179,8 @@ aria-hidden="true">
           </div>
         </div>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'> 
-            <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
+          <div class='p-2 m-2 rounded'> 
+            <img width="60px" src="{% static 'images/bio.png'%}">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>Biofuels</div>
@@ -191,8 +193,8 @@ aria-hidden="true">
             <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>Hydro</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_hydro |floatformat:2 }}  TWh/year</div>
+            <div class='px-2 small' style='font-size:.5rem;'>Hydrogen</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/year</div>
           </div>
         </a>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
