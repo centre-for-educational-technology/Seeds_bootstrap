@@ -74,8 +74,10 @@ def index(request):
             email = request.POST['email']
             form = RegisterForm()
             return render(request, "sign_up.html", {"form": form, 'email': email})
-        else:
+        elif request.POST.get("form_type") == 'signin':
             return rv.login(request)
+        else:
+            return rv.register(request)
     else:
         form = reg_forms.LoginForm()
         return render(request, 'index.html', {'form': form})
