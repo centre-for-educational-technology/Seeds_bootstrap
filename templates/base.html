@@ -60,10 +60,15 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
                 <li><a href="#home-section" class="nav-link text-dark">Home</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'portfolio' query='saved_scenarios' %}" class="nav-link text-dark">My Portfolio</a></li>
+                {% endif %}
+                <!--
                 <li><a href="#team-section" class="nav-link text-dark">About us</a></li>
                 <li><a href="#documentation-section" class="nav-link text-dark">Documentation</a></li>
                 <li><a href="#help-section" class="nav-link text-dark">Help</a></li>
                 <li><a href="#contact-section" class="nav-link text-dark">Contact</a></li>
+                -->
               </ul>
             </nav>
           </div>

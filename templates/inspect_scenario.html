@@ -51,6 +51,8 @@ aria-hidden="true">
         <div class="modal-content">
           <form action="" method="post">
             {% csrf_token %}
+            <input type='hidden' name='form_type' value='save'>
+            <input type='hidden' name='project_id' value='{{project_id}}'>
             <div class="modal-header border-bottom-0">
                 <h5 class="modal-title" id="exampleModalLabel">Save this scenario in your portfolio
                 </h5>
@@ -91,6 +93,11 @@ aria-hidden="true">
     aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type='hidden' name='project_id' value='{{project_id}}'>
+            <input type='hidden' name='form_type' value='vote'>
+            <input type='hidden' id='vote_input' name='vote_input' value = '1'>
             <div class="modal-header border-bottom-0">
                 <h5 class="modal-title" id="exampleModalLabel">Cofirm
                 </h5>
@@ -99,13 +106,23 @@ aria-hidden="true">
                 </button>
             </div>
             <div class='modal-body'>
-               <p  class="form-text text-muted">Your vote selection will be saved permanently. Are you sure?</p>
+              <div class="p-2 m-5 text-center">
+                <p class='p-1 h5'> Would you be willing to accept this scenario?</p> 
+                <p class="p-1">
+                  Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system
+                </p>
+                <div class="flex p-4">
+                  <a id="like" href="#" class='rounded bg-success text-white btn  px-5'> <i class="fa fa-check"></i> </a>
+                  <a id="unlike" href="#" class='rounded bg-light btn  px-5'> <span class='font-weight-bold'>X</span> </a>
+                </div>
+              </div>
                 
             </div>
             <div class="modal-footer">
-              <a href="{% url 'vote' selection='up' scenario=data.scenario.id%}" class="btn btn-primary">Yes</a>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Vote</button>
+              
             </div>
+          </form>
         </div>
       </div>
     </div>
@@ -151,11 +168,11 @@ aria-hidden="true">
         <div class="collapse py-2 pl-5" id="collapseOne">
           <div class='bg-light m-2 rounded-top rounded-bottom'>
             <p class='small pl-4 pt-2'> Roof PV </p>
-            <p class='display-5 text-right pr-3 pb-3'>{{data.roof_mounted_pv |floatformat:2}}%</p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.pv_roof_percentage |floatformat:2}}%</p>
           </div>
           <div class='bg-light m-2 rounded-top rounded-bottom'>
             <p class='small pl-4 pt-2'> Open field PV </p>
-            <p class='display-5 text-right pr-3 pb-3'>{{data.open_field_pv |floatformat:2}}</p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.pv_open_percentage |floatformat:2}}%</p>
           </div>
         </div>
 
@@ -171,11 +188,11 @@ aria-hidden="true">
         <div class="collapse py-2 pl-5" id="collapseTwo">
           <div class='bg-light m-2 rounded-top rounded-bottom'>
             <p class='small pl-4 pt-2'> Off-shore </p>
-            <p class='display-5 text-right pr-3 pb-3'>{{data.wind_offshore |floatformat:2}}</p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.wind_onshore_percentage |floatformat:2}}%</p>
           </div>
           <div class='bg-light m-2 rounded-top rounded-bottom'>
             <p class='small pl-4 pt-2'> On-shore </p>
-            <p class='display-5 text-right pr-3 pb-3'>{{data.wind_offshore |floatformat:2}}</p>
+            <p class='display-5 text-right pr-3 pb-3'>{{data.wind_offshore_percentage |floatformat:2}}%</p>
           </div>
         </div>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
@@ -215,6 +232,26 @@ aria-hidden="true">
   <div </div>
     {% endblock%}
     {% block scr %}
+
+    $('#like').click(function(event){
+      console.log('Like clicked');
+      $("#like").removeClass('bg-light text-success');
+      $("#like").addClass('bg-success text-white');
+      $("#unlike").removeClass('bg-danger text-white');
+      $("#unlike").addClass('bg-light text-danger');
+      console.log('changed class');
+      $("#vote_input").val('1');
+    });
+
+    $('#unlike').click(function(event){
+      console.log('UnLike clicked');
+      $("#unlike").removeClass('bg-light text-danger');
+      $("#unlike").addClass('bg-danger text-white');
+      $("#like").removeClass('bg-success text-white');
+      $("#like").addClass('bg-light text-success');
+      console.log('changed class');
+      $("#vote_input").val('0');
+    });
     const config = {
       displayModeBar: false, // this is the line that hides the bar.
     };

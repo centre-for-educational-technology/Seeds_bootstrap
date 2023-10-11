@@ -448,7 +448,7 @@
                             <td x-show="global">{{scenario.global_warming |floatformat:2}}</td>
                             <td x-show="water">{{scenario.water_consumption |floatformat:2}}</td>
                             <td x-show="land">{{scenario.land_occupation |floatformat:2}}</td>
-                            <td > <a href='{% url 'inspect' scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
+                            <td > <a href='{% url 'inspect' project_id=project_id scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
                            
                         </tr>
                         {% endfor %}

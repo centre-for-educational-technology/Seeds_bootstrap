@@ -44,6 +44,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('admin/', admin.site.urls),
     path("register/", v.register, name="register"),
+
     path("password_reset/", v.password_reset_request, name='password_reset'),
     path("password_reset/done", auth_views.PasswordResetDoneView.as_view(
         template_name='password_reset_done.html'), name='password_reset_done'),
@@ -54,22 +55,23 @@ urlpatterns = [
     path('account_activation_sent/', v.account_activation_sent,
          name='account_activation_sent'),
     path('activate/<slug:uidb64>/<slug:token>/', v.activate, name='activate'),
-    path('inspect/<scenario_id>', views.inspect, name='inspect'),
+    path('inspect/<project_id>/<scenario_id>', views.inspect, name='inspect'),
     path('compare/<sc_1>/<sc_2>/', views.compare, name='compare'),
+    path('save/', views.save_search_params),
 
 
     path('login/', v.login, name='login'),
     path('logout/', v.logout, name='logout'),
     path('vote/<selection>/<scenario>/', views.vote, name='vote'),
 
-    path('portfolio/',
+    path('portfolio/<query>',
          login_required(views.portfolio), name='portfolio'),
-    path('project/', login_required(views.project_page),
+    path('project/', views.project_page,
          name='project_select_page'),
     path('interface/<project_id>',
-         login_required(views.interface), name='interface'),
+         views.interface, name='interface'),
 
-
+    path('fetch/<search_id>', views.get_saved_search, name='fetch'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('maps/', views.map, name='map'),
     path('location/', login_required(views.select_location), name='location'),

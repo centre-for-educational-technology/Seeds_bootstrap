@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.forms.models import model_to_dict
 from register import views as rv
 from register.forms import RegisterForm
 from django.http import HttpResponseRedirect
@@ -284,24 +285,39 @@ def interface(request, project_id):
         return render(request, 'param_selection.html', {'locations': locations})
 
 
+def get_saved_search(request, search_id):
+    ob = model_to_dict(QueryParameters.objects.get(id=search_id))
+    search_params = {}
+    for key in ob:
+        if key != 'sub_date' and key != 'submitted_user':
+            search_params[key] = ob[key]
+    scenarios_filtered = filter_scenarios(search_params)
+
+    # scenarios_implementation = scenarios_storage
+
+    return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
+                                                 'search_params': search_params,
+                                                 'json_format': serializers.serialize('json', scenarios_filtered),
+                                                 'project_id': 1})
+
+
 @csrf_exempt
 def save_search_params(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
-
             data = {}
             data['submitted_user'] = request.user
-            data['label'] = 'demo pankaj'
             for key in request.POST:
                 if 'key' == 'project':
                     project = Project.objects.get(id=request.POST[key])
-                    # data['project'] = project
                 else:
                     data[key] = request.POST[key]
             print(data)
             q = QueryParameters(**data)
             q.save()
-    return HttpResponse('success')
+        return HttpResponse('success')
+    else:
+        return HttpResponse('failure')
 
 
 def get_scenario_details(scenario_id):
@@ -344,20 +360,25 @@ def get_scenario_details(scenario_id):
 
     total_generation = 0
     for ob in tech_gen:
-        data['generation'][ob.technology_type] = ob.energy_generation
+        # causing error due to replacing
+        if ob.technology_type in data['generation']:
+            data['generation'][ob.technology_type] += ob.energy_generation
+        else:
+            data['generation'][ob.technology_type] = ob.energy_generation
         total_generation += ob.energy_generation
+        if 'hydro_' in ob.technology_type:
+            total_hydro += ob.energy_generation
+
+    for key, value in data['generation'].items():
         trace = {
             "y": ['Power'],
-            "x": [float(ob.energy_generation)],
-            "name": ob.technology_type,
+            "x": [float(value)],
+            "name": key,
             "type": 'bar',
             "orientation": 'h'
         }
         bar_chart_data.append(trace)
-        if 'hydro_' in ob.technology_type:
-            total_hydro += ob.energy_generation
 
-    print(data['generation'])
     data['power_bar_data'] = bar_chart_data
 
     pie_chart_data = {}
@@ -367,18 +388,23 @@ def get_scenario_details(scenario_id):
 
     storage_chart_data = []
     for ob in tech_sto:
+        if ob.technology_type in data['storage']:
+            data['storage'][ob.technology_type] += float(ob.energy_storage)
+        else:
+            data['storage'][ob.technology_type] = float(ob.energy_storage)
 
-        data['storage'][ob.technology_type] = float(ob.energy_storage)
         total_storage += ob.energy_storage
+
+    for key, value in data['storage'].items():
         trace = {
             "y": ['Storage'],
-            "x": [float(ob.energy_storage)],
-            "name": ob.technology_type,
+            "x": [float(value)],
+            "name": key,
             "type": 'bar',
             "orientation": 'h'
         }
         storage_chart_data.append(trace)
-    print(data['storage'])
+
     data['storage_bar_data'] = storage_chart_data
 
     pie_chart_data['labels'] = list(pie_values.keys())
@@ -387,8 +413,10 @@ def get_scenario_details(scenario_id):
     count_storage_tech = len(pie_chart_data['labels'])
     sum_storage = sum(pie_chart_data['values'])
 
-    energy_data, total_supply = get_energy_supply(scenario_id)
-    generation_labels, generation_values = get_power_generation(scenario_id)
+    energy, energy_data, total_supply = get_energy_supply(scenario_id)
+    generation_labels = list(data['generation'].keys())
+    generation_values = list(data['generation'].values())
+
     data['energy_supply_pie_labels'] = list(energy_data.keys())
     data['energy_supply_pie_values'] = list(energy_data.values())
     data['energy_supply_total'] = total_supply
@@ -398,10 +426,7 @@ def get_scenario_details(scenario_id):
 
     data['power_pie_data'] = pie_chart_data
 
-    total_supply = 0
-    for ob in energy:
-        data['energy']['technology_type'] = ob.energy_supply
-        total_supply += ob.energy_supply
+    data['energy'] = energy
 
     total_electrification = 0
     for ob in electrification:
@@ -422,27 +447,46 @@ def get_scenario_details(scenario_id):
     data['total_transmission'] = total_transmission
     data['total_hydro'] = total_hydro
     data['total_generation'] = total_generation
-    if scenario.roof_mounted_pv:
-        roof = scenario.roof_mounted_pv
+
+    if 'existing_pv' in data['generation'].keys():
+        exist_pv = data['generation']['existing_pv']
+    else:
+        exist_pv = 0
+
+    if 'roof_pv' in data['generation'].keys():
+        roof = data['generation']['roof_pv']
     else:
         roof = 0
-    if scenario.open_field_pv:
-        open = scenario.open_field_pv
+    if 'open_field_pv' in data['generation'].keys():
+        open = data['generation']['open_field_pv']
     else:
         open = 0
-    data['total_pv'] = roof + open
+    data['total_pv'] = roof + open + exist_pv
+    data['pv_roof_percentage'] = '{:.2}'.format(roof * 100 / data['total_pv'])
+    data['pv_open_percentage'] = '{:.2}'.format(open * 100 / data['total_pv'])
 
-    if scenario.wind_onshore:
-        onshore = scenario.wind_onshore
+    if 'existing_wind' in data['generation'].keys():
+        exist_wind = data['generation']['existing_wind']
+    else:
+        exist_wind = 0
+
+    if 'wind_onshore' in data['generation'].keys():
+        onshore = data['generation']['wind_onshore']
     else:
         onshore = 0
 
-    if scenario.wind_offshore:
-        offshore = scenario.wind_offshore
+    if 'wind_offshore' in data['generation'].keys():
+        offshore = data['generation']['wind_offshore']
     else:
         offshore = 0
-    data['total_wind'] = onshore + offshore
-
+    data['total_wind'] = onshore + offshore + exist_wind
+    data['wind_onshore_percentage'] = '{:.2}'.format(
+        onshore * 100 / data['total_wind'])
+    data['wind_offshore_percentage'] = '{:.2}'.format(
+        offshore * 100 / data['total_wind'])
+    print('Scenario:', model_to_dict(data['scenario']))
+    print("wind:", data['total_wind'])
+    print('generation:', data['generation'])
     return data
 
 
@@ -452,7 +496,10 @@ def get_energy_supply(scenario_id):
     supply = EnergySupply.objects.all().filter(scenario=scenario)
     energy = {}
     for ob in supply:
-        energy[ob.technology_type] = float(ob.energy_supply)
+        if ob.technology_type in energy.keys():
+            energy[ob.technology_type] += float(ob.energy_supply)
+        else:
+            energy[ob.technology_type] = float(ob.energy_supply)
 
     total_supply = '{0:.2f}'.format(sum(list(energy.values())))
 
@@ -473,20 +520,7 @@ def get_energy_supply(scenario_id):
     pie_energy_supply_data['Wind'] += energy['existing_wind'] + \
         energy['wind_offshore'] + energy['wind_onshore']
 
-    return pie_energy_supply_data, total_supply
-
-
-def get_power_generation(scenario_id):
-    scenario = Scenario.objects.get(id=scenario_id)
-    generation = {}
-    tech_gen_obs = TechGeneration.objects.all().filter(scenario=scenario)
-    for tech_gen_ob in tech_gen_obs:
-        generation[tech_gen_ob.technology_type] = tech_gen_ob.energy_generation
-
-    generation_labels = list(generation.keys())
-    generation_values = list(generation.values())
-
-    return generation_labels, generation_values
+    return energy, pie_energy_supply_data, total_supply
 
 
 def get_sankey_data(scenario_id):
@@ -546,23 +580,35 @@ def compare(request, sc_1, sc_2):
                                                      'data2': data2})
 
 
-def inspect(request, scenario_id):
+def inspect(request, project_id, scenario_id):
     scenario = Scenario.objects.get(id=scenario_id)
     data = get_scenario_details(scenario_id)
 
     if request.method == 'POST':
         scenario = Scenario.objects.get(id=scenario_id)
-        label = request.POST['label']
-        user = request.user
-        project = Project.objects.get(id=request.session['project'])
-        obj = UserScenario.objects.create(
-            submitted_user=user, label=label, project=project, scenario=scenario)
-        print('Object saved', obj)
-        request.session['selected_location'] = str(select_location)
-        messages.success(request, "Scenario has been added to your portfolio")
-        return render(request, 'inspect_scenario.html', {'data': data})
-    else:
-        return render(request, 'inspect_scenario.html', {'data': data})
+        form_type = request.POST['form_type']
+
+        if form_type == 'vote':
+            selection = request.POST['vote_input']
+            project_obj = Project.objects.get(id=project_id)
+            response = True if selection == '1' else False
+            submitted_user = request.user
+            scenario_obj = Scenario.objects.get(id=scenario_id)
+
+            obj = Vote(project=project_obj, response=response,
+                       submitted_user=submitted_user, scenario=scenario_obj)
+            obj.save()
+            messages.success(request, "Your vote has been saved.")
+        else:
+            user = request.user
+            project = Project.objects.get(id=project_id)
+            label = request.POST['label']
+            obj = UserScenario.objects.create(
+                submitted_user=user, label=label, project=project, scenario=scenario)
+            print('Object saved', obj)
+            messages.success(
+                request, "Scenario has been added to your portfolio.")
+    return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id})
 
 
 def select_location(request):
@@ -597,7 +643,7 @@ def portfolio(request, query):
     if query in ['saved_scenarios', 'saved_searches']:
         if query == 'saved_scenarios':
             scenarios = UserScenario.objects.all().filter(submitted_user=request.user)
-            return render(request, 'portfolio.html', {'scenarios': scenarios, 'title': 'Your scenarios'})
+            return render(request, 'portfolio.html', {'scenarios': scenarios, 'title': 'Your scenarios', 'query': query})
         else:
             params = QueryParameters.objects.all().filter(submitted_user=request.user)
-            return render(request, 'portfolio.html', {'scenarios': params, 'title': 'Your saved searches'})
+            return render(request, 'portfolio.html', {'scenarios': params, 'title': 'Your saved searches', 'query': query})

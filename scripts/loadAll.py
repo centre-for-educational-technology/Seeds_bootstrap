@@ -113,7 +113,8 @@ for s in scenario.itertuples():
                                            surplus_ore=s.surplus_ore,
                                            water_consumption=s.water_consumption,
                                            freshwater_eutrophication=s.freshwater_eutrophication,
-                                           battery=s.battery
+                                           battery=s.battery,
+                                           hydrogen=s.chp_hydrogen
                                            )
 
     except ValidationError as e:

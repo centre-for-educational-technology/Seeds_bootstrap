@@ -88,7 +88,7 @@
                             <td>{{scenario.last_modified}}</td>
                             {% endif %}
                             {% if query == 'saved_searches' %}
-                            <td class='text-left'><a href="{% url 'inspect' scenario_id=scenario.id%}">{{scenario.label}}</td>
+                            <td class='text-left'><a href="{% url 'fetch' search_id=scenario.id%}">{{scenario.label}}</td>
                             
                             <td>{{scenario.sub_date}}</td>
                             {% endif %}
