@@ -83,7 +83,7 @@
                         {% for scenario in scenarios %}
                         <tr class='text-align-middle'>
                             {% if query == 'saved_scenarios' %}
-                            <td class='text-left'><a href="{% url 'inspect' scenario_id=scenario.scenario.id%}">{{scenario.label}}</td>
+                            <td class='text-left'><a href="{% url 'inspect' project_id=scenario.project.id scenario_id=scenario.scenario.id%}">{{scenario.label}}</td>
                             
                             <td>{{scenario.last_modified}}</td>
                             {% endif %}

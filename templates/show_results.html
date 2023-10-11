@@ -107,7 +107,7 @@
               
                 <div class="form-group">
                   <label for="exampleInputEmail1">Label</label>
-                  <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="Enter label">
+                  <input type="text" class="form-control" id="search_param_name" name="label" aria-describedby="emailHelp" placeholder="Enter label">
                   <small  class="form-text text-muted">Search parameters will be saved with the specified label.</small>
                 </div>
               
@@ -488,9 +488,10 @@ function downloadCSV(e){
 
 $(document).ready(function () {
   $("#save_params").click(function (event) {
+    let val = $("#search_param_name").val();
     $.ajax({
       type: "POST",
-      url: "/save/",
+      url: "/save/" + val + "/",
       data: {{ search_params | safe }},
       success: function () {
         console.log('Data is saved');

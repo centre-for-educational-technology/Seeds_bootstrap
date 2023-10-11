@@ -206,7 +206,7 @@ def interface(request, project_id):
         search_params['surplus_min'] = surplus_min
         search_params['surplus_max'] = surplus_max
 
-        # fetching energy technologies params
+        # fetching energy technologies paramss
         photo_roof_min = rescale(
             request.POST['photo-roof_0'], param_config['roof_mounted_pv']['min'], param_config['roof_mounted_pv']['max'])
         photo_roof_max = rescale(
@@ -279,7 +279,7 @@ def interface(request, project_id):
         return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
                                                      'search_params': search_params,
                                                      'json_format': serializers.serialize('json', scenarios_filtered),
-                                                     'project': project_id})
+                                                     'project_id': project_id})
     else:
         locations = ScenarioLocation.objects.all()
         return render(request, 'param_selection.html', {'locations': locations})
@@ -302,10 +302,11 @@ def get_saved_search(request, search_id):
 
 
 @csrf_exempt
-def save_search_params(request):
+def save_search_params(request, label):
     if request.method == 'POST':
         if request.user.is_authenticated:
             data = {}
+            data['label'] = label
             data['submitted_user'] = request.user
             for key in request.POST:
                 if 'key' == 'project':
@@ -587,7 +588,6 @@ def inspect(request, project_id, scenario_id):
     if request.method == 'POST':
         scenario = Scenario.objects.get(id=scenario_id)
         form_type = request.POST['form_type']
-
         if form_type == 'vote':
             selection = request.POST['vote_input']
             project_obj = Project.objects.get(id=project_id)
