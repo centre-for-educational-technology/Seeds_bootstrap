@@ -43,19 +43,14 @@ def login(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             pwd = form.cleaned_data['password']
-
             try:
                 user = User.objects.get(email=email)
                 print('user exists:', user.username, ' pwd:', pwd)
                 if not user.is_active:
                     messages.warning(request, 'Your account is not activated.')
                     return redirect('login')
-
                 user_login_status = authenticate(
                     username=user.username, password=pwd)
-
-                print(user_login_status)
-
                 if user_login_status is not None:
                     user.backend = 'django.contrib.auth.backends.ModelBackend'
                     auth_login(request, user)
@@ -67,13 +62,12 @@ def login(request):
             except:
                 messages.error(request, 'User does not exists.')
                 return redirect('login')
-
         else:
             print('not valid')
             form = LoginForm()
     else:
         if request.user.is_authenticated:
-            return redirect('portfolio')
+            return redirect('/portfolio/saved_scenarios')
         else:
             form = LoginForm()
     return render(request, "sign_in.html", {"form": form, "title": 'Login', "button": 'Login'})
@@ -81,8 +75,21 @@ def login(request):
 # Create your views here.
 
 
+def register_with_email(request, email):
+    form = RegisterForm()
+    return render(request, "sign_up.html", {"form": form, 'email': email})
+
+
+def register_with_email(request, email):
+    form = RegisterForm({'email': email})
+    request.method = "GET"
+    print('Inside register with email:', request.method)
+    form = RegisterForm()
+
+
 def register(request):
     errors = {}
+    print('Inside register:', request.method)
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -129,20 +136,15 @@ def register(request):
             print(result.status_code)
             messages.info(request, 'An email with instructions to activate your account has been sent.')
             """
-
             messages.info(
                 request, 'An account has been created. You can login now')
             return redirect('login')
         else:
             print('Form is not valid')
             messages.error(request, form.errors)
-            messages.info(request, 'hu lala la')
-            print(form.errors)
     else:
         c = get_current_site(request)
         form = RegisterForm()
-
-    # return render(request, "register.html", {"form":form})
     return render(request, "sign_up.html", {"form": form})
 # Create your views here.
 
