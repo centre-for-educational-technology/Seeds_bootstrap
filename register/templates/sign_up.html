@@ -101,6 +101,7 @@
 
     $(document).ready(function () {
         $('.pass_show').append('<span class="ptxt fa fa-eye-slash"></span>');
+        $('#id_email').val('{{email}}');
     });
     $(document).on('click', '.pass_show .ptxt', function () {
         if ($(this).prev().attr('type') == "text") {
