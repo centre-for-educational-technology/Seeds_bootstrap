@@ -140,15 +140,12 @@ aria-hidden="true">
           </div>
         </div>
       </div>
-      <div class='row mt-3 pr-3 col-12 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
-        <div class='col mr-3 p-4 '>
-          <div class='m-2' id='power_generation'></div>
-        
-          <div class='p-0 m-2' id='power_storage'></div>
-        </div>
-        <div class='col p-4'>
-          <div  id='energy_supply'></div>
-        </div>
+      <div class='row mt-3 pr-3 col-12 d-flex flex-wrap p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
+          <div class='p-5  rounded rounded-bottom border-light' id="solar_map"></div>
+          <div class='p-5'  id="wind_map"></div>
+          <div class='p-2 d-flex align-items-center'  id='energy_supply'></div>
+          <div class='p-0 ' id='power_generation'></div>
+          <div class='p-0 ' id='power_storage'></div>
       </div>
     </div>
     <div class='col col-4 p-3'>
@@ -299,7 +296,8 @@ aria-hidden="true">
         range:[0,{{data.total_generation}} + 20]
     },
     height: 240,
-    width: 600,
+    width: 500,
+
     showlegend: false,
     legend:{orientation: 'h', side:'top'}
     };
@@ -313,10 +311,49 @@ aria-hidden="true">
         range:[0,{{data.total_storage}} + 20]
     },
     height: 240,
-    width: 600,
+    width: 500,
     showlegend: false,
+   
     legend:{orientation: 'h', side:'top'}
     };
     Plotly.newPlot('power_storage', storage_data,layout,config);
   
+    var solar_map_data = [{
+      type: "choroplethmapbox",
+      geojson:"{% static 'portugal_regions.geojson' %}",
+      featureidkey:'properties.index',
+      z: {{ mapdata.solar.z | safe}},
+      locations:{{ mapdata.solar.locations | safe}},
+      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      showscale:false,
+
+      marker_line_width:1,
+  
+    }]
+    var wind_map_data = [{
+      type: "choroplethmapbox",
+      geojson:"{% static 'portugal_regions.geojson' %}",
+      featureidkey:'properties.index',
+      z: {{ mapdata.wind.z | safe}},
+      locations:{{ mapdata.wind.locations | safe}},
+      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      marker_line_width:1,
+      showscale:false,
+    }]
+    var map_layout = {
+  
+      height: 500,
+      width: 200,
+      showlegend: false,
+      margin : {l:0, r:0, t:0, b:0},
+      mapbox:{
+          style:'carto-positron',
+          zoom:5.4,
+          center:{lat:39.5,lon:-8}
+      }
+      }
+    Plotly.newPlot('solar_map', solar_map_data, map_layout,config)
+    Plotly.newPlot('wind_map', wind_map_data, map_layout,config)
+
+   
     {% endblock%}

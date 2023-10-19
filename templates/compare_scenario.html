@@ -30,11 +30,12 @@
       <div class='row mt-3 pr-3 col-12 p-4 '>
         <div class='col mr-3 p-4 '>
           <div class='m-2' id='power_generation_a'></div>
-        
+          <div  id='energy_supply_a'></div>
           <div class='p-0 m-2' id='power_storage_a'></div>
         </div>
         <div class='col p-4'>
-          <div  id='energy_supply_a'></div>
+          <div class='p-1 ' id="solar_map_a"></div>
+          <div class='p-1'  id="wind_map_a"></div>
         </div>
       </div>
     </div>
@@ -47,11 +48,13 @@
       <div class='row mt-3 pr-3 col-12 p-4 '>
         <div class='col mr-3 p-4 '>
           <div class='m-2' id='power_generation_b'></div>
-        
+          <div  id='energy_supply_b'></div>
           <div class='p-0 m-2' id='power_storage_b'></div>
         </div>
         <div class='col p-4'>
-          <div  id='energy_supply_b'></div>
+          
+          <div class='p-1 d-flex align-items-start' id="solar_map_b"></div>
+          <div class='p-1 d-flex align-items-end'  id="wind_map_b"></div>
         </div>
       </div>
     </div>
@@ -112,9 +115,8 @@
       automargin: true
     }]
     var layout_supply = {
-      title: 'Total energy supply',
-      height: 500,
-      width: 300,
+      height: 400,
+      width: 330,
       showlegend: false
       }
     Plotly.newPlot('energy_supply_a', data_supply, layout_supply,config)
@@ -128,9 +130,9 @@
       automargin: true
     }]
     var layout_supply = {
-      title: 'Total energy supply',
-      height: 500,
-      width: 300,
+ 
+      height: 400,
+      width: 330,
       showlegend: false
       }
     Plotly.newPlot('energy_supply_b', data_supply, layout_supply,config)
@@ -191,4 +193,80 @@
     };
     Plotly.newPlot('power_storage_b', storage_data,layout,config);
   
+    var solar_map_data_a = [{
+      type: "choroplethmapbox",
+      geojson:"{% static 'portugal_regions.geojson' %}",
+      featureidkey:'properties.index',
+      z: {{ mapdata1.solar.z | safe}},
+      locations:{{ mapdata1.solar.locations | safe}},
+      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      showscale:false,
+
+      marker_line_width:1,
+  
+    }]
+    var wind_map_data_a = [{
+      type: "choroplethmapbox",
+      geojson:"{% static 'portugal_regions.geojson' %}",
+      featureidkey:'properties.index',
+      z: {{ mapdata1.wind.z | safe}},
+      locations:{{ mapdata1.wind.locations | safe}},
+      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      marker_line_width:1,
+      showscale:false,
+    }]
+
+    var solar_map_data_b = [{
+      type: "choroplethmapbox",
+      geojson:"{% static 'portugal_regions.geojson' %}",
+      featureidkey:'properties.index',
+      z: {{ mapdata2.solar.z | safe}},
+      locations:{{ mapdata2.solar.locations | safe}},
+      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      showscale:false,
+
+      marker_line_width:1,
+  
+    }]
+    var wind_map_data_b = [{
+      type: "choroplethmapbox",
+      geojson:"{% static 'portugal_regions.geojson' %}",
+      featureidkey:'properties.index',
+      z: {{ mapdata2.wind.z | safe}},
+      locations:{{ mapdata2.wind.locations | safe}},
+      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      marker_line_width:1,
+      showscale:false,
+    }]
+    var map_layout = {
+  
+      height: 500,
+      width: 250,
+      showlegend: false,
+      margin : {l:0, r:50, t:0, b:0,pad:5},
+      mapbox:{
+          style:'carto-positron',
+          zoom:5.4,
+          center:{lat:39.5,lon:-8}
+      }
+      }
+      var map_layout2 = {
+  
+        height: 500,
+        width: 250,
+        showlegend: false,
+        margin : {l:50, r:0, t:0, b:0},
+        mapbox:{
+            style:'carto-positron',
+            zoom:5.4,
+            center:{lat:39.5,lon:-8}
+        }
+        }
+    Plotly.newPlot('solar_map_a', solar_map_data_a, map_layout,config)
+    Plotly.newPlot('wind_map_a', wind_map_data_a, map_layout2,config)
+
+    Plotly.newPlot('solar_map_b', solar_map_data_b, map_layout,config)
+    Plotly.newPlot('wind_map_b', wind_map_data_b, map_layout2,config)
+
+
     {% endblock%}

@@ -68,6 +68,53 @@ def reduce_intensity(c, intensity=.2):
     return c.replace('0.8', '0.2')
 
 
+def get_mapdata(scenario_id):
+    solar = {}
+    wind = {}
+    scenario = Scenario.objects.get(id=scenario_id)
+    tech_gen = TechGeneration.objects.all().filter(scenario=scenario)
+    for tech_ob in tech_gen:
+        if 'wind' in tech_ob.technology_type:
+            print("Wind:", tech_ob.technology_type,
+                  ':', tech_ob.energy_generation)
+            if tech_ob.location.location in wind.keys():
+                wind[tech_ob.location.location] += float(
+                    tech_ob.energy_generation)
+            else:
+                wind[tech_ob.location.location] = float(
+                    tech_ob.energy_generation)
+
+        if 'pv' in tech_ob.technology_type:
+            print("Solar:", tech_ob.technology_type,
+                  ':', tech_ob.energy_generation)
+            if tech_ob.location.location in solar.keys():
+                solar[tech_ob.location.location] += float(
+                    tech_ob.energy_generation)
+            else:
+                solar[tech_ob.location.location] = float(
+                    tech_ob.energy_generation)
+    print(wind, solar)
+
+    map_data = {}
+    map_data['solar'] = {}
+    map_data['solar']['z'] = []
+    map_data['solar']['locations'] = []
+    map_data['solar']['customdata'] = []
+    for key, value in solar.items():
+        map_data['solar']['locations'].append(key)
+        map_data['solar']['z'].append(value)
+
+    map_data['wind'] = {}
+    map_data['wind']['z'] = []
+    map_data['wind']['locations'] = []
+    for key, value in wind.items():
+        map_data['wind']['locations'].append(key)
+        map_data['wind']['z'].append(value)
+
+    print(map_data)
+    return map_data
+
+
 def index(request):
     if request.method == "POST":
         if request.POST.get("form_type") == 'signup':
@@ -266,14 +313,6 @@ def interface(request, project_id):
         search_params['bio_max'] = bio_max
         search_params['battery_min'] = battery_min
         search_params['battery_max'] = battery_max
-
-        # print('Power min:{} max:{}'.format(power_min,power_max))
-        # print('Hyodro-river min:{} max:{}'.format(hydro_river_min,hydro_river_max))
-        # print('wind-on-shore min:{} max:{}'.format(wind_on_shore_min,wind_on_shore_max))
-        # print('Human min:{} max:{}'.format(human_min,human_max))
-
-        # Scale of parameters in database
-
         scenarios_filtered = filter_scenarios(search_params)
 
         # scenarios_implementation = scenarios_storage
@@ -294,9 +333,6 @@ def get_saved_search(request, search_id):
         if key != 'sub_date' and key != 'submitted_user':
             search_params[key] = ob[key]
     scenarios_filtered = filter_scenarios(search_params)
-
-    # scenarios_implementation = scenarios_storage
-
     return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
                                                  'search_params': search_params,
                                                  'json_format': serializers.serialize('json', scenarios_filtered),
@@ -579,13 +615,18 @@ def get_sankey_data(scenario_id):
 def compare(request, sc_1, sc_2):
     data1 = get_scenario_details(sc_1)
     data2 = get_scenario_details(sc_2)
+    mapdata1 = get_mapdata(sc_1)
+    mapdata2 = get_mapdata(sc_2)
     return render(request, 'compare_scenario.html', {'data1': data1,
-                                                     'data2': data2})
+                                                     'data2': data2,
+                                                     'mapdata1': mapdata1,
+                                                     'mapdata2': mapdata2})
 
 
 def inspect(request, project_id, scenario_id):
     scenario = Scenario.objects.get(id=scenario_id)
     data = get_scenario_details(scenario_id)
+    map_data = get_mapdata(scenario_id)
 
     if request.method == 'POST':
         scenario = Scenario.objects.get(id=scenario_id)
@@ -610,7 +651,7 @@ def inspect(request, project_id, scenario_id):
             print('Object saved', obj)
             messages.success(
                 request, "Scenario has been added to your portfolio.")
-    return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id})
+    return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id, 'mapdata': map_data})
 
 
 def select_location(request):
