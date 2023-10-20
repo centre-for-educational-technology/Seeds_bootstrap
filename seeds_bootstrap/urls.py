@@ -68,6 +68,7 @@ urlpatterns = [
          login_required(views.portfolio), name='portfolio'),
     path('project/', views.project_page,
          name='project_select_page'),
+    path('select/<project_id>', views.select_starting_point, name='staring_page'),
     path('interface/<project_id>',
          views.interface, name='interface'),
 

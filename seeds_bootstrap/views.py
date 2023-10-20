@@ -141,6 +141,11 @@ def rescale(value, min, max):
 
 
 def standardise(value, min, max):
+    range = max - min
+    return min - float(value) / range
+
+
+def standardise(value, min, max):
     range = float(max) - float(min)
     return (float(value) - float(min)) / range
 
@@ -621,6 +626,72 @@ def compare(request, sc_1, sc_2):
                                                      'data2': data2,
                                                      'mapdata1': mapdata1,
                                                      'mapdata2': mapdata2})
+
+
+def get_all_scenarios_impact_data(request):
+    obs = Scenario.objects.all()
+    return obs
+
+
+def select_starting_point(request, project_id):
+    start_point_a = 45
+    start_point_b = 140
+    data1 = get_scenario_details(start_point_a)
+    data2 = get_scenario_details(start_point_b)
+    mapdata1 = get_mapdata(start_point_a)
+    mapdata2 = get_mapdata(start_point_b)
+    scenarios = get_all_scenarios_impact_data(request)
+
+    land_others_a = {}
+    land_self_a = {}
+
+    land_others_b = {}
+    land_self_b = {}
+
+    for scenario in scenarios:
+        land_scaled = standardise(float(scenario.land_occupation), param_config['land_occupation']
+                                  ['min'], param_config['land_occupation']['max'])
+        print(scenario.id, ':', land_scaled)
+        if scenario.id == start_point_a:
+            label = str(scenario.id)
+            land_self_a[label] = land_scaled
+        else:
+            label = str(scenario.id)
+            land_others_a[label] = land_scaled
+
+        if scenario.id == start_point_b:
+            label = str(scenario.id)
+            land_self_b[label] = land_scaled
+        else:
+            label = str(scenario.id)
+            land_others_b[label] = land_scaled
+
+    land_other_a_text = list(land_others_a.keys())
+    land_other_a_x = list(land_others_a.keys())
+    land_other_a_y = list(land_others_a.values())
+
+    land_other_b_text = list(land_others_b.keys())
+    land_other_b_x = list(range(len(land_others_b)))
+    land_other_b_y = list(land_others_b.values())
+
+    land_self_a_text = list(land_self_a.keys())
+    land_self_a_x = list(land_self_a.keys())
+    land_self_a_y = list(land_self_a.values())
+
+    land_self_b_text = list(land_self_b.keys())
+    land_self_b_x = list(range(len(land_self_b)))
+    land_self_b_y = list(land_self_b.values())
+
+    return render(request, 'starting_page.html', {'data1': data1,
+                                                  'data2': data2,
+                                                  'mapdata1': mapdata1,
+                                                  'mapdata2': mapdata2,
+                                                  'land_other_a_text': land_other_a_text,
+                                                  'land_other_a_x': land_other_a_x,
+                                                  'land_other_a_y': land_other_a_y,
+                                                  'land_self_a_text': land_self_a_text,
+                                                  'land_self_a_x': land_self_a_x,
+                                                  'land_self_a_y': land_self_a_y, })
 
 
 def inspect(request, project_id, scenario_id):
