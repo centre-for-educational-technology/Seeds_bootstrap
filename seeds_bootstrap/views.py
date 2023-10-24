@@ -18,8 +18,12 @@ from .models import Scenario, TechGeneration, TechStorage, ScenarioLocation, Pro
 from .models import EnergySupply, EnergyTransmission, Vote, UserScenario, Electrification
 import pandas as pd
 import pprint as pp
-import json
-
+from django.conf import settings
+from urllib.parse import unquote
+from django.utils.translation import (
+    check_for_language, get_language,
+)
+LANGUAGE_SESSION_KEY = '_language'
 # location mapping
 location_mapping = {'PRT-1_1': 'Aveiro',
                     'PRT-3_1': 'Beja',
@@ -346,7 +350,20 @@ def interface(request, project_id):
                                                      'project_id': project_id})
     else:
         locations = ScenarioLocation.objects.all()
-        return render(request, 'param_selection.html', {'locations': locations})
+        return render(request, 'param_selection.html', {'project': project_id})
+
+
+def changLang(request, lang_code):
+    next = request.META.get('HTTP_REFERER')
+    next = next and unquote(next)  # HTTP_REFERER may be encoded.
+    print('URL:', next)
+    response = HttpResponse(status=204)
+    if lang_code == 'pt':
+        next = next.replace('/en/', '/pt/')
+    if lang_code == 'en':
+        next = next.replace('/pt/', '/en/')
+    response = HttpResponseRedirect(next)
+    return response
 
 
 def get_saved_search(request, search_id):

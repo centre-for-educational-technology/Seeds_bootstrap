@@ -32,7 +32,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.conf.urls.i18n import i18n_patterns
 from register import views as v
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.views.static import serve
@@ -40,7 +42,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import admin
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('', views.index, name='home'),
     path('admin/', admin.site.urls),
     path("register/", v.register, name="register"),
@@ -75,6 +77,5 @@ urlpatterns = [
     path('fetch/<search_id>', views.get_saved_search, name='fetch'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('maps/', views.map, name='map'),
-    path('location/', login_required(views.select_location), name='location'),
-
-]
+    path('location/', login_required(views.select_location), name='location')
+) + [path('changeLang/<lang_code>', views.changLang, name='change_language')]
