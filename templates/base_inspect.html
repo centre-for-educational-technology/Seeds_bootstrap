@@ -47,12 +47,13 @@
 
 
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
-
       <div class="container-fluid">
-        <div class="d-flex">
-          <div class="mr-auto text-dark pt-1"><a href="index.html">
-              <h4><a href="{%url 'home'%}">SEEDS</a></h4>
-            </a></div>
+        <div class="d-flex align-items-center">
+          <div class="mr-auto text-dark pt-1 ">
+            <a href="index.html">
+              <h4><a href="{%url 'home'%}"><img class='img img-responsive' src="{% static 'images/home.png' %}"></a></h4>
+            </a>
+          </div>
 
           <div class="mx-auto text-center">
             <nav class="site-navigation position-relative text-right" role="navigation">
@@ -79,6 +80,7 @@
       </div>
 
     </header>
+    
     <div class="site-section mb-0 pb-0">
       <div class="w-100 bg-light">
         {% if messages %}
@@ -98,7 +100,7 @@
 
       </div>
     </div>
-    <div class='m-5 p-5 h-100'></div>
+    <div id= class='m-5 p-5 h-100'></div>
     <div class='site-footer'>
       <footer class="footer-section bg-light px-5 py-0">
         <div class="container-fluid px-4 text-muted py-0">
@@ -130,10 +132,6 @@
         </div>
       </footer>
     </div>
-   
-
-
-
   </div>
  
   

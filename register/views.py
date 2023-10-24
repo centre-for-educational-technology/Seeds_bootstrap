@@ -60,7 +60,7 @@ def login(request):
                     messages.error(request, 'Entered password is wrong.')
                     return redirect('login')
             except:
-                messages.error(request, 'User does not exists.')
+                # messages.error(request, 'User does not exists.')
                 return redirect('login')
         else:
             print('not valid')
@@ -92,6 +92,7 @@ def register(request):
     print('Inside register:', request.method)
     if request.method == "POST":
         form = RegisterForm(request.POST)
+        print(form)
         if form.is_valid():
             print('form is valid')
             user = form.save(commit=False)

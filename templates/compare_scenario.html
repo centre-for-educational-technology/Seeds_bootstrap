@@ -199,7 +199,8 @@
       featureidkey:'properties.index',
       z: {{ mapdata1.solar.z | safe}},
       locations:{{ mapdata1.solar.locations | safe}},
-      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      text:{{ mapdata1.solar.text | safe}},
+      hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
 
       marker_line_width:1,
@@ -211,7 +212,8 @@
       featureidkey:'properties.index',
       z: {{ mapdata1.wind.z | safe}},
       locations:{{ mapdata1.wind.locations | safe}},
-      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      text:{{ mapdata1.wind.text | safe}},
+      hovertemplate: 'Wind: %{z:.2f} TW<br>%{text}<extra></extra>',
       marker_line_width:1,
       showscale:false,
     }]
@@ -222,7 +224,8 @@
       featureidkey:'properties.index',
       z: {{ mapdata2.solar.z | safe}},
       locations:{{ mapdata2.solar.locations | safe}},
-      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      text:{{ mapdata2.solar.text | safe}},
+      hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
 
       marker_line_width:1,
@@ -234,7 +237,8 @@
       featureidkey:'properties.index',
       z: {{ mapdata2.wind.z | safe}},
       locations:{{ mapdata2.wind.locations | safe}},
-      customdata: [65, 88, 51, 46, 93, 20, 79, 33, 95, 95, 62,  7],
+      text:{{ mapdata2.wind.text | safe}},
+      hovertemplate: 'Wind: %{z:.2f} TW<br>%{text}<extra></extra>',
       marker_line_width:1,
       showscale:false,
     }]
