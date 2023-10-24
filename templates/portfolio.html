@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load i18n %}
 {%block body%}
 
     <div class="row flex-nowrap m-4 p-4 h-100">
@@ -8,17 +9,17 @@
                 <ul class="nav nav-pills flex-column mb-sm-auto mt-3 mb-2 align-items-center pt-5 " id="menu">
                     <li class="btn btn-info py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20">
                         <a href="{% url 'project_select_page' %}" class="align-middle px-0 text-white  ">
-                            <i class="fa fa-plus pr-2"></i>  <span class="ms-1 d-none  d-sm-inline">New Scenario</span>
+                            <i class="fa fa-plus pr-2"></i>  <span class="ms-1 d-none  d-sm-inline">{% translate 'New Scenario'%}</span>
                         </a>
                     </li>
                     <li class="btn btn-primary mt-4 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
                         <a href="{% url 'portfolio' query='saved_scenarios'%}" data-bs-toggle="collapse" class="text-white ">
-                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Portfolio</span> 
+                            <i class="fa fa-archive pr-2"></i>  <span class="ms-1 d-none d-sm-inline">{% translate 'Portfolio'%}</span> 
                         </a>
                     </li>
                     <li class="btn btn-primary mt-4 mb-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
                         <a href="{% url 'portfolio' query='saved_searches'%}" data-bs-toggle="collapse" class="text-white ">
-                            <i class="fa fa-save pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Saved Search</span> 
+                            <i class="fa fa-save pr-2"></i>  <span class="ms-1 d-none d-sm-inline">{% translate 'Saved Search'%}</span> 
                         </a>
                     </li>
                     <!--
@@ -30,15 +31,15 @@
                     -->
                     <li class="btn btn-secondary mt-5 py-2 px-5 btn-pill btn-md btn-block waves-effect text-left m-b-20" pt-2>
                         <a href="#submenu1" data-bs-toggle="collapse" class="text-white ">
-                            <i class="fa fa-cog pr-2"></i>  <span class="ms-1 d-none d-sm-inline">Account settings</span> 
+                            <i class="fa fa-cog pr-2"></i>  <span class="ms-1 d-none d-sm-inline">{% translate 'Account settings'%}</span> 
                         </a>
                     </li>
                     
                     
                 </ul>
                 <div class='mt-5 p-2'>
-                    <p class='mx-3'><a href="#">Terms of Use</a></p>
-                    <p class='mx-3'><a href="#">Privacy policy</a></p>
+                    <p class='mx-3'><a href="#">{% translate 'Terms of Use'%}</a></p>
+                    <p class='mx-3'><a href="#">{% translate 'Privacy policy'%}</a></p>
 
                 </div>
                 <hr>
@@ -48,35 +49,35 @@
         <div class="col px-5 h-75">
             <div class = 'd-flex px-3 row'>
                 <div>
-                    <h3 class='px-3 font-weight-bold'> Your Portfolio </h3>
+                    <h3 class='px-3 font-weight-bold'> {% translate 'Your Portfolio'%} </h3>
                 </div>
                 <div class='ml-auto'>
                     <h3><a title='Logout' class='text-muted' href="/logout/"><i class="fa fa-sign-out-alt"></i></a></h3>
                 </div>
             </div>
-            <p class='text-muted px-3 mb-4'> Store and organise your favourite scenarios </p>
+            <p class='text-muted px-3 mb-4'> {% translate 'Store and organise your favourite scenarios'%} </p>
             <div class='text-center text-lg py-5 align-middle h-75'>
                  {% if scenarios|length == 0 %}
-                    <div class='text-muted'> It seems like your portfolio is still empty. </div>
+                    <div class='text-muted'> {% translate 'It seems like your portfolio is still empty.'%} </div>
                     <div class='text-muted mb-5'>    
                         Click <b>Start</b> to begin selecting your favourite energy transition scenarios. 
                     </div> 
-                    <div> <a href="{% url 'project_select_page'%}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md"> Start</a></div>
+                    <div> <a href="{% url 'project_select_page'%}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md"> {% translate 'Start'%}</a></div>
                 {% else %}
                 <div class='text-left'>
                 {% if query == 'saved_scenarios' %}
-                <h4> Your saved scenarios </h4>
+                <h4> {% translate 'Your saved scenarios'%} </h4>
                 {% endif %}
                 {% if query == 'saved_searches' %}
-                <h4> Your saved scenarios </h4> 
+                <h4> {% translate 'Your saved scenarios'%} </h4> 
                 {% endif %}
                 </div>
                 <table class="table ">
                     <thead>
                         <tr> 
-                            <th class='text-left'>Name</th>
+                            <th class='text-left'>{% translate 'Name'%}</th>
                             
-                            <th>Last Modified</th>
+                            <th>{% translate 'Last Modified'%}</th>
                         </tr>
                     </thead>
                     <tbody>

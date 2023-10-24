@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load i18n %}
 {%block body%}
 
 </script>
@@ -13,7 +14,7 @@
     
 </style>
 <div id='save_confirmation' class="p-2 mt-5 alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
-  Your search parameters have been saved in your searches.
+  {% translate 'Your search parameters have been saved in your searches.'%}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
   <span aria-hidden="true">&times;</span>
   </button>
@@ -36,9 +37,9 @@
   }
 }" class="m-4 p-5" >
     
-    <h3 >  Scenario Insepction </h3>
-    <p class="'text-secondary"> In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.  </p>
-    <p class="'text-secondary"> The actions tab on the right allows you to perform comparisons and download scenario reports.</p>
+    <h3 >     {% translate 'Scenario Insepction'%} </h3>
+    <p class="'text-secondary">    {% translate 'In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.'%}  </p>
+    <p class="'text-secondary">    {% translate 'The actions tab on the right allows you to perform comparisons and download scenario reports.'%}</p>
     <div class='d-flex flex-row-reverse p-2 m-2'>
       {% if user.is_authenticated %}
         <i x-on:click="downloadCSV" title="download"  class="fa fa-download  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary"></i> 
@@ -53,18 +54,18 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Are you sure
+                <h5 class="modal-title" id="exampleModalLabel">   {% translate 'Are you sure'%}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class='modal-body'>
-                Confirming this choice will erase all settings defined for these scenarios.
+              {% translate 'Confirming this choice will erase all settings defined for these scenarios.'%}
             </div>
             <div class="modal-footer">
-              <a href="{% url 'interface' project_id=1 %}" type="button" class="btn btn-primary">Confirm</a>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <a href="{% url 'interface' project_id=1 %}" type="button" class="btn btn-primary"> {% translate 'Confirm'%}</a>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">   {% translate 'Cancel'%}</button>
             </div>
         </div>
       </div>
@@ -75,17 +76,17 @@
         <div class="modal-content">
        
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel1"> Saved successsfully !
+                <h5 class="modal-title" id="exampleModalLabel1">    {% translate 'Saved successsfully !'%}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class='modal-body'> 
-              <p> Your search parameters have been saved in your saved search.</p>
+              <p>    {% translate 'Your search parameters have been saved in your saved search.'%}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">   {% translate 'Cancel'%}</button>
             </div>
 
         </div>
@@ -97,7 +98,7 @@
         <div class="modal-content">
        
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Save the search parameters in your portfolio
+                <h5 class="modal-title" id="exampleModalLabel">   {% translate 'Save the search parameters in your portfolio'%}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -106,15 +107,15 @@
             <div class='modal-body'>
               
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Label</label>
+                  <label for="exampleInputEmail1">   {% translate 'Label'%}</label>
                   <input type="text" class="form-control" id="search_param_name" name="label" aria-describedby="emailHelp" placeholder="Enter label">
-                  <small  class="form-text text-muted">Search parameters will be saved with the specified label.</small>
+                  <small  class="form-text text-muted">   {% translate 'Search parameters will be saved with the specified label.'%}</small>
                 </div>
               
             </div>
             <div class="modal-footer">
-              <button id='save_params' type="submit" class="btn btn-primary">Save</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button id='save_params' type="submit" class="btn btn-primary">   {% translate 'Save'%}</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">   {% translate 'Cancel'%}</button>
             </div>
 
         </div>
@@ -125,7 +126,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Compare two scenarios
+                <h5 class="modal-title" id="exampleModalLabel">   {% translate 'Compare two scenarios'%}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -143,7 +144,7 @@
               </template>
               <template x-if="!check()">
                 <div>
-                  <i class='px-2 py-1 rounded bg-danger text-white fa fa-exclamation '></i> You need to select two scenarios for comparison.
+                  <i class='px-2 py-1 rounded bg-danger text-white fa fa-exclamation '></i>    {% translate 'You need to select two scenarios for comparison.'%}
                 </div>
               </template>
             </div>
@@ -151,12 +152,12 @@
               <template x-if="check()">
                 <div>
                  
-                  <a x-bind:href="'/compare/' + selected_scenarios[0] + '/' + selected_scenarios[1] + '/'" class="btn btn-primary text-white">Confirm</a>
+                  <a x-bind:href="'/compare/' + selected_scenarios[0] + '/' + selected_scenarios[1] + '/'" class="btn btn-primary text-white">   {% translate 'Confirm'%}</a>
                 </div>
                 </form>
               </template>
               <template x-if="!check()">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">   {% translate 'Close'%}</button>
             </template>
             </div>
         </div>
@@ -170,7 +171,7 @@
                           <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
                               <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Energy System Settings
+                                {% translate 'Energy System Settings'%}
                               </button>
                             </h5>
                           </div>
@@ -186,7 +187,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <small>
-                                          Power generation
+                                          {% translate 'Power generation'%}
                                         </small>
                                       </div>
                                     </div> 
@@ -199,7 +200,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <small>
-                                          Total Energy Supply
+                                          {% translate 'Total Energy Supply'%}
                                         </small>
                                       </div>
                                     </div> 
@@ -212,7 +213,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <small>
-                                          Transmission
+                                          {% translate 'Transmission'%}
                                         </small>
                                       </div>
                                     </div> -->
@@ -225,7 +226,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <small>
-                                          Total Storage
+                                          {% translate 'Total Storage'%}
                                         </small>
                                       </div>
                                     </div> 
@@ -238,7 +239,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <small>
-                                          Pace of Implementation
+                                          {% translate 'Pace of Implementation'%}
                                         </small>
                                       </div>
                                     </div> 
@@ -251,7 +252,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <small>
-                                          Community Structured
+                                          {% translate 'Community Structured'%}
                                         </small>
                                       </div>
                                     </div> 
@@ -264,7 +265,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <small>
-                                          Electrification (Heating)
+                                          {% translate 'Electrification (Heating)'%}
                                         </small>
                                       </div>
                                     </div> 
@@ -277,7 +278,7 @@
                                       </div>
                                       <div class='pl-2'>
                                         <p class='small'>
-                                          Electrification (Transport)
+                                          {% translate 'Electrification (Transport)'%}
                                         </p>
                                       </div>
                                     </div>  -->
@@ -288,7 +289,7 @@
                           <div class="card-header" id="headingTwo">
                             <h5 class="mb-0">
                               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Energy Technology
+                                {% translate 'Energy Technology'%}
                               </button>
                             </h5>
                           </div>
@@ -303,7 +304,7 @@
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Wind Onshore
+                                    {% translate 'Wind Onshore'%}
                                   </small>
                                 </div>
                               </div> 
@@ -317,7 +318,7 @@
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Wind Offshore
+                                    {% translate 'Wind Offshore'%}
                                   </small>
                                 </div>
                               </div> 
@@ -331,7 +332,7 @@
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Roof Mounted PV
+                                    {% translate 'Roof Mounted PV'%}
                                   </small>
                                 </div>
                               </div> 
@@ -344,7 +345,7 @@
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Open Field PV
+                                    {% translate 'Open Field PV'%}
                                   </small>
                                 </div>
                               </div>    
@@ -370,7 +371,7 @@
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Global Warming
+                                    {% translate 'Global Warming'%}
                                   </small>
                                 </div>
                               </div> 
@@ -383,7 +384,7 @@
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Water Consumption
+                                    {% translate 'Water Consumption'%}
                                   </small>
                                 </div>
                               </div> 
@@ -396,7 +397,7 @@
                                 </div>
                                 <div class='pl-2'>
                                   <small>
-                                    Land occupation
+                                    {% translate 'Land occupation'%}
                                   </small>
                                 </div>
                               </div> 
@@ -412,20 +413,20 @@
                     <thead>
                         <tr>
                             
-                            <th>Scenario ID</th>
-                            <th x-show="power">Power capacity (Tw)</th>
-                            <th x-show="storage">Storage capacity (Twh)</th>
-                            <th x-show="pace">Community infrastructure</th>
-                            <th x-show="infra">Implementation pace</th>
-                            <th>Import dependency</th>
+                            <th>   {% translate 'Scenario'%} ID</th>
+                            <th x-show="power">   {% translate 'Power capacity'%} (Tw)</th>
+                            <th x-show="storage">   {% translate 'Storage capacity'%} (Twh)</th>
+                            <th x-show="pace">   {% translate 'Community infrastructure'%}</th>
+                            <th x-show="infra">   {% translate 'Implementation pace'%}</th>
+                            <th>   {% translate 'Import dependency'%}</th>
                             
-                            <th x-show="wind_onshore">Wind onshore </th>
-                            <th x-show="wind_offshore">Wind offshore </th>
-                            <th x-show="roof_pv">Roof mounted pv</th>
-                            <th x-show="field_pv">Open field pv </th>
-                            <th x-show="global">Global warming</th>
-                            <th x-show="water">Water consumption</th>
-                            <th x-show="land">Land occupation</th>
+                            <th x-show="wind_onshore">   {% translate 'Wind onshore'%} </th>
+                            <th x-show="wind_offshore">   {% translate 'Wind offshore'%} </th>
+                            <th x-show="roof_pv">   {% translate 'Roof mounted pv'%}</th>
+                            <th x-show="field_pv">   {% translate 'Open field pv'%} </th>
+                            <th x-show="global">   {% translate 'Global warming'%}</th>
+                            <th x-show="water">   {% translate 'Water consumption'%}</th>
+                            <th x-show="land">   {% translate 'Land occupation'%}</th>
                             <th >Details</th>
                            
                         </tr>
@@ -448,7 +449,7 @@
                             <td x-show="global">{{scenario.global_warming |floatformat:2}}</td>
                             <td x-show="water">{{scenario.water_consumption |floatformat:2}}</td>
                             <td x-show="land">{{scenario.land_occupation |floatformat:2}}</td>
-                            <td > <a href='{% url 'inspect' project_id=project_id scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>Inspect</a></td>
+                            <td > <a href='{% url 'inspect' project_id=project_id scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>   {% translate 'Inspect'%}</a></td>
                            
                         </tr>
                         {% endfor %}

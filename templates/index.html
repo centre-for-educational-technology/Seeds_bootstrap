@@ -1,41 +1,42 @@
 
 {% extends 'base.html'%}
 {% load static %}
+{% load i18n %}
 {%block body%}
 
 <div class='row mt-4 p-4 h-100 justify-content-around mb-5'>
-  <div class="px-5 col col-lg-6 col-md-7 col-sm-8 col-xs-8">
-      <div class="h2 font-weight-bold text-dark col-xs-8 col-lg-8 col-md-12 col-sm-12">
-        Stakeholder-Based Environmentally-sustainable and Economically Doable Scenarios for the Energy Transition
+  <div class="px-5 col col-lg-7 col-md-6 col-sm-12 col-xs-12">
+      <div class="h4 p-0 font-weight-bold text-dark col-xs-12 col-lg-10 col-md-12 col-sm-12">
+        {% translate 'Stakeholder-Based Environmentally-sustainable and Economically Doable Scenarios for the Energy Transition' %}
       </div>
-      <div class="pt-5 mt-2">
-        In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. Doing so involves methodological development, software development and implementation, and experimentation with a pilot study in Portugal. 
+      <div class="pt-5 mt-2 ">
+        {% translate  'In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. Doing so involves methodological development, software development and implementation, and experimentation with a pilot study in Portugal. ' %}
       </div>
       <div class="pt-2 mt-1">
-        This work is done in a focused consortium of four partners: ETHZ is a leading centre of high-resolution energy system modelling; ICTA-UAB is a leading centre in the development of integrated sustainability assessment methods; TLU provides expertise in participatory design of trustworthy interactive systems; and FC.ID contributes its unique expertise combining modelling with participatory action research. 
+        {% translate  'This work is done in a focused consortium of four partners: ETHZ is a leading centre of high-resolution energy system modelling; ICTA-UAB is a leading centre in the development of integrated sustainability assessment methods; TLU provides expertise in participatory design of trustworthy interactive systems; and FC.ID contributes its unique expertise combining modelling with participatory action research. ' %}
       </div>
  
   </div>
-  <div class=" mr-4 col col-lg-4 col-md-5 col-sm-4 col-xs-4">
+  <div class=" mr-4 mt-4 col col-lg-4 col-md-5 col-sm-4 col-xs-4">
     <div class="px-3">
       <div class="btn-group d-flex" id="myTabs" role="group" aria-label="Basic example">
-          <button type="button" id="signup-tab" class="btn rounded-left border-left border-top border-bottom border-right border-right-5 border-5 border-gray bg-light text-muted px-3 w-100">Sign up</button>
-          <button type="button" id="signin-tab"  class="btn rounded-right border-right border-top border-bottom border-5  border-gray bg-light  text-muted px-3 w-100">Sign in</button>
+          <button type="button" id="signup-tab" class="btn rounded-left border-left border-top border-bottom border-right border-right-5 border-5 border-gray bg-light text-muted px-3 w-100"> {% translate 'Sign up' %}</button>
+          <button type="button" id="signin-tab"  class="btn rounded-right border-right border-top border-bottom border-5  border-gray bg-light  text-muted px-3 w-100">{% translate 'Sign in' %}</button>
       </div>
     </div>
     <div class="tab-content" id="signup_content">
       <div  class='text-muted  text-center small p-1' > 
-        Create your account to access all app resources
+        {% translate  ' Create your account to access all app resources' %}
       </div>
       <form class= "mt-2 " method="post" id='signup'>
         {% csrf_token %}
         <div class="form-group form-primary font-weight-bold">
-          Email address  {{form.email }} 
+          {% translate  'Email address' %}  {{form.email }} 
         </div>
         <input type="hidden" name="form_type" value="signup">
         <br/>
         <div class="py-3  d-flex justify-content-center">
-          <input type="submit" class="btn btn-primary py-2 px-5 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Create a new account"> 
+          <input type="submit" class="btn btn-primary py-2 px-5 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value=" {% translate  'Create a new account'%}"> 
         </div>
       </form>
     </div>
@@ -45,16 +46,16 @@
       <form class= "mt-2 " method="post">
         {% csrf_token %}
         <div class="form-group form-primary font-weight-bold">
-          Email address  {{form.email }} 
+          {% translate  'Email address' %}  {{form.email }} 
         </div>
         <div class="form-group pass_show  font-weight-bold pt-2"> 
-          Password
+          {% translate  'Password' %}
           {{form.password}}
         </div>
         <input type="hidden" name="form_type" value="signin">
         <br/>
         <small class='text-right'>
-         <!----> <a href="{% url 'password_reset' %}">I forgot my password</a>
+         <!----> <a href="{% url 'password_reset' %}"> {% translate  'I forgot my password' %}</a>
         </small>
         <div class="py-3  d-flex justify-content-center">
           <input type="submit" class="btn btn-primary py-2 px-5 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> 
@@ -66,8 +67,8 @@
 
   <div class=' d-flex justify-content-center' style="background-color: rgba(67,114,227,.2)">
     <div class="p-5 text-dark d-flex flex-column">
-     <div class='h4 p-2 text-dark text-center'> START USING IT </div>
-     <div class='p-2 text-center'> <a href="{% url 'project_select_page' %}" class="text-white btn btn-info py-2 px-4 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"> Try SEEDS App </a></div>
+     <div class='h4 p-2 text-dark text-center'>  {% translate  'START USING IT'%} </div>
+     <div class='p-2 text-center'> <a href="{% url 'project_select_page' %}" class="text-white btn btn-info py-2 px-4 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;">  {% translate  'Try SEEDS App'%} </a></div>
     </div>
   <div>
 </div>

@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load i18n %}
 {%block body%}
     <div class="mt-4 mx-4 px-5 ">
         <a class="text-muted" href="{% url 'portfolio' query='saved_scenarios' %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
@@ -7,9 +8,9 @@
     <div class="mt-2 mx-4 mb-5 px-5 h-100">
         
         <div class='mb-4'>
-            <h2> Join a Project </h2>
+            <h2> {% translate 'Join a Project'%} </h2>
             <p class='text-muted text-lg'> 
-                We call Projects the different ”case studies” proposed by the research team which helps SEEDS researchers to close the human-computer loop. Preferences expressed by our users will help to tailor the algorithms used by our tool for the ranking of optimal solutions.
+                {% translate 'We call Projects the different case studies proposed by the research team which helps SEEDS researchers to close the human-computer loop. Preferences expressed by our users will help to tailor the algorithms used by our tool for the ranking of optimal solutions.'%}
             </p>
         </div>
         {% for project in projects %}
@@ -21,11 +22,11 @@
                    {{ project.description }}
                 </p>
                 <p class='mt-2'>
-                    Find out more in our <a href='#'>Documentation</a>.
+                    {% translate 'Find out more in our'%} <a href='#'>Documentation</a>.
                 </p>
             </div>
             <div class='p-2 align-center'>
-                <a href="{%url 'starting_page' project_id=project.id   %}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md"> Join</a>
+                <a href="{%url 'starting_page' project_id=project.id   %}" class="btn btn-primary  py-1 text-white px-5 btn-pill btn-md">  {% translate 'Join'%}</a>
             </div>
         </div>
         {% endfor %}

@@ -1,5 +1,6 @@
 {% extends 'base_inspect.html'%}
 {%load static%}
+{% load i18n %}
 {%block body%}
 <style>
   a.active {
@@ -29,18 +30,18 @@ aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header border-bottom-0">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure
+            <h5 class="modal-title" id="exampleModalLabel">{% translate 'Are you sure'%}
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class='modal-body'>
-            Confirming this choice will erase all settings defined for these scenarios.
+          {% translate 'Confirming this choice will erase all settings defined for these scenarios.'%}
         </div>
         <div class="modal-footer">
-          <a href="{% url 'interface' project_id=1 %}" type="button" class="btn btn-primary">Confirm</a>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a href="{% url 'interface' project_id=1 %}" type="button" class="btn btn-primary">{% translate 'Confirm'%}</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate 'Cancel'%}</button>
         </div>
     </div>
   </div>
@@ -54,7 +55,7 @@ aria-hidden="true">
             <input type='hidden' name='form_type' value='save'>
             <input type='hidden' name='project_id' value='{{project_id}}'>
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Save this scenario in your portfolio
+                <h5 class="modal-title" id="exampleModalLabel">{% translate 'Save this scenario in your portfolio'%}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -65,13 +66,13 @@ aria-hidden="true">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Label</label>
                   <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="Enter label">
-                  <small  class="form-text text-muted">Scenario will be saved with the label.</small>
+                  <small  class="form-text text-muted">{% translate 'Scenario will be saved with the label.'%}</small>
                 </div>
               
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">{% translate 'Save'%}</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate 'Cancel'%}</button>
             </div>
           </form>
         </div>
@@ -79,9 +80,9 @@ aria-hidden="true">
     </div>
 <!--
 <div class="p-2 m-5 bg-white shadow-sm border-light rounded rounded-bottom text-center">
-  <p class='p-1 h5'> Would you be willing to accept this scenario?</p> 
+  <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p> 
   <p class="p-1">
-    Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system
+    {% translate 'Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system'%}
   </p>
   <div class="flex p-4">
     <button class='rounded bg-light btn  px-5'> <i class="fa fa-check text-success" data-toggle='modal' data-placement='top' data-target="#vote_modal"></i> </button>
@@ -99,7 +100,7 @@ aria-hidden="true">
             <input type='hidden' name='form_type' value='vote'>
             <input type='hidden' id='vote_input' name='vote_input' value = '1'>
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Cofirm
+                <h5 class="modal-title" id="exampleModalLabel">{% translate 'Cofirm'%}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -107,9 +108,9 @@ aria-hidden="true">
             </div>
             <div class='modal-body'>
               <div class="p-2 m-5 text-center">
-                <p class='p-1 h5'> Would you be willing to accept this scenario?</p> 
+                <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p> 
                 <p class="p-1">
-                  Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system
+                  {% translate 'Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system'%}
                 </p>
                 <div class="flex p-4">
                   <a id="like" href="#" class='rounded bg-success text-white btn  px-5'> <i class="fa fa-check"></i> </a>
@@ -119,7 +120,7 @@ aria-hidden="true">
                 
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Vote</button>
+              <button type="submit" class="btn btn-primary">{% translate 'Vote'%}</button>
               
             </div>
           </form>
@@ -130,10 +131,10 @@ aria-hidden="true">
   <div class='row'>
     <div class='col col-8'>
       <div class='row mt-3 pr-3 col-12 p-4 bg-white shadow-sm border-light rounded rounded-bottom'>
-        <p class='small text-muted font-weight-bold'>Scenario Performance</p>
+        <p class='text-muted font-weight-bold'>{% translate 'Scenario Performance'%}</p>
         <div class='d-flex flex-row'>
-          <div class="px-2 py-2 w-25">
-            The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).
+          <div class="px-2 small py-2 w-50">
+            {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).'%}
           </div>
           <div class="px-5 py-2">
             <div class='' id='impact_control'></div>
@@ -150,7 +151,7 @@ aria-hidden="true">
     </div>
     <div class='col col-4 p-3'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
-        <p class='small text-muted font-weight-bold'>Total Energy </p>
+        <p class='small text-muted font-weight-bold'>{% translate 'Total Energy'%} </p>
         <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/year</p>
 
         <a class="m-3  d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
@@ -158,17 +159,17 @@ aria-hidden="true">
             <img width="50px" src="{% static 'images/PHOTOVOLTAIC.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>Photovoltic</div>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Photovoltic'%}</div>
             <div class='h4 px-2 text-dark font-weight-bold'> {{data.total_pv |floatformat:2 }} TWh/year</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseOne">
           <div class='bg-light m-2 rounded-top rounded-bottom'>
-            <p class='small pl-4 pt-2'> Roof PV </p>
+            <p class='small pl-4 pt-2'> {% translate 'Roof PV'%} </p>
             <p class='display-5 text-right pr-3 pb-3'>{{data.pv_roof_percentage |floatformat:2}}%</p>
           </div>
           <div class='bg-light m-2 rounded-top rounded-bottom'>
-            <p class='small pl-4 pt-2'> Open field PV </p>
+            <p class='small pl-4 pt-2'> {% translate 'Open field PV'%} </p>
             <p class='display-5 text-right pr-3 pb-3'>{{data.pv_open_percentage |floatformat:2}}%</p>
           </div>
         </div>
@@ -178,17 +179,17 @@ aria-hidden="true">
             <img width="50px" src="{% static 'images/wind.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>Wind</div>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Wind'%}</div>
             <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_wind |floatformat:2 }} TWh/year</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseTwo">
           <div class='bg-light m-2 rounded-top rounded-bottom'>
-            <p class='small pl-4 pt-2'> Off-shore </p>
+            <p class='small pl-4 pt-2'> {% translate 'Off-shore'%} </p>
             <p class='display-5 text-right pr-3 pb-3'>{{data.wind_onshore_percentage |floatformat:2}}%</p>
           </div>
           <div class='bg-light m-2 rounded-top rounded-bottom'>
-            <p class='small pl-4 pt-2'> On-shore </p>
+            <p class='small pl-4 pt-2'> {% translate 'On-shore'%} </p>
             <p class='display-5 text-right pr-3 pb-3'>{{data.wind_offshore_percentage |floatformat:2}}%</p>
           </div>
         </div>
@@ -197,7 +198,7 @@ aria-hidden="true">
             <img width="60px" src="{% static 'images/bio.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>Biofuels</div>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Biofuels'%}</div>
             <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.bio_fuel |floatformat:2 }} TWh/year</div>
           </div>
         </a>
@@ -207,7 +208,7 @@ aria-hidden="true">
             <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>Hydrogen</div>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Hydrogen'%}</div>
             <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/year</div>
           </div>
         </a>
@@ -216,7 +217,7 @@ aria-hidden="true">
             <img width="50px" src="{% static 'images/ELECTRIC.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>Electrification</div>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Electrification'%}</div>
             <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_electrification |floatformat:2 }} TWh/year</div>
           </div>
         </a>
@@ -265,7 +266,9 @@ aria-hidden="true">
           range: [0,1]
         }
       },
-      showlegend: false
+      width: 300,
+      margin : {l:35, r:15, t:15, b:15},
+      showlegend: false,
     }
     Plotly.newPlot("impact_control", data, layout,config)
     

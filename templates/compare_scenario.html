@@ -1,5 +1,6 @@
 {% extends 'base_inspect.html'%}
 {%load static%}
+{% load i18n %}
 {%block body%}
 <style>
   a.active {
@@ -13,9 +14,9 @@
 </style>
 <div class='d-flex px-4 mx-4 justify-content-between'>
   <div>
-    <h2> Comparison </h2> 
+    <h2> {% translate 'Comparison'%} </h2> 
     <p class='text-muted'> 
-      Here you can compare the features of the selected scenarios. Further actions are available using the toolbar on the bottom. Check the scenarios numbers and characteristic by clicking on the Detailed Report icon.
+      {% translate 'Here you can compare the features of the selected scenarios. Further actions are available using the toolbar on the bottom. Check the scenarios numbers and characteristic by clicking on the Detailed Report icon.'%}
     </p>
   </div>
 
@@ -25,17 +26,17 @@
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
         <p class='h3  font-weight-bold'>Scenario {{data1.scenario.id}}</p>
-        <a href='{% url 'inspect' project_id=data1.scenario.project.id scenario_id=data1.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
+        <a href='{% url 'inspect' project_id=data1.scenario.project.id scenario_id=data1.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>{% translate 'Inspect'%}</a>
       </div>
-      <div class='row mt-3 pr-3 col-12 p-4 '>
-        <div class='col mr-3 p-4 '>
-          <div class='m-2' id='power_generation_a'></div>
-          <div  id='energy_supply_a'></div>
-          <div class='p-0 m-2' id='power_storage_a'></div>
+      <div class='row mt-3 pr-3 col-12 '>
+        <div class='col mr-3 p-0'>
+          <div class='m-1' id='power_generation_a'></div>
+          <div class='p-1' id='energy_supply_a'></div>
+          <div class='p-0 m-1' id='power_storage_a'></div>
         </div>
-        <div class='col p-4'>
-          <div class='p-1 ' id="solar_map_a"></div>
-          <div class='p-1'  id="wind_map_a"></div>
+        <div class='col p-0'>
+          <div class='d-flex align-items-start p-1' id="solar_map_a"></div>
+          <div class='d-flex align-items-end p-1'   id="wind_map_a"></div>
         </div>
       </div>
     </div>
@@ -43,15 +44,15 @@
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
         <p class='h3  font-weight-bold'>Scenario {{data2.scenario.id}}</p>
-        <a href='{% url 'inspect' project_id=data2.scenario.project.id scenario_id=data2.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Inspect</a>
+        <a href='{% url 'inspect' project_id=data2.scenario.project.id scenario_id=data2.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>{% translate 'Inspect'%}</a>
       </div>
       <div class='row mt-3 pr-3 col-12 p-4 '>
-        <div class='col mr-3 p-4 '>
+        <div class='col mr-3 p-0'>
           <div class='m-2' id='power_generation_b'></div>
           <div  id='energy_supply_b'></div>
           <div class='p-0 m-2' id='power_storage_b'></div>
         </div>
-        <div class='col p-4'>
+        <div class='col'>
           
           <div class='p-1 d-flex align-items-start' id="solar_map_b"></div>
           <div class='p-1 d-flex align-items-end'  id="wind_map_b"></div>
@@ -65,7 +66,7 @@
       <p class='small text-muted font-weight-bold'>Scenarios Performance</p>
       <div class='d-flex flex-row'>
         <div class="px-2 py-2 w-25">
-          The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).
+          {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).'%}
         </div>
         <div class="px-5 py-2">
           <div class='' id='impact_control'></div>
@@ -115,9 +116,11 @@
       automargin: true
     }]
     var layout_supply = {
-      height: 400,
-      width: 330,
-      showlegend: false
+      height: 230,
+      width: 230,
+      showlegend: false,
+      margin : {l:0, r:0, t:0, b:0},
+ 
       }
     Plotly.newPlot('energy_supply_a', data_supply, layout_supply,config)
 
@@ -131,65 +134,67 @@
     }]
     var layout_supply = {
  
-      height: 400,
-      width: 330,
-      showlegend: false
+      height: 230,
+      width: 230,
+      showlegend: false,
+      margin : {l:0, r:0, t:0, b:0},
+ 
       }
     Plotly.newPlot('energy_supply_b', data_supply, layout_supply,config)
 
     var power_data = {{data1.power_bar_data | safe}};
     var layout = {
-    title: 'Power generation',
     barmode: 'stack',
     xaxis:{
         range:[0,{{data1.total_generation}} + 20]
     },
-    height: 240,
-    width: 300,
+    height: 60,
+    width: 150,
     showlegend: false,
-    legend:{orientation: 'h', side:'top'}
+    legend:{orientation: 'h', side:'top'},
+    margin : {l:40, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_generation_a', power_data,layout,config);
 
     var storage_data = {{data1.storage_bar_data | safe}};
     var layout = {
-    title: 'Power storage',
     barmode: 'stack',
     xaxis:{
         range:[0,{{data1.total_storage}} + 20]
     },
-    height: 240,
-    width: 300,
+    height: 60,
+    width: 150,
     showlegend: false,
-    legend:{orientation: 'h', side:'top'}
+    legend:{orientation: 'h', side:'top'},
+    margin : {l:50, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_storage_a', storage_data,layout,config);
 
     var power_data = {{data2.power_bar_data | safe}};
     var layout = {
-    title: 'Power generation',
     barmode: 'stack',
     xaxis:{
         range:[0,{{data2.total_generation}} + 20]
     },
-    height: 240,
-    width: 300,
+    height: 60,
+    width: 150,
     showlegend: false,
-    legend:{orientation: 'h', side:'top'}
+    legend:{orientation: 'h', side:'top'},
+    margin : {l:40, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_generation_b', power_data,layout,config);
 
     var storage_data = {{data2.storage_bar_data | safe}};
     var layout = {
-    title: 'Power storage',
     barmode: 'stack',
     xaxis:{
         range:[0,{{data2.total_storage}} + 20]
     },
-    height: 240,
-    width: 300,
+    height: 60,
+    width: 150,
     showlegend: false,
-    legend:{orientation: 'h', side:'top'}
+    legend:{orientation: 'h', side:'top'},
+    margin : {l:50, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_storage_b', storage_data,layout,config);
   
@@ -227,7 +232,6 @@
       text:{{ mapdata2.solar.text | safe}},
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
-
       marker_line_width:1,
   
     }]
@@ -243,26 +247,26 @@
       showscale:false,
     }]
     var map_layout = {
-  
-      height: 500,
-      width: 250,
+      height: 300,
+      width: 120,
       showlegend: false,
-      margin : {l:0, r:50, t:0, b:0,pad:5},
+
+      margin : {l:0, r:20, t:0, b:0,pad:5},
       mapbox:{
           style:'carto-positron',
-          zoom:5.4,
+          zoom:4.4,
           center:{lat:39.5,lon:-8}
       }
       }
       var map_layout2 = {
   
-        height: 500,
-        width: 250,
-        showlegend: false,
-        margin : {l:50, r:0, t:0, b:0},
+        height: 300,
+      width: 120,
+      showlegend: false,
+        margin : {l:20, r:0, t:0, b:0},
         mapbox:{
             style:'carto-positron',
-            zoom:5.4,
+            zoom:4.4,
             center:{lat:39.5,lon:-8}
         }
         }

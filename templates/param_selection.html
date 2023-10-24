@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load i18n %}
 {%block body%}
 <style>
     a.active {
@@ -11,29 +12,31 @@
     }
 </style>
 <div class="mt-4 mx-4 px-5 ">
-    <a class="text-muted" href="{% url 'project_select_page' %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
+    <a class="text-muted" href="{% url 'starting_page' project %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
 </div>
-<div class=" align-center mt-2 mx-4 px-5 mb-5 pb-5">
-    <h3> Define Scenario Settings </h3>
-    <p class="'text-secondary"> Parameters settings are available with the use of sliders.
-        Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.</p>
+<div class=" align-center mt-2 mx-4 px-5 mb-5 pb-5" style="overflow:auto;">
+    <h3> {% translate 'Define Scenario Settings'%} </h3>
+    <p class="'text-secondary"> {% translate 'Parameters settings are available with the use of sliders.'%}
+        {% translate 'Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.'%}</p>
     <br />
     <ul class="nav nav-tabs">
-        <li class="mx-5"><a class="active" data-toggle="tab" href="#home">Energy system settings</a></li>
-        <li class="mx-5"><a data-toggle="tab" href="#menu1">Impact control</a></li>
-        <li class="mx-5"><a data-toggle="tab" href="#menu2">Energy technologies</a></li>
+        <li class="mx-5"><a class="active" data-toggle="tab" href="#home">{% translate 'Energy system settings'%}</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu1">{% translate 'Impact control'%}</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu2">{% translate 'Energy technologies'%}</a></li>
     </ul>
     <form action="" method="post">
         {% csrf_token %}
         <div class="tab-content">
             <div id="home" class="ml-5 pt-5 tab-pane fade in active show">
-                <p>These parameters will allow you to define the configurations of the energy transition scenario.
+                <p>{% blocktranslate %} 
+                    These parameters will allow you to define the configurations of the energy transition scenario.
                     Additional information regarding the parameters and metrics is available by clicking the information
-                    icons.</p> <br />
+                    icons.
+                    {% endblocktranslate %}</p> <br />
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Power Generation Capacity (Tw) </div>
+                            <div>{% translate 'Power Generation Capacity'%} (Tw) </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -44,7 +47,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Storage Capacity (Twh) </div>
+                            <div>{% translate 'Storage Capacity'%} (Twh) </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -55,7 +58,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Community-led infrasctructure </div>
+                            <div>{% translate 'Community-led infrasctructure'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -69,7 +72,7 @@
                 <div class="row mt-4">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Implementation pace </div>
+                            <div>{% translate 'Implementation pace'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -81,7 +84,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Import dependency </div>
+                            <div>{% translate 'Import dependency'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -92,7 +95,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Degree of electrification (heating) </div>
+                            <div>{% translate 'Degree of electrification (heating)'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -106,7 +109,7 @@
                 <div class="row mt-4">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Degree of electrification (transport) </div>
+                            <div>{% translate 'Degree of electrification (transport)'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -131,9 +134,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                <b>Power generation capacity </b><br />
+                                <b>{% translate 'Power generation capacity </b><br />
                                 Learning task is what participants are supposed to do during the activity.
-                                You can specify the task or activity here.
+                                You can specify the task or activity here.'%}
                             </div>
                         </div>
                     </div>
@@ -142,15 +145,16 @@
             <div id="menu1" class="ml-5  pt-5 tab-pane fade">
 
                 <p>
-                    These parameters will allow you to define the configurations of impact control.
+                    {% blocktranslate %} These parameters will allow you to define the configurations of impact control.
                     Additional information regarding the parameters and metrics is available by clicking the information
                     icons.
+                    {% endblocktranslate %}
                 </p>
                 <div class="row">
                     
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Land Occupation (m2) </div>
+                            <div>{% translate 'Land Occupation'%} (m2) </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -161,7 +165,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Surplus Ore </div>
+                            <div>{% translate 'Surplus Ore'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -172,7 +176,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Global Warming</div>
+                            <div>{% translate 'Global Warming'%}</div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -186,7 +190,7 @@
                 <div class="row mt-4">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Water Comsumption </div>
+                            <div>{% translate 'Water Comsumption'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -197,7 +201,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>Freshwater Eutrophication </div>
+                            <div>{% translate 'Freshwater Eutrophication'%} </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
@@ -211,9 +215,11 @@
 
             </div>
             <div id="menu2" class="ml-5 pt-5 tab-pane fade">
-                <p>These parameters will allow you to define the configurations of energy technogoies.
+                <p>{% blocktranslate %} 
+                    These parameters will allow you to define the configurations of energy technogoies.
                     Additional information regarding the parameters and metrics is available by clicking the information
-                    icons..</p>
+                    icons.
+                    {% endblocktranslate %}</p>
                 <div class="row">
 
                 <div class="col-lg-4">
@@ -230,7 +236,7 @@
 
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Photovoltic - Open-field (Gw) </div>
+                        <div>{% translate 'Photovoltic - Open-field'%} (Gw) </div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -242,7 +248,7 @@
                 
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Hydrogen</div>
+                        <div>{% translate 'Hydrogen'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -256,7 +262,7 @@
                 
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Hydro - Run or river </div>
+                        <div>{% translate 'Hydro - Run or river </div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -267,7 +273,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Hydro - Pumped</div>
+                        <div>{% translate 'Hydro - Pumped</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -278,7 +284,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Hydro - Reservoir (Gw) </div>
+                        <div>{% translate 'Hydro - Reservoir (Gw) </div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -291,7 +297,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Wind - On-shore </div>
+                        <div>{% translate 'Wind - On-shore'%} </div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -302,7 +308,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Wind - Off-shore</div>
+                        <div>{% translate 'Wind - Off-shore'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -313,7 +319,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Transmission</div>
+                        <div>{% translate 'Transmission'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -326,7 +332,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Biofuels</div>
+                        <div>{% translate 'Biofuels'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -337,7 +343,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Battery </div>
+                        <div>{% translate 'Battery'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
@@ -358,6 +364,7 @@
     </form>
 
 </div>
+<div class='m-5 p-5 h-100'></div>
 {% endblock%}
 {% block scr %}
 const options = {

@@ -1,5 +1,6 @@
 {% extends 'base_inspect.html'%}
 {%load static%}
+{% load i18n %}
 {%block body%}
 <style>
   a.active {
@@ -17,9 +18,9 @@
 </div>
 <div class='d-flex px-4 mx-4 justify-content-between'>
   <div class='p-4'>
-    <h2> Select a Starting Point </h2> 
+    <h2> {% translate 'Select a Starting Point'%} </h2> 
     <p class='text-muted'> 
-      These examples will assis you in how to design your energy transition scenarios, giving you a starting point for selecting and adjusting the parameters.
+      {% translate 'These examples will assis you in how to design your energy transition scenarios, giving you a starting point for selecting and adjusting the parameters.'%}
     </p>
   </div>
 
@@ -28,12 +29,12 @@
   <div class='row justify-content-around'>
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
-        <p class='h3  font-weight-bold'>Scenario A</p>
+        <p class='h3  font-weight-bold'>{% translate 'Scenario'%} A</p>
       </div>
       <div class='row mt-3 pr-3 col-12 p-4 '>
         <div class='col d-flex'>
-          <div class='p-1 bg-white shadow-sm border-light rounded' id="solar_map_a"></div>
-          <div class='p-1'  id="wind_map_a"></div>
+          <div class='p-1 d-flex align-items-start' id="solar_map_a"></div>
+          <div class='p-1 d-flex align-items-end'  id="wind_map_a"></div>
           <div>
             <div class='m-2' id='power_generation_a'></div>
             <div class='p-0 m-2' id='power_storage_a'></div>
@@ -44,40 +45,40 @@
       <div class='my-3'>
         <div id="carouselExampleControls_a" class="carousel slide" data-interval="false" data-ride="carousel">
           <div class="carousel-inner">
-            <div class="carousel-item active pl-5">
+            <div class="carousel-item active">
               <div id='impact_land_a' alt="First slide"></div>
             </div>
-            <div class="carousel-item  pl-5">
+            <div class="carousel-item">
               <div id='impact_ore_a' alt="Second slide"></div>
             </div>
-            <div class="carousel-item pl-5">
+            <div class="carousel-item">
               <div id='impact_global_a' alt="Third slide"></div>
             </div>
-            <div class="carousel-item pl-5">
+            <div class="carousel-item">
               <div id='impact_water_a' alt="Fourth slide"></div>
             </div>
-            <div class="carousel-item pl-5">
+            <div class="carousel-item">
               <div id='impact_freshwater_a' alt="Fifth slide"></div>
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleControls_a" role="button" data-slide="prev">
-            <span class='fa fa-arrow-left fa-2x text-dark'></span>
+            <span class='fa fa-arrow-left fa-1x text-dark'></span>
             <span class="sr-only">Previous</span>
           </a>
           <a class="carousel-control-next" href="#carouselExampleControls_a" role="button" data-slide="next">
-            <span class='fa fa-arrow-right fa-2x text-dark'></span>
+            <span class='fa fa-arrow-right fa-1x text-dark'></span>
             <span class="sr-only">Next</span>
           </a>
         </div>
       </div>
       <div class='d-flex justify-content-center'>
-       <a href='{% url 'interface' project_id=data1.scenario.project.id  %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Start with this</a>
+       <a href='{% url 'interface' project_id=data1.scenario.project.id  %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>   {% translate 'Start with this'%}</a>
       </div>
     </div>
 
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
-        <p class='h3  font-weight-bold'>Scenario B</p>
+        <p class='h3  font-weight-bold'>{% translate 'Scenario'%} B</p>
       </div>
       <div class='row mt-3 pr-3 col-12 p-4 '>
         <div class='col d-flex'>
@@ -94,35 +95,35 @@
         
         <div id="carouselExampleControls" class="carousel slide" data-interval="false" data-ride="carousel">
           <div class="carousel-inner">
-            <div class="carousel-item active pl-5">
+            <div class="carousel-item active">
               <div id='impact_land_b' alt="First slide"></div>
             </div>
-            <div class="carousel-item  pl-5">
+            <div class="carousel-item">
               <div id='impact_ore_b' alt="Second slide"></div>
             </div>
-            <div class="carousel-item pl-5">
+            <div class="carousel-item">
               <div id='impact_global_b' alt="Third slide"></div>
             </div>
-            <div class="carousel-item pl-5">
+            <div class="carousel-item">
               <div id='impact_water_b' alt="Fourth slide"></div>
             </div>
-            <div class="carousel-item pl-5">
+            <div class="carousel-item">
               <div id='impact_freshwater_b' alt="Fifth slide"></div>
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class='fa fa-arrow-left fa-2x text-dark'></span>
+            <span class='fa fa-arrow-left fa-1x text-dark'></span>
             <span class="sr-only">Previous</span>
           </a>
           <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class='fa fa-arrow-right fa-2x text-dark'></span>
+            <span class='fa fa-arrow-right fa-1x text-dark'></span>
             <span class="sr-only">Next</span>
           </a>
         </div>
       </div>
     
       <div class='d-flex justify-content-center'>
-        <a href='{% url 'interface' project_id=data2.scenario.project.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>Start with this</a>
+        <a href='{% url 'interface' project_id=data2.scenario.project.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>   {% translate 'Start with this'%}</a>
        </div>
     </div>
   </div>
@@ -175,8 +176,8 @@
       automargin: true
     }]
     var layout_supply = {
-      height: 300,
-      width: 330,
+      height: 230,
+      width: 230,
       showlegend: false,
       margin : {l:0, r:0, t:0, b:0},
       }
@@ -199,8 +200,8 @@
     xaxis:{
         range:[0,{{data1.total_generation}} + 20]
     },
-    height: 80,
-    width: 300,
+    height: 50,
+    width: 170,
     showlegend: false,
     legend:{orientation: 'h', side:'top'},
     margin : {l:55, r:5, t:0, b:25},
@@ -214,8 +215,8 @@
     xaxis:{
         range:[0,{{data1.total_storage}} + 20]
     },
-    height: 80,
-    width: 300,
+    height: 50,
+    width: 150,
     showlegend: false,
     legend:{orientation: 'h', side:'top'},
     margin : {l:55, r:5, t:0, b:25},
@@ -229,8 +230,8 @@
     xaxis:{
         range:[0,{{data2.total_generation}} + 20]
     },
-    height: 80,
-    width: 300,
+    height: 50,
+    width: 170,
     showlegend: false,
     legend:{orientation: 'h', side:'top'},
     margin : {l:55, r:5, t:0, b:25},
@@ -243,8 +244,8 @@
     xaxis:{
         range:[0,{{data2.total_storage}} + 20]
     },
-    height: 80,
-    width: 300,
+    height: 50,
+    width: 150,
     showlegend: false,
     legend:{orientation: 'h', side:'top'},
     margin : {l:55, r:5, t:0, b:25},
@@ -302,25 +303,25 @@
     }]
     var map_layout = {
   
-      height: 500,
-      width: 200,
+      height: 300,
+      width: 100,
       showlegend: false,
       margin : {l:0, r:0, t:0, b:0},
       mapbox:{
           style:'carto-positron',
-          zoom:5.4,
-          center:{lat:39.5,lon:-8}
+          zoom:4.4,
+          center:{lat:39.3,lon:-8}
       }
       }
       var map_layout2 = {
   
-        height: 500,
-        width: 200,
+        height: 300,
+        width: 100,
         showlegend: false,
         margin : {l:0, r:0, t:0, b:0},
         mapbox:{
             style:'carto-positron',
-            zoom:5.4,
+            zoom:4.4,
             center:{lat:39.5,lon:-8}
         }
         }
@@ -353,9 +354,12 @@
 
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Agricultural Land Occupation'
+      title:'Agricultural Land Occupation',
+      width: 500,
+      showlegend: false,
+   
     };
-    Plotly.newPlot('impact_land_a', data_a, layout_a);
+    Plotly.newPlot('impact_land_a', data_a, layout_a,config);
 
    
     var trace1_a = {
@@ -377,9 +381,11 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Surplus Ore'
+      title:'Surplus Ore',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_ore_a', data_a, layout_a);
+    Plotly.newPlot('impact_ore_a', data_a, layout_a,config);
 
     var trace1_a = {
       x: {{impact_a.global_warming.others.x | safe}},
@@ -400,9 +406,11 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Global Warming'
+      title:'Global Warming',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_global_a', data_a, layout_a);
+    Plotly.newPlot('impact_global_a', data_a, layout_a,config);
 
     var trace1_a = {
       x: {{impact_a.water_consumption.others.x | safe}},
@@ -423,9 +431,11 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Water Consumption'
+      title:'Water Consumption',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_water_a', data_a, layout_a);
+    Plotly.newPlot('impact_water_a', data_a, layout_a,config);
 
     var trace1_a = {
       x: {{impact_a.freshwater_eutrophication.others.x | safe}},
@@ -446,9 +456,11 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Freshwater Eutrophication'
+      title:'Freshwater Eutrophication',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_freshwater_a', data_a, layout_a);
+    Plotly.newPlot('impact_freshwater_a', data_a, layout_a,config);
 
     var trace1_b = {
       x: {{impact_b.land_occupation.others.x | safe}},
@@ -469,9 +481,11 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Agricultural Land Occupation'
+      title:'Agricultural Land Occupation',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_land_b', data_b, layout_b);
+    Plotly.newPlot('impact_land_b', data_b, layout_b,config);
 
     var trace1_b = {
       x: {{impact_b.surplus_ore.others.x | safe}},
@@ -492,9 +506,11 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Surplus Ore'
+      title:'Surplus Ore',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_ore_b', data_b, layout_b);
+    Plotly.newPlot('impact_ore_b', data_b, layout_b,config);
 
     var trace1_b = {
       x: {{impact_b.global_warming.others.x | safe}},
@@ -515,9 +531,11 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Global Warming'
+      title:'Global Warming',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_global_b', data_b, layout_b);
+    Plotly.newPlot('impact_global_b', data_b, layout_b,config);
 
     var trace1_b = {
       x: {{impact_b.water_consumption.others.x | safe}},
@@ -538,9 +556,11 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Water Consumption'
+      title:'Water Consumption',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_water_b', data_b, layout_b);
+    Plotly.newPlot('impact_water_b', data_b, layout_b,config);
 
     var trace1_b = {
       x: {{impact_b.freshwater_eutrophication.others.x | safe}},
@@ -561,7 +581,9 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Freshwater Eutrophication'
+      title:'Freshwater Eutrophication',
+      width: 500,
+      showlegend: false,
     };
-    Plotly.newPlot('impact_freshwater_b', data_b, layout_b);
+    Plotly.newPlot('impact_freshwater_b', data_b, layout_b,config);
     {% endblock%}
