@@ -20,6 +20,27 @@ import pandas as pd
 import pprint as pp
 import json
 
+# location mapping
+location_mapping = {'PRT-1_1': 'Aveiro',
+                    'PRT-3_1': 'Beja',
+                    'PRT-4_1': 'Braga',
+                    'PRT-6_1': 'Castelo Branco',
+                    'PRT-7_1': 'Coimbra',
+                    'PRT-10_1': 'Guarda',
+                    'PRT-11_1': 'Leiria',
+                    'PRT-12_1': 'Lisboa',
+                    'PRT-14_1': 'Portalegre',
+                    'PRT-15_1': 'Porto',
+                    'PRT-18_1': 'Viana do Castelo',
+                    'PRT-19_1': 'Vila Real',
+                    'PRT-20_1': 'Viseu',
+                    'PRT-5_1': 'Bragança',
+                    'PRT-8_1': 'Évora',
+                    'PRT-16_1': 'Santarém',
+                    'PRT-17_1': 'Setúbal',
+                    'PRT-9_1': 'Faro',
+                    'PRT_1': 'Norte',
+                    'PRT_2': 'Sul'}
 # param configurations
 param_config = {'battery': {'max': 0.0444797482359873, 'min': 2.6183049409038122e-08},
                 'bio': {'max': 1.0009737770934894, 'min': 4.134278090390732e-06},
@@ -75,8 +96,6 @@ def get_mapdata(scenario_id):
     tech_gen = TechGeneration.objects.all().filter(scenario=scenario)
     for tech_ob in tech_gen:
         if 'wind' in tech_ob.technology_type:
-            print("Wind:", tech_ob.technology_type,
-                  ':', tech_ob.energy_generation)
             if tech_ob.location.location in wind.keys():
                 wind[tech_ob.location.location] += float(
                     tech_ob.energy_generation)
@@ -85,33 +104,32 @@ def get_mapdata(scenario_id):
                     tech_ob.energy_generation)
 
         if 'pv' in tech_ob.technology_type:
-            print("Solar:", tech_ob.technology_type,
-                  ':', tech_ob.energy_generation)
             if tech_ob.location.location in solar.keys():
                 solar[tech_ob.location.location] += float(
                     tech_ob.energy_generation)
             else:
                 solar[tech_ob.location.location] = float(
                     tech_ob.energy_generation)
-    print(wind, solar)
 
     map_data = {}
     map_data['solar'] = {}
     map_data['solar']['z'] = []
     map_data['solar']['locations'] = []
-    map_data['solar']['customdata'] = []
+    map_data['solar']['text'] = []
+
     for key, value in solar.items():
         map_data['solar']['locations'].append(key)
         map_data['solar']['z'].append(value)
+        map_data['solar']['text'].append(location_mapping[key])
 
     map_data['wind'] = {}
     map_data['wind']['z'] = []
     map_data['wind']['locations'] = []
+    map_data['wind']['text'] = []
     for key, value in wind.items():
         map_data['wind']['locations'].append(key)
         map_data['wind']['z'].append(value)
-
-    print(map_data)
+        map_data['wind']['text'].append(location_mapping[key])
     return map_data
 
 
@@ -633,6 +651,41 @@ def get_all_scenarios_impact_data(request):
     return obs
 
 
+def get_impact_graph_data(all_scenarios, current_scenario):
+    impact = {}
+    temp = {}
+    impact_types = ['land_occupation', 'surplus_ore',
+                    'freshwater_eutrophication', 'global_warming', 'water_consumption']
+    for impact_type in impact_types:
+        temp[impact_type] = {}
+        temp[impact_type]['others'] = {}
+        temp[impact_type]['self'] = {}
+
+        impact[impact_type] = {}
+        impact[impact_type]['others'] = {}
+        impact[impact_type]['self'] = {}
+
+    for scenario in all_scenarios:
+        for impact_type in impact_types:
+            impact_value = standardise(float(
+                getattr(scenario, impact_type)), param_config[impact_type]['min'], param_config[impact_type]['max'])
+            if scenario.id == current_scenario:
+                temp[impact_type]['self'][scenario.id] = impact_value
+            else:
+                temp[impact_type]['others'][scenario.id] = impact_value
+
+    for impact_type in impact_types:
+        impact[impact_type]['others']['x'] = list(
+            temp[impact_type]['others'].keys())
+        impact[impact_type]['others']['y'] = list(
+            temp[impact_type]['others'].values())
+        impact[impact_type]['self']['x'] = list(
+            temp[impact_type]['self'].keys())
+        impact[impact_type]['self']['y'] = list(
+            temp[impact_type]['self'].values())
+    return impact
+
+
 def select_starting_point(request, project_id):
     start_point_a = 45
     start_point_b = 140
@@ -648,10 +701,12 @@ def select_starting_point(request, project_id):
     land_others_b = {}
     land_self_b = {}
 
+    impact_a = get_impact_graph_data(scenarios, start_point_a)
+    impact_b = get_impact_graph_data(scenarios, start_point_b)
+
     for scenario in scenarios:
         land_scaled = standardise(float(scenario.land_occupation), param_config['land_occupation']
                                   ['min'], param_config['land_occupation']['max'])
-        print(scenario.id, ':', land_scaled)
         if scenario.id == start_point_a:
             label = str(scenario.id)
             land_self_a[label] = land_scaled
@@ -686,12 +741,8 @@ def select_starting_point(request, project_id):
                                                   'data2': data2,
                                                   'mapdata1': mapdata1,
                                                   'mapdata2': mapdata2,
-                                                  'land_other_a_text': land_other_a_text,
-                                                  'land_other_a_x': land_other_a_x,
-                                                  'land_other_a_y': land_other_a_y,
-                                                  'land_self_a_text': land_self_a_text,
-                                                  'land_self_a_x': land_self_a_x,
-                                                  'land_self_a_y': land_self_a_y, })
+                                                  'impact_a': impact_a,
+                                                  'impact_b': impact_b})
 
 
 def inspect(request, project_id, scenario_id):
