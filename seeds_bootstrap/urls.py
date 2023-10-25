@@ -59,12 +59,12 @@ urlpatterns = i18n_patterns(
     path('activate/<slug:uidb64>/<slug:token>/', v.activate, name='activate'),
     path('inspect/<project_id>/<scenario_id>', views.inspect, name='inspect'),
     path('compare/<sc_1>/<sc_2>/', views.compare, name='compare'),
-    path('save/<label>/', views.save_search_params),
+
 
 
     path('login/', v.login, name='login'),
     path('logout/', v.logout, name='logout'),
-    path('vote/<selection>/<scenario>/', views.vote, name='vote'),
+
 
     path('portfolio/<query>',
          login_required(views.portfolio), name='portfolio'),
@@ -78,4 +78,7 @@ urlpatterns = i18n_patterns(
     path('aboutus/', views.aboutus, name='aboutus'),
     path('maps/', views.map, name='map'),
     path('location/', login_required(views.select_location), name='location')
-) + [path('changeLang/<lang_code>', views.changLang, name='change_language')]
+) + [
+    path('changeLang/<lang_code>', views.changLang, name='change_language'),
+    path('save/<label>/', views.save_search_params),
+    path('vote/<selection>/<scenario>/', views.vote, name='vote')]
