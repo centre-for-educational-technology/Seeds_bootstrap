@@ -11,7 +11,7 @@
     .al-range-slider__input {
         display: none;
     }
-    
+
 </style>
 <div id='save_confirmation' class="p-2 mt-5 alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
   {% translate 'Your search parameters have been saved in your searches.'%}
@@ -36,18 +36,18 @@
     }
   }
 }" class="m-4 p-5" >
-    
+
     <h3 >     {% translate 'Scenario Insepction'%} </h3>
     <p class="'text-secondary">    {% translate 'In the table below, you can see the overall indicators of each scenario generated. Further information can be explored in the inspection mode.'%}  </p>
     <p class="'text-secondary">    {% translate 'The actions tab on the right allows you to perform comparisons and download scenario reports.'%}</p>
     <div class='d-flex flex-row-reverse p-2 m-2'>
       {% if user.is_authenticated %}
-        <i x-on:click="downloadCSV" title="download"  class="fa fa-download  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary"></i> 
-        <i title="compare"   class="fa fa-exchange-alt  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary" data-toggle='modal' data-placement='top' data-target="#compare_modal"></i> 
-        <i title="save"  class="fa fa-save  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#save_modal"></i> 
+        <i x-on:click="downloadCSV" title="download"  class="fa fa-download  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary"></i>
+        <i title="compare"   class="fa fa-exchange-alt  px-2 bg-primary text-white p-3 rounded-top rounded-bottom mx-2 btn btn-primary" data-toggle='modal' data-placement='top' data-target="#compare_modal"></i>
+        <i title="save"  class="fa fa-save  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
        {% endif %}
-        <i title="restart"  class="fa fa-undo  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i> 
-        
+        <i title="restart"  class="fa fa-undo  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i>
+
     </div>
     <div class="modal fade" id="back_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -64,7 +64,7 @@
               {% translate 'Confirming this choice will erase all settings defined for these scenarios.'%}
             </div>
             <div class="modal-footer">
-              <a href="{% url 'interface' project_id=1 %}" type="button" class="btn btn-primary"> {% translate 'Confirm'%}</a>
+              <a href="{% url 'interface' project_id=1 starting_scenario='a' %}" type="button" class="btn btn-primary"> {% translate 'Confirm'%}</a>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">   {% translate 'Cancel'%}</button>
             </div>
         </div>
@@ -74,7 +74,7 @@
     aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-       
+
             <div class="modal-header border-bottom-0">
                 <h5 class="modal-title" id="exampleModalLabel1">    {% translate 'Saved successsfully !'%}
                 </h5>
@@ -82,7 +82,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class='modal-body'> 
+            <div class='modal-body'>
               <p>    {% translate 'Your search parameters have been saved in your saved search.'%}</p>
             </div>
             <div class="modal-footer">
@@ -96,7 +96,7 @@
     aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-       
+
             <div class="modal-header border-bottom-0">
                 <h5 class="modal-title" id="exampleModalLabel">   {% translate 'Save the search parameters in your portfolio'%}
                 </h5>
@@ -105,13 +105,13 @@
                 </button>
             </div>
             <div class='modal-body'>
-              
+
                 <div class="form-group">
                   <label for="exampleInputEmail1">   {% translate 'Label'%}</label>
                   <input type="text" class="form-control" id="search_param_name" name="label" aria-describedby="emailHelp" placeholder="Enter label">
                   <small  class="form-text text-muted">   {% translate 'Search parameters will be saved with the specified label.'%}</small>
                 </div>
-              
+
             </div>
             <div class="modal-footer">
               <button id='save_params' type="submit" class="btn btn-primary">   {% translate 'Save'%}</button>
@@ -151,7 +151,7 @@
             <div class="modal-footer">
               <template x-if="check()">
                 <div>
-                 
+
                   <a x-bind:href="'/compare/' + selected_scenarios[0] + '/' + selected_scenarios[1] + '/'" class="btn btn-primary text-white">   {% translate 'Confirm'%}</a>
                 </div>
                 </form>
@@ -175,7 +175,7 @@
                               </button>
                             </h5>
                           </div>
-                      
+
                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body p-1">
                                     <div class="d-flex  border-bottom align-items-center">
@@ -190,7 +190,7 @@
                                           {% translate 'Power generation'%}
                                         </small>
                                       </div>
-                                    </div> 
+                                    </div>
                                     <!-- <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -203,7 +203,7 @@
                                           {% translate 'Total Energy Supply'%}
                                         </small>
                                       </div>
-                                    </div> 
+                                    </div>
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -229,7 +229,7 @@
                                           {% translate 'Total Storage'%}
                                         </small>
                                       </div>
-                                    </div> 
+                                    </div>
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -242,7 +242,7 @@
                                           {% translate 'Pace of Implementation'%}
                                         </small>
                                       </div>
-                                    </div> 
+                                    </div>
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -255,7 +255,7 @@
                                           {% translate 'Community Structured'%}
                                         </small>
                                       </div>
-                                    </div> 
+                                    </div>
                                   <!--  <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -268,7 +268,7 @@
                                           {% translate 'Electrification (Heating)'%}
                                         </small>
                                       </div>
-                                    </div> 
+                                    </div>
                                     <div class="d-flex  border-bottom align-items-center">
                                       <div class=''>
                                         <label class="switch pt-1">
@@ -307,12 +307,12 @@
                                     {% translate 'Wind Onshore'%}
                                   </small>
                                 </div>
-                              </div> 
+                              </div>
                               <div class="d-flex  border-bottom align-items-center">
                                 <div class=''>
                                   <label class="switch pt-1">
                                     <input type="checkbox" x-model="wind_offshore" @click="wind_offshore = !wind_offshore">
-        
+
                                     <span class="slider round"></span>
                                   </label>
                                 </div>
@@ -321,12 +321,12 @@
                                     {% translate 'Wind Offshore'%}
                                   </small>
                                 </div>
-                              </div> 
+                              </div>
                               <div class="d-flex  border-bottom align-items-center">
                                 <div class=''>
                                   <label class="switch pt-1">
                                     <input type="checkbox" x-model="roof_pv" @click="roof_pv = !roof_pv">
-                                   
+
                                     <span class="slider round"></span>
                                   </label>
                                 </div>
@@ -335,7 +335,7 @@
                                     {% translate 'Roof Mounted PV'%}
                                   </small>
                                 </div>
-                              </div> 
+                              </div>
                               <div class="d-flex  border-bottom align-items-center">
                                 <div class=''>
                                   <label class="switch pt-1">
@@ -348,7 +348,7 @@
                                     {% translate 'Open Field PV'%}
                                   </small>
                                 </div>
-                              </div>    
+                              </div>
                       </div>
                           </div>
                         </div>
@@ -374,7 +374,7 @@
                                     {% translate 'Global Warming'%}
                                   </small>
                                 </div>
-                              </div> 
+                              </div>
                               <div class="d-flex  border-bottom align-items-center">
                                 <div class=''>
                                   <label class="switch pt-1">
@@ -387,7 +387,7 @@
                                     {% translate 'Water Consumption'%}
                                   </small>
                                 </div>
-                              </div> 
+                              </div>
                               <div class="d-flex  border-bottom align-items-center">
                                 <div class=''>
                                   <label class="switch pt-1">
@@ -400,8 +400,8 @@
                                     {% translate 'Land occupation'%}
                                   </small>
                                 </div>
-                              </div> 
-                                
+                              </div>
+
                             </div>
                           </div>
                         </div>
@@ -412,14 +412,14 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            
+
                             <th>   {% translate 'Scenario'%} ID</th>
                             <th x-show="power">   {% translate 'Power capacity'%} (Tw)</th>
                             <th x-show="storage">   {% translate 'Storage capacity'%} (Twh)</th>
                             <th x-show="pace">   {% translate 'Community infrastructure'%}</th>
                             <th x-show="infra">   {% translate 'Implementation pace'%}</th>
                             <th>   {% translate 'Import dependency'%}</th>
-                            
+
                             <th x-show="wind_onshore">   {% translate 'Wind onshore'%} </th>
                             <th x-show="wind_offshore">   {% translate 'Wind offshore'%} </th>
                             <th x-show="roof_pv">   {% translate 'Roof mounted pv'%}</th>
@@ -428,14 +428,14 @@
                             <th x-show="water">   {% translate 'Water consumption'%}</th>
                             <th x-show="land">   {% translate 'Land occupation'%}</th>
                             <th >Details</th>
-                           
+
                         </tr>
                     </thead>
-                    
+
                     <tbody>
                         {% for scenario in page_obj %}
                         <tr class='text-align-middle'>
-                            
+
                             <td ><input type='checkbox' x-on:click="toggle({{scenario.id}})" value='{{scenario.id}}' name='scenario'> {{scenario.id}}</td>
                             <td x-show="power">{{scenario.power_capacity |floatformat:2}}</td>
                             <td x-show="storage">{{scenario.storage_capacity |floatformat:2}}</td>
@@ -450,7 +450,7 @@
                             <td x-show="water">{{scenario.water_consumption |floatformat:2}}</td>
                             <td x-show="land">{{scenario.land_occupation |floatformat:2}}</td>
                             <td > <a href='{% url 'inspect' project_id=project_id scenario_id=scenario.id %}' class='px-3  bg-light rounded-top rounded-bottom text-primary border border-primary'>   {% translate 'Inspect'%}</a></td>
-                           
+
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -481,10 +481,10 @@ function downloadCSV(e){
     row += data.fields[f] + ',';
   }
     csvContent +=  row + "\r\n";
-    
-  } 
+
+  }
   var encodedUri = encodeURI(csvContent);
-  window.open(encodedUri);    
+  window.open(encodedUri);
 }
 
 $(document).ready(function () {

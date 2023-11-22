@@ -1,0 +1,431 @@
+{% extends 'base.html'%}
+{% load i18n %}
+{%block body%}
+<style>
+    a.active {
+        font-weight: bold;
+        border-bottom: #007bff;
+    }
+
+    .al-range-slider__input {
+        display: none;
+    }
+</style>
+<div class="mt-4 mx-4 px-5 ">
+    <a class="text-muted" href="{% url 'starting_page' project %}"> <span class='fa fa-arrow-left fa-2x'></span><a>
+</div>
+<div class=" align-center mt-2 mx-4 px-5 mb-5 pb-5" style="overflow:auto;">
+    <h3> {% translate 'Define Scenario Settings'%} </h3>
+    <p class="'text-secondary"> {% translate 'Parameters settings are available with the use of sliders.'%}
+        {% translate 'Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.'%}</p>
+    <br />
+    <ul class="nav nav-tabs">
+        <li class="mx-5"><a class="active" data-toggle="tab" href="#home">{% translate 'Energy system settings'%}</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu1">{% translate 'Impact control'%}</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu2">{% translate 'Energy technologies'%}</a></li>
+    </ul>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="tab-content">
+            <div id="home" class="ml-5 pt-5 tab-pane fade in active show">
+                <p>{% blocktranslate %} 
+                    These parameters will allow you to define the configurations of the energy transition scenario.
+                    Additional information regarding the parameters and metrics is available by clicking the information
+                    icons.
+                    {% endblocktranslate %}</p> <br />
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Power Generation Capacity'%} (Tw) </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#power_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="power"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Storage Capacity'%} (Twh) </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#storage_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="storage"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Community-led infrasctructure'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#community_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="community"></div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Implementation pace'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#implement_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="implement"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Import dependency'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#import_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="import"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Degree of electrification (heating)'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#heat_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="heat"></div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Degree of electrification (transport)'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#transport_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="transport"></div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="power_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>Specify task/activity
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                <b>{% translate 'Power generation capacity </b><br />
+                                Learning task is what participants are supposed to do during the activity.
+                                You can specify the task or activity here.'%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="menu1" class="ml-5  pt-5 tab-pane fade">
+
+                <p>
+                    {% blocktranslate %} These parameters will allow you to define the configurations of impact control.
+                    Additional information regarding the parameters and metrics is available by clicking the information
+                    icons.
+                    {% endblocktranslate %}
+                </p>
+                <div class="row">
+                    
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Land Occupation'%} (m2) </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#land_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="land"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Surplus Ore'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#surplus_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="surplus"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Global Warming'%}</div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#global_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="global"></div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Water Comsumption'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#water_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="water"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex justify-content-between px-4">
+                            <div>{% translate 'Freshwater Eutrophication'%} </div>
+                            <div>
+                                <span>
+                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top' data-target="#fresh_help"></i></span>
+                            </div>
+                        </div>
+                        <div id="fresh"></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div id="menu2" class="ml-5 pt-5 tab-pane fade">
+                <p>{% blocktranslate %} 
+                    These parameters will allow you to define the configurations of energy technogoies.
+                    Additional information regarding the parameters and metrics is available by clicking the information
+                    icons.
+                    {% endblocktranslate %}</p>
+                <div class="row">
+
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>Photovoltic - Roof-mounted (Gw)</div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#photo-roof_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="photo-roof"></div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Photovoltic - Open-field'%} (Gw) </div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#photo-open-field_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="photo-open-field"></div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Hydrogen'%}</div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#hydrogen_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="hydrogen"></div>
+                </div>
+            </div>
+          <!-- <div class="row">
+                
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Hydro - Run or river </div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#hydro-river_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="hydro-river"></div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Hydro - Pumped</div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#hydro-pumped_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="hydro-pumped"></div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Hydro - Reservoir (Gw) </div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#hydro-reservoir_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="hydro-reservoir"></div>
+                </div>
+            </div> --> 
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Wind - On-shore'%} </div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#wind-on-shore_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="wind-on-shore"></div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Wind - Off-shore'%}</div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#wind-off-shore_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="wind-off-shore"></div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Transmission'%}</div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#transmission_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="transmission"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Biofuels'%}</div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#photo_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="bio"></div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-between px-4">
+                        <div>{% translate 'Battery'%}</div>
+                        <div>
+                            <span>
+                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#land_help"></i></span>
+                        </div>
+                    </div>
+                    <div id="battery"></div>
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+            </div>
+        </div>
+            
+        </div>
+        <br />
+        <input type="submit" class="float-right btn btn-primary py-3 px-5 btn-pill"> 
+    </form>
+
+</div>
+<div class='m-5 p-5 h-100'></div>
+{% endblock%}
+{% block scr %}
+const options = {
+range: { min: 0, max: 100, step: 10 },
+initialSelectedValues: { from: 0, to: 80 },
+grid: { minTicksStep: 1, marksStep: 1 },
+theme: "light",
+showInputs: false,
+};
+const fracOptions = {
+range: { min: 0, max: 1, step: .05 },
+initialSelectedValues: { from: .1, to: .8 },
+grid: { minTicksStep: 2, marksStep: 2 },
+theme: "light",
+
+};
+
+const powerOptions = {
+    range: { min: 0, max: 160, step: 25 },
+    initialSelectedValues: { from: 80, to: 100 },
+    theme: "light",
+    };
+
+const storageOptions = {
+        range: { min: 0, max: 8, step: 1 },
+        initialSelectedValues: { from: 2, to: 7 },
+        theme: "light",
+        };
+    
+
+const paceOptions = {
+range: { min: 0, max: 13, step: 1 },
+initialSelectedValues: { from: 1, to: 7 },
+grid: { minTicksStep: 1, marksStep: 1 },
+theme: "light"
+};
+
+$('#power').alRangeSlider(powerOptions);
+$('#storage').alRangeSlider(storageOptions);
+$('#community').alRangeSlider(fracOptions);
+$('#implement').alRangeSlider(paceOptions);
+$('#import').alRangeSlider(fracOptions);
+$('#heat').alRangeSlider(fracOptions);
+$('#transport').alRangeSlider(fracOptions);
+
+$('#land').alRangeSlider(fracOptions);
+$('#surplus').alRangeSlider(fracOptions);
+$('#global').alRangeSlider(fracOptions);
+$('#water').alRangeSlider(fracOptions);
+$('#fresh').alRangeSlider(fracOptions);
+
+$('#photo-roof').alRangeSlider(fracOptions);
+
+$('#photo-open-field').alRangeSlider(fracOptions);
+$('#hydro-river').alRangeSlider(fracOptions);
+$('#hydro-pumped').alRangeSlider(fracOptions);
+$('#hydro-reservoir').alRangeSlider(fracOptions);
+$('#hydrogen').alRangeSlider(fracOptions);
+$('#wind-on-shore').alRangeSlider(fracOptions);
+$('#wind-off-shore').alRangeSlider(fracOptions);
+$('#transmission').alRangeSlider(fracOptions);
+$('#bio').alRangeSlider(fracOptions);
+$('#battery').alRangeSlider(fracOptions);
+{% endblock%}

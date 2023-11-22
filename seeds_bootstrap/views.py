@@ -206,7 +206,7 @@ def filter_scenarios(search_params):
     return scenarios_fresh
 
 
-def interface(request, project_id):
+def interface(request, project_id, starting_scenario):
     if starting_scenario == 'a':
         template = 'param_selection_a.html'
     else:
@@ -789,6 +789,8 @@ def inspect(request, project_id, scenario_id):
     scenario = Scenario.objects.get(id=scenario_id)
     data = get_scenario_details(scenario_id)
     map_data = get_mapdata(scenario_id)
+    scenarios = get_all_scenarios_impact_data(request)
+    impact_a = get_impact_graph_data(scenarios, int(scenario_id))
 
     if request.method == 'POST':
         scenario = Scenario.objects.get(id=scenario_id)
@@ -813,7 +815,7 @@ def inspect(request, project_id, scenario_id):
             print('Object saved', obj)
             messages.success(
                 request, "Scenario has been added to your portfolio.")
-    return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id, 'mapdata': map_data})
+    return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id, 'mapdata': map_data, 'impact_a': impact_a})
 
 
 def select_location(request):
