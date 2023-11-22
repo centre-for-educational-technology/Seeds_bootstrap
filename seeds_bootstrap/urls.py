@@ -71,7 +71,7 @@ urlpatterns = i18n_patterns(
     path('project/', views.project_page,
          name='project_select_page'),
     path('select/<project_id>', views.select_starting_point, name='starting_page'),
-    path('interface/<project_id>',
+    path('interface/<project_id>/<starting_scenario>',
          views.interface, name='interface'),
 
     path('fetch/<search_id>', views.get_saved_search, name='fetch'),

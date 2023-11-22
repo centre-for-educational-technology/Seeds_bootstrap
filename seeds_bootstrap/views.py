@@ -207,7 +207,10 @@ def filter_scenarios(search_params):
 
 
 def interface(request, project_id):
-
+    if starting_scenario == 'a':
+        template = 'param_selection_a.html'
+    else:
+        template = 'param_selection_b.html'
     if request.method == 'POST':
         # fetching energy systems params
         search_params = {}
@@ -350,7 +353,7 @@ def interface(request, project_id):
                                                      'project_id': project_id})
     else:
         locations = ScenarioLocation.objects.all()
-        return render(request, 'param_selection.html', {'project': project_id})
+        return render(request, template, {'project': project_id})
 
 
 def changLang(request, lang_code):
