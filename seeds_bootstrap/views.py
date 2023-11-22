@@ -512,9 +512,20 @@ def get_scenario_details(scenario_id):
 
     total_electrification = 0
     for ob in electrification:
-        data['electrification']['type'] = ob.carriers_type
-        data['electrification']['value'] = ob.electrification_rate
+        print(ob.carriers_type, ':', ob.electrification_rate)
+        print(ob.carriers_type in data['electrification'].keys())
+        if ob.carriers_type in data['electrification'].keys():
+            data['electrification'][ob.carriers_type] += float(
+                ob.electrification_rate)
+        else:
+            data['electrification'][ob.carriers_type] = float(
+                ob.electrification_rate)
+
         total_electrification += ob.electrification_rate
+    data['electrification']['heat_percentage'] = data['electrification']['heat'] * \
+        100 / float(total_electrification)
+    data['electrification']['transport_percentage'] = data['electrification']['transport'] * \
+        100 / float(total_electrification)
 
     total_transmission = 0
     for ob in transmission:
