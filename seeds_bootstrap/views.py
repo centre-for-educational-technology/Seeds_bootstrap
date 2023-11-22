@@ -667,14 +667,23 @@ def get_sankey_data(scenario_id):
 
 
 def compare(request, sc_1, sc_2):
+    sc_1 = int(sc_1)
+    sc_2 = int(sc_2)
     data1 = get_scenario_details(sc_1)
     data2 = get_scenario_details(sc_2)
     mapdata1 = get_mapdata(sc_1)
     mapdata2 = get_mapdata(sc_2)
+
+    scenarios = get_all_scenarios_impact_data(request)
+    impact_a = get_impact_graph_data(scenarios, sc_1)
+    impact_b = get_impact_graph_data(scenarios, sc_2)
+
     return render(request, 'compare_scenario.html', {'data1': data1,
                                                      'data2': data2,
                                                      'mapdata1': mapdata1,
-                                                     'mapdata2': mapdata2})
+                                                     'mapdata2': mapdata2,
+                                                     'impact_a': impact_a,
+                                                     'impact_b': impact_b})
 
 
 def get_all_scenarios_impact_data(request):

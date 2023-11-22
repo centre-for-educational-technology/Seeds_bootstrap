@@ -14,12 +14,13 @@
 </style>
 <div class='d-flex px-4 mx-4 justify-content-between'>
   <div>
-    <h2> {% translate 'Comparison'%} </h2> 
-    <p class='text-muted'> 
+    <h2> {% translate 'Comparison'%} </h2>
+    <p class='text-muted'>
       {% translate 'Here you can compare the features of the selected scenarios. Further actions are available using the toolbar on the bottom. Check the scenarios numbers and characteristic by clicking on the Detailed Report icon.'%}
     </p>
-  </div>
 
+
+  </div>
 </div>
 <div class="p-2 ">
   <div class='row justify-content-around'>
@@ -39,6 +40,33 @@
           <div class='d-flex align-items-end p-1'   id="wind_map_a"></div>
         </div>
       </div>
+      <div id="carouselExampleControls_a" class="row carousel slide" data-interval="false" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div id='impact_land_a' alt="First slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_ore_a' alt="Second slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_global_a' alt="Third slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_water_a' alt="Fourth slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_freshwater_a' alt="Fifth slide"></div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls_a" role="button" data-slide="prev">
+          <span class='fa fa-arrow-left fa-1x text-dark'></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls_a" role="button" data-slide="next">
+          <span class='fa fa-arrow-right fa-1x text-dark'></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
     </div>
 
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
@@ -53,10 +81,37 @@
           <div class='p-0 m-2' id='power_storage_b'></div>
         </div>
         <div class='col'>
-          
+
           <div class='p-1 d-flex align-items-start' id="solar_map_b"></div>
           <div class='p-1 d-flex align-items-end'  id="wind_map_b"></div>
         </div>
+      </div>
+      <div id="carouselExampleControls_b" class="carousel slide mx-auto" data-interval="false" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active mx-auto">
+            <div id='impact_land_b'  alt="First slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_ore_b' alt="Second slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_global_b' alt="Third slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_water_b' alt="Fourth slide"></div>
+          </div>
+          <div class="carousel-item">
+            <div id='impact_freshwater_b' alt="Fifth slide"></div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls_b" role="button" data-slide="prev">
+          <span class='fa fa-arrow-left fa-1x text-dark'></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls_b" role="button" data-slide="next">
+          <span class='fa fa-arrow-right fa-1x text-dark'></span>
+          <span class="sr-only">Next</span>
+        </a>
       </div>
     </div>
   </div>
@@ -66,7 +121,7 @@
       <p class='small text-muted font-weight-bold'>Scenarios Performance</p>
       <div class='d-flex flex-row'>
         <div class="px-2 py-2 w-25">
-          {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).'%}
+          {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP100), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).'%}
         </div>
         <div class="px-5 py-2">
           <div class='' id='impact_control'></div>
@@ -106,7 +161,7 @@
       showlegend: true
     }
     Plotly.newPlot("impact_control", data, layout,config)
-    
+
     var data_supply = [{
       type: "pie",
       values: {{ data1.energy_supply_pie_values | safe}},
@@ -120,7 +175,7 @@
       width: 230,
       showlegend: false,
       margin : {l:0, r:0, t:0, b:0},
- 
+
       }
     Plotly.newPlot('energy_supply_a', data_supply, layout_supply,config)
 
@@ -133,12 +188,12 @@
       automargin: true
     }]
     var layout_supply = {
- 
+
       height: 230,
       width: 230,
       showlegend: false,
       margin : {l:0, r:0, t:0, b:0},
- 
+
       }
     Plotly.newPlot('energy_supply_b', data_supply, layout_supply,config)
 
@@ -197,7 +252,7 @@
     margin : {l:50, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_storage_b', storage_data,layout,config);
-  
+
     var solar_map_data_a = [{
       type: "choroplethmapbox",
       geojson:"{% static 'portugal_regions.geojson' %}",
@@ -209,7 +264,7 @@
       showscale:false,
 
       marker_line_width:1,
-  
+
     }]
     var wind_map_data_a = [{
       type: "choroplethmapbox",
@@ -233,7 +288,7 @@
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
       marker_line_width:1,
-  
+
     }]
     var wind_map_data_b = [{
       type: "choroplethmapbox",
@@ -259,7 +314,7 @@
       }
       }
       var map_layout2 = {
-  
+
         height: 300,
       width: 120,
       showlegend: false,
@@ -276,5 +331,258 @@
     Plotly.newPlot('solar_map_b', solar_map_data_b, map_layout,config)
     Plotly.newPlot('wind_map_b', wind_map_data_b, map_layout2,config)
 
+
+    var trace1_a = {
+      x: {{impact_a.land_occupation.others.x | safe}},
+      y: {{impact_a.land_occupation.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_a = {
+      x: {{impact_a.land_occupation.self.x | safe}},
+      y: {{impact_a.land_occupation.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-A',
+      marker: { size: 12 }
+    };
+
+    var data_a = [ trace1_a, trace2_a ];
+    var layout_a = {
+      title:'Agricultural Land Occupation',
+      width: 500,
+      showlegend: false,
+
+    };
+    Plotly.newPlot('impact_land_a', data_a, layout_a,config);
+
+
+    var trace1_a = {
+      x: {{impact_a.surplus_ore.others.x | safe}},
+      y: {{impact_a.surplus_ore.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_a = {
+      x: {{impact_a.surplus_ore.self.x | safe}},
+      y: {{impact_a.surplus_ore.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-A',
+      marker: { size: 12 }
+    };
+    var data_a = [ trace1_a, trace2_a ];
+    var layout_a = {
+      title:'Surplus Ore',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_ore_a', data_a, layout_a,config);
+
+    var trace1_a = {
+      x: {{impact_a.global_warming.others.x | safe}},
+      y: {{impact_a.global_warming.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_a = {
+      x: {{impact_a.global_warming.self.x | safe}},
+      y: {{impact_a.global_warming.self.y | safe}},
+      mode: 'markers',
+      name: 'Scenario-A',
+      type: 'scatter',
+      marker: { size: 12 }
+    };
+    var data_a = [ trace1_a, trace2_a ];
+    var layout_a = {
+      title:'Global Warming',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_global_a', data_a, layout_a,config);
+
+    var trace1_a = {
+      x: {{impact_a.water_consumption.others.x | safe}},
+      y: {{impact_a.water_consumption.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_a = {
+      x: {{impact_a.water_consumption.self.x | safe}},
+      y: {{impact_a.water_consumption.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-A',
+      marker: { size: 12 }
+    };
+    var data_a = [ trace1_a, trace2_a ];
+    var layout_a = {
+      title:'Water Consumption',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_water_a', data_a, layout_a,config);
+
+    var trace1_a = {
+      x: {{impact_a.freshwater_eutrophication.others.x | safe}},
+      y: {{impact_a.freshwater_eutrophication.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_a = {
+      x: {{impact_a.freshwater_eutrophication.self.x | safe}},
+      y: {{impact_a.freshwater_eutrophication.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-A',
+      marker: { size: 12 }
+    };
+    var data_a = [ trace1_a, trace2_a ];
+    var layout_a = {
+      title:'Freshwater Eutrophication',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_freshwater_a', data_a, layout_a,config);
+
+    var trace1_b = {
+      x: {{impact_b.land_occupation.others.x | safe}},
+      y: {{impact_b.land_occupation.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_b = {
+      x: {{impact_b.land_occupation.self.x | safe}},
+      y: {{impact_b.land_occupation.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-B',
+      marker: { size: 12 }
+    };
+    var data_b = [ trace1_b, trace2_b ];
+    var layout_b = {
+      title:'Agricultural Land Occupation',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_land_b', data_b, layout_b,config);
+
+    var trace1_b = {
+      x: {{impact_b.surplus_ore.others.x | safe}},
+      y: {{impact_b.surplus_ore.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_b = {
+      x: {{impact_b.surplus_ore.self.x | safe}},
+      y: {{impact_b.surplus_ore.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-B',
+      marker: { size: 12 }
+    };
+    var data_b = [ trace1_b, trace2_b ];
+    var layout_b = {
+      title:'Surplus Ore',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_ore_b', data_b, layout_b,config);
+
+    var trace1_b = {
+      x: {{impact_b.global_warming.others.x | safe}},
+      y: {{impact_b.global_warming.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_b = {
+      x: {{impact_b.global_warming.self.x | safe}},
+      y: {{impact_b.global_warming.self.y | safe}},
+      mode: 'markers',
+      name: 'Scenario-B',
+      type: 'scatter',
+      marker: { size: 12 }
+    };
+    var data_b = [ trace1_b, trace2_b ];
+    var layout_b = {
+      title:'Global Warming',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_global_b', data_b, layout_b,config);
+
+    var trace1_b = {
+      x: {{impact_b.water_consumption.others.x | safe}},
+      y: {{impact_b.water_consumption.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_b = {
+      x: {{impact_b.water_consumption.self.x | safe}},
+      y: {{impact_b.water_consumption.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-B',
+      marker: { size: 12 }
+    };
+    var data_b = [ trace1_b, trace2_b ];
+    var layout_b = {
+      title:'Water Consumption',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_water_b', data_b, layout_b,config);
+
+    var trace1_b = {
+      x: {{impact_b.freshwater_eutrophication.others.x | safe}},
+      y: {{impact_b.freshwater_eutrophication.others.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name:'Other scenarios',
+      opacity: .3,
+      marker: { size: 12 }
+    };
+    var trace2_b = {
+      x: {{impact_b.freshwater_eutrophication.self.x | safe}},
+      y: {{impact_b.freshwater_eutrophication.self.y | safe}},
+      mode: 'markers',
+      type: 'scatter',
+      name: 'Scenario-B',
+      marker: { size: 12 }
+    };
+    var data_b = [ trace1_b, trace2_b ];
+    var layout_b = {
+      title:'Freshwater Eutrophication',
+      width: 500,
+      showlegend: false,
+    };
+    Plotly.newPlot('impact_freshwater_b', data_b, layout_b,config);
 
     {% endblock%}
