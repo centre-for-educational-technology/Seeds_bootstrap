@@ -854,3 +854,38 @@ def portfolio(request, query):
         else:
             params = QueryParameters.objects.all().filter(submitted_user=request.user)
             return render(request, 'portfolio.html', {'scenarios': params, 'title': 'Your saved searches', 'query': query})
+
+
+
+def portfolio_actions(request, query, command, id, label):
+    if query in ['saved_scenarios', 'saved_searches']:
+        if query == 'saved_scenarios':
+            if command == 'update':
+                object = UserScenario.objects.all().get(id=id)
+                print('update :', object)
+                object.label = label
+                object.save()
+                messages.success(
+                    request,  'Scenario has been updated successfully !')
+            elif command == 'delete':
+                UserScenario.objects.all().filter(submitted_user=request.user, id=id).delete()
+                messages.success(
+                    request,  'Scenario has been deleted successfully !')
+
+            scenarios = UserScenario.objects.all().filter(submitted_user=request.user)
+            return render(request, 'portfolio.html', {'scenarios': scenarios, 'title': 'Your scenarios', 'query': query})
+        else:
+
+            if command == 'update':
+                object = QueryParameters.objects.all().get(id=id)
+                object.label = label
+                object.save()
+                messages.success(
+                    request,  'Search parameter entry has been updated successfully !')
+            elif command == 'delete':
+                messages.success(
+                    request,  'Search parameter entry has been deleted successfully !')
+                QueryParameters.objects.all().filter(submitted_user=request.user, id=id).delete()
+
+            params = QueryParameters.objects.all().filter(submitted_user=request.user)
+            return render(request, 'portfolio.html', {'scenarios': params, 'title': 'Your saved searches', 'query': query})

@@ -68,6 +68,8 @@ urlpatterns = i18n_patterns(
 
     path('portfolio/<query>',
          login_required(views.portfolio), name='portfolio'),
+    path('portfolio/<query>/<command>/<id>/<label>',
+         login_required(views.portfolio_actions), name='portfolio_actions'),
     path('project/', views.project_page,
          name='project_select_page'),
     path('select/<project_id>', views.select_starting_point, name='starting_page'),
