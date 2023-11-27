@@ -20,6 +20,7 @@ import pandas as pd
 import pprint as pp
 from django.conf import settings
 from urllib.parse import unquote
+from django.http import JsonResponse
 from django.utils.translation import (
     check_for_language, get_language,
 )
@@ -206,11 +207,9 @@ def filter_scenarios(search_params):
     return scenarios_fresh
 
 
-def interface(request, project_id, starting_scenario):
-    if starting_scenario == 'a':
-        template = 'param_selection_a.html'
-    else:
-        template = 'param_selection_b.html'
+def get_filtered_scenarios(request, project_id):
+    search_params = {}
+    scenarios_filtered = None
     if request.method == 'POST':
         # fetching energy systems params
         search_params = {}
@@ -344,9 +343,25 @@ def interface(request, project_id, starting_scenario):
         search_params['battery_min'] = battery_min
         search_params['battery_max'] = battery_max
         scenarios_filtered = filter_scenarios(search_params)
+    return scenarios_filtered, search_params
 
-        # scenarios_implementation = scenarios_storage
 
+def get_scenarios_count_ajax(request):
+    print(request.POST)
+    scenarios_filtered, search_params = get_filtered_scenarios(
+        request, 1)
+    return JsonResponse({'total_scenarios': len(scenarios_filtered)})
+
+
+def interface(request, project_id, starting_scenario):
+    if starting_scenario == 'a':
+        template = 'param_selection_a.html'
+    else:
+        template = 'param_selection_b.html'
+
+    if request.method == 'POST':
+        scenarios_filtered, search_params = get_filtered_scenarios(
+            request, project_id)
         return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
                                                      'search_params': search_params,
                                                      'json_format': serializers.serialize('json', scenarios_filtered),
@@ -735,47 +750,8 @@ def select_starting_point(request, project_id):
     mapdata2 = get_mapdata(start_point_b)
     scenarios = get_all_scenarios_impact_data(request)
 
-    land_others_a = {}
-    land_self_a = {}
-
-    land_others_b = {}
-    land_self_b = {}
-
     impact_a = get_impact_graph_data(scenarios, start_point_a)
     impact_b = get_impact_graph_data(scenarios, start_point_b)
-
-    for scenario in scenarios:
-        land_scaled = standardise(float(scenario.land_occupation), param_config['land_occupation']
-                                  ['min'], param_config['land_occupation']['max'])
-        if scenario.id == start_point_a:
-            label = str(scenario.id)
-            land_self_a[label] = land_scaled
-        else:
-            label = str(scenario.id)
-            land_others_a[label] = land_scaled
-
-        if scenario.id == start_point_b:
-            label = str(scenario.id)
-            land_self_b[label] = land_scaled
-        else:
-            label = str(scenario.id)
-            land_others_b[label] = land_scaled
-
-    land_other_a_text = list(land_others_a.keys())
-    land_other_a_x = list(land_others_a.keys())
-    land_other_a_y = list(land_others_a.values())
-
-    land_other_b_text = list(land_others_b.keys())
-    land_other_b_x = list(range(len(land_others_b)))
-    land_other_b_y = list(land_others_b.values())
-
-    land_self_a_text = list(land_self_a.keys())
-    land_self_a_x = list(land_self_a.keys())
-    land_self_a_y = list(land_self_a.values())
-
-    land_self_b_text = list(land_self_b.keys())
-    land_self_b_x = list(range(len(land_self_b)))
-    land_self_b_y = list(land_self_b.values())
 
     return render(request, 'starting_page.html', {'data1': data1,
                                                   'data2': data2,
@@ -789,6 +765,7 @@ def inspect(request, project_id, scenario_id):
     scenario = Scenario.objects.get(id=scenario_id)
     data = get_scenario_details(scenario_id)
     map_data = get_mapdata(scenario_id)
+
     scenarios = get_all_scenarios_impact_data(request)
     impact_a = get_impact_graph_data(scenarios, int(scenario_id))
 
@@ -854,7 +831,6 @@ def portfolio(request, query):
         else:
             params = QueryParameters.objects.all().filter(submitted_user=request.user)
             return render(request, 'portfolio.html', {'scenarios': params, 'title': 'Your saved searches', 'query': query})
-
 
 
 def portfolio_actions(request, query, command, id, label):

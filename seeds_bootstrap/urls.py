@@ -60,16 +60,15 @@ urlpatterns = i18n_patterns(
     path('inspect/<project_id>/<scenario_id>', views.inspect, name='inspect'),
     path('compare/<sc_1>/<sc_2>/', views.compare, name='compare'),
 
-
-
     path('login/', v.login, name='login'),
     path('logout/', v.logout, name='logout'),
-
 
     path('portfolio/<query>',
          login_required(views.portfolio), name='portfolio'),
     path('portfolio/<query>/<command>/<id>/<label>',
          login_required(views.portfolio_actions), name='portfolio_actions'),
+    path('interface/scenarios', views.get_scenarios_count_ajax,
+         name='scenarios_count'),
     path('project/', views.project_page,
          name='project_select_page'),
     path('select/<project_id>', views.select_starting_point, name='starting_page'),

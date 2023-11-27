@@ -16,15 +16,22 @@
 </div>
 <div class=" align-center mt-2 mx-4 px-5 mb-5 pb-5" style="overflow:auto;">
     <h3> {% translate 'Define Scenario Settings'%} </h3>
-    <p class="'text-secondary"> {% translate 'Parameters settings are available with the use of sliders.'%}
-        {% translate 'Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.'%}</p>
-    <br />
+    <div class="d-flex justify-content-around">
+        <div class="'text-secondary"> {% translate 'Parameters settings are available with the use of sliders.'%}
+            {% translate 'Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.'%}
+        </div>
+        <div id='scenario_response' >
+      
+        </div>
+    </div>
+        <br />
+
     <ul class="nav nav-tabs">
         <li class="mx-5"><a class="active" data-toggle="tab" href="#home">{% translate 'Energy system settings'%}</a></li>
         <li class="mx-5"><a data-toggle="tab" href="#menu1">{% translate 'Impact control'%}</a></li>
         <li class="mx-5"><a data-toggle="tab" href="#menu2">{% translate 'Energy technologies'%}</a></li>
     </ul>
-    <form action="" method="post">
+    <form action="" method="post" id='search_form'>
         {% csrf_token %}
         <div class="tab-content">
             <div id="home" class="ml-5 pt-5 tab-pane fade in active show">
@@ -127,16 +134,15 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>Specify task/activity
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Power generation capacity' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                <b>{% translate 'Power generation capacity </b><br />
-                                Learning task is what participants are supposed to do during the activity.
-                                You can specify the task or activity here.'%}
+                                <b></b><br />
+                                
                             </div>
                         </div>
                     </div>
@@ -428,4 +434,25 @@ $('#wind-off-shore').alRangeSlider(fracOptions);
 $('#transmission').alRangeSlider(fracOptions);
 $('#bio').alRangeSlider(fracOptions);
 $('#battery').alRangeSlider(fracOptions);
+
+
+console.log('hello have ');
+
+$(document).ready(function () { 
+    $('.al-range-slider__knob').on('click',function (e) {
+        console.log($("#search_form").serialize());
+        $.ajax({
+            data: $("#search_form").serialize(),
+            type: 'POST',
+            url: "{% url 'scenarios_count' %}",
+            success: function (response) {
+                console.log ('successfully');
+                console.log(response);
+                msg = "<p class='d-flex h3 text-secondary'>Total scenarios: <span class='h3 text-dark'>"+response.total_scenarios +"</span> </p>";
+                $('#scenario_response').html(msg);
+            }
+        });
+        return false;
+    });
+})
 {% endblock%}

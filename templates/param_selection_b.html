@@ -24,7 +24,7 @@
         <li class="mx-5"><a data-toggle="tab" href="#menu1">{% translate 'Impact control'%}</a></li>
         <li class="mx-5"><a data-toggle="tab" href="#menu2">{% translate 'Energy technologies'%}</a></li>
     </ul>
-    <form action="" method="post">
+    <form action="" method="post" id='search_form'>
         {% csrf_token %}
         <div class="tab-content">
             <div id="home" class="ml-5 pt-5 tab-pane fade in active show">
@@ -428,4 +428,23 @@ $('#wind-off-shore').alRangeSlider(fracOptions);
 $('#transmission').alRangeSlider(fracOptions);
 $('#bio').alRangeSlider(fracOptions);
 $('#battery').alRangeSlider(fracOptions);
+
+
+$(document).ready(function () { 
+    $('.al-range-slider__knob').on('click',function (e) {
+        console.log($("#search_form").serialize());
+        $.ajax({
+            data: $("#search_form").serialize(),
+            type: 'POST',
+            url: "{% url 'scenarios_count' %}",
+            success: function (response) {
+                console.log ('successfully');
+                console.log(response);
+                msg = "<p class='d-flex h3 text-secondary'>Total scenarios: <span class='h3 text-dark'>"+response.total_scenarios +"</span> </p>";
+                $('#scenario_response').html(msg);
+            }
+        });
+        return false;
+    });
+})
 {% endblock%}
