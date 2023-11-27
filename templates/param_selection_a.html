@@ -20,12 +20,16 @@
         <div class="'text-secondary"> {% translate 'Parameters settings are available with the use of sliders.'%}
             {% translate 'Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.'%}
         </div>
-        <div id='scenario_response' >
-      
+        <div class="small p-3 text-dark" style="border-top-left-radius: 3px;">
+            <div> There are </div>
+            <div class='d-flex justify-content-around  align-items-center'>
+                <div  class="h1 text-primary font-weight-bold" id='scenarios_response'> 35 </div>
+                <div class='p-2'><a href="#" id='submit_form' class='btn btn-primary btn-sm'>See results </a></div>
+            </div>
+            <div> scenarios matching your search parameters. </div>
         </div>
     </div>
-        <br />
-
+    <br/>
     <ul class="nav nav-tabs">
         <li class="mx-5"><a class="active" data-toggle="tab" href="#home">{% translate 'Energy system settings'%}</a></li>
         <li class="mx-5"><a data-toggle="tab" href="#menu1">{% translate 'Impact control'%}</a></li>
@@ -57,7 +61,7 @@
                             <div>{% translate 'Storage Capacity'%} (Twh) </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary  fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#storage_help"></i></span>
                             </div>
                         </div>
@@ -68,7 +72,7 @@
                             <div>{% translate 'Community-led infrasctructure'%} </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top'
                                         data-target="#community_help"></i></span>
                             </div>
@@ -82,9 +86,9 @@
                             <div>{% translate 'Implementation pace'%} </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top'
-                                        data-target="#implement_help"></i></span>
+                                        data-target="#pace_help"></i></span>
                             </div>
                         </div>
                         <div id="implement"></div>
@@ -94,7 +98,7 @@
                             <div>{% translate 'Import dependency'%} </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#import_help"></i></span>
                             </div>
                         </div>
@@ -105,7 +109,7 @@
                             <div>{% translate 'Degree of electrification (heating)'%} </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#heat_help"></i></span>
                             </div>
                         </div>
@@ -119,7 +123,7 @@
                             <div>{% translate 'Degree of electrification (transport)'%} </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top'
                                         data-target="#transport_help"></i></span>
                             </div>
@@ -141,7 +145,135 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                <b></b><br />
+                                {% blocktranslate %} 
+                                Allows user to set the amount of power generation capacity (Tw)  deployed in the system.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="storage_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Power storage capacity' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows user to set how much storage capacity (e.g., battery, heat, hydrogen storage) is deployed in the system.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="community_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Community led-infrastructure' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows users to set the degree to which the system capacity is composed of community-scale infrastructure, such as rooftop photovoltaic panels and batteries.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="pace_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Pace of Implementation' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows user to set the speed of the implementation by power generation capacity deployed per year compared to historical data.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="import_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Import dependency' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows users to set the degree of imported energy in the total primary energy supply. Includes both electricity and hydrogen imports
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="heat_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Degree of electrification (heating)' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows users to set the degree to which heat for buildings is provided by electric technologies,such as Heat Pumps
+                                  {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="transport_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Degree of electrification (transport)' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows users to set the degree to which road transport is provided by electric vehicles
+                                {% endblocktranslate %}
                                 
                             </div>
                         </div>
@@ -160,10 +292,10 @@
                     
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Land Occupation'%} (m2) </div>
+                            <div>{% translate 'Land Occupation'%} (m2 x year annual crop land) </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#land_help"></i></span>
                             </div>
                         </div>
@@ -171,10 +303,10 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Surplus Ore'%} </div>
+                            <div>{% translate 'Surplus Ore'%} (kg Cu) </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#surplus_help"></i></span>
                             </div>
                         </div>
@@ -182,10 +314,10 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Global Warming'%}</div>
+                            <div>{% translate 'Global Warming'%} (kg CO2 to air)</div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#global_help"></i></span>
                             </div>
                         </div>
@@ -196,10 +328,10 @@
                 <div class="row mt-4">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Water Comsumption'%} </div>
+                            <div>{% translate 'Water Comsumption'%}  (m3 water consumed)</div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#water_help"></i></span>
                             </div>
                         </div>
@@ -207,10 +339,10 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Freshwater Eutrophication'%} </div>
+                            <div>{% translate 'Freshwater Eutrophication'%} (Kg P to fresh water) </div>
                             <div>
                                 <span>
-                                    <i style='color:#007bff;' class="text-secondary fa fa-info-circle"
+                                    <i style='color:#007bff;' class="text-primary fa fa-info-circle"
                                         data-toggle='modal' data-placement='top' data-target="#fresh_help"></i></span>
                             </div>
                         </div>
@@ -219,6 +351,112 @@
                 </div>
 
 
+            </div>
+
+            <div class="modal fade" id="land_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Land Use' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much land will be occupied and transformed by the energy system designed.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="surplus_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Mineral Resource scarcity' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set the amount of mineral resource scarcity, expressed as a Surplus Ore Potential (SOP), the energy system has. The SOP expresses the average extra amount of ore produced in the future by the extraction of a mineral resource considering all future production of that mineral resource.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="global_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Climate change' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much integrated infrared radiative forcing increase of greenhouse gas (GHG), expressed in kg CO2-eq the energy system has.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="water_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Water use' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much water will be consumed by the energy system designed.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="fresh_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Freshwater Eutrophication ' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allow users to set the Level of plant and algae growth they consider aceptable as consequence of a energy system implementation.
+                                {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
             </div>
             <div id="menu2" class="ml-5 pt-5 tab-pane fade">
                 <p>{% blocktranslate %} 
@@ -230,10 +468,10 @@
 
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Photovoltic - Roof-mounted (Gw)</div>
+                        <div>Photovoltic - Roof-mounted </div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
                                     data-placement='top' data-target="#photo-roof_help"></i></span>
                         </div>
                     </div>
@@ -242,10 +480,10 @@
 
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>{% translate 'Photovoltic - Open-field'%} (Gw) </div>
+                        <div>{% translate 'Photovoltic - Open-field'%}  </div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
                                     data-placement='top' data-target="#photo-open-field_help"></i></span>
                         </div>
                     </div>
@@ -257,7 +495,7 @@
                         <div>{% translate 'Hydrogen'%}</div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
                                     data-placement='top' data-target="#hydrogen_help"></i></span>
                         </div>
                     </div>
@@ -306,7 +544,7 @@
                         <div>{% translate 'Wind - On-shore'%} </div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
                                     data-placement='top' data-target="#wind-on-shore_help"></i></span>
                         </div>
                     </div>
@@ -317,7 +555,7 @@
                         <div>{% translate 'Wind - Off-shore'%}</div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
                                     data-placement='top' data-target="#wind-off-shore_help"></i></span>
                         </div>
                     </div>
@@ -328,7 +566,7 @@
                         <div>{% translate 'Transmission'%}</div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
                                     data-placement='top' data-target="#transmission_help"></i></span>
                         </div>
                     </div>
@@ -341,8 +579,8 @@
                         <div>{% translate 'Biofuels'%}</div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
-                                    data-placement='top' data-target="#photo_help"></i></span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#bio_help"></i></span>
                         </div>
                     </div>
                     <div id="bio"></div>
@@ -352,8 +590,8 @@
                         <div>{% translate 'Battery'%}</div>
                         <div>
                             <span>
-                                <i style='color:#007bff;' class="text-secondary fa fa-info-circle" data-toggle='modal'
-                                    data-placement='top' data-target="#land_help"></i></span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
+                                    data-placement='top' data-target="#battery_help"></i></span>
                         </div>
                     </div>
                     <div id="battery"></div>
@@ -361,6 +599,176 @@
                 <div class="col-lg-4">
 
                 </div>
+            </div>
+        
+            <div class="modal fade" id="photo-roof_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Roof-mounted Photovltaic' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much of the system should be installed as Rooftop PV.
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="modal fade" id="photo-open-field_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Open-field Photovltaic' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much of the system should be installed as Open field PV. 
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="hydrogen_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Hydrogen CHP' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much of the system should be installed as hydrogen CHP.
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="wind-on-shore_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind on-shore' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much of the system should be installed as OnShore wind.
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="wind-off-shore_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind off-shore' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much of the system should be installed as OffShore wind.
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="transmission_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Transmission capacity' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Allows the user to set how much transmission capacity should be expanded.
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="bio_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Biofuel supply (domestic)' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Extent to which domestic sustainable biofuel resources are used.
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="battery_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Battery storage' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktranslate %} 
+                                Extent to which batteries are deployed.
+                                 {% endblocktranslate %}
+                                
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
             
@@ -382,7 +790,7 @@ showInputs: false,
 };
 const fracOptions = {
 range: { min: 0, max: 1, step: .05 },
-initialSelectedValues: { from: .1, to: .5 },
+initialSelectedValues: { from: 0, to: .8 },
 grid: { minTicksStep: 2, marksStep: 2 },
 theme: "light",
 
@@ -390,7 +798,7 @@ theme: "light",
 
 const powerOptions = {
     range: { min: 0, max: 160, step: 25 },
-    initialSelectedValues: { from: 40, to: 100 },
+    initialSelectedValues: { from: 20, to: 100 },
     theme: "light",
     };
 
@@ -434,12 +842,15 @@ $('#wind-off-shore').alRangeSlider(fracOptions);
 $('#transmission').alRangeSlider(fracOptions);
 $('#bio').alRangeSlider(fracOptions);
 $('#battery').alRangeSlider(fracOptions);
-
-
-console.log('hello have ');
+$(document).ready(function () { 
+    $('#submit_form').on('click',function (e) {
+        $("#search_form").submit();
+    });
+});
 
 $(document).ready(function () { 
     $('.al-range-slider__knob').on('click',function (e) {
+        console.log('Clicked');
         console.log($("#search_form").serialize());
         $.ajax({
             data: $("#search_form").serialize(),
@@ -448,8 +859,8 @@ $(document).ready(function () {
             success: function (response) {
                 console.log ('successfully');
                 console.log(response);
-                msg = "<p class='d-flex h3 text-secondary'>Total scenarios: <span class='h3 text-dark'>"+response.total_scenarios +"</span> </p>";
-                $('#scenario_response').html(msg);
+                msg = "<p class='text-dark'>There are  <h1 class='text-primary'>"+response.total_scenarios +"</h1>  scenarios matching your preferences.</p>";
+                $('#scenarios_response').text(response.total_scenarios);
             }
         });
         return false;
