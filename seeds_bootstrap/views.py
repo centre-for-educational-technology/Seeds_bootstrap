@@ -377,12 +377,6 @@ def get_filtered_scenarios(request, project_id):
         search_params['battery_max'] = battery_max
         scenarios_filtered = filter_scenarios(search_params)
 
-        # create log entry
-
-        create_log_entry(project_id, request.user, 'submitted',
-                         'search parameters', '')
-        print('created log entry')
-
     return scenarios_filtered, search_params
 
 
@@ -402,6 +396,9 @@ def interface(request, project_id, starting_scenario):
     if request.method == 'POST':
         scenarios_filtered, search_params = get_filtered_scenarios(
             request, project_id)
+        create_log_entry(project_id, request.user, 'submitted',
+                         'search parameters', '')
+        print('created log entry')
         return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
                                                      'search_params': search_params,
                                                      'json_format': serializers.serialize('json', scenarios_filtered),
