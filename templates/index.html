@@ -6,14 +6,20 @@
 
 <div class='row mt-4 p-4 h-100 justify-content-around mb-5'>
   <div class="px-5 col col-lg-7 col-md-6 col-sm-12 col-xs-12">
-      <div class="h4 p-0 font-weight-bold text-dark col-xs-12 col-lg-10 col-md-12 col-sm-12">
-        {% translate 'Stakeholder-Based Environmentally-sustainable and Economically Doable Scenarios for the Energy Transition' %}
+      <div class="display-4 p-0 text-align-center font-weight-bold text-dark col-xs-12 col-lg-10 col-md-12 col-sm-12">
+        {% translate 'Welcome to SEEDS app!' %}
       </div>
       <div class="pt-5 mt-2 ">
-        {% translate  'In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. Doing so involves methodological development, software development and implementation, and experimentation with a pilot study in Portugal. ' %}
+        {% blocktrans %}
+        SEEDS stands for Stakeholder-Based Environmentally-sustainable And Economically Doable Scenarios for the Energy Transition
+        
+        {% endblocktrans %}      
       </div>
       <div class="pt-2 mt-1">
-        {% translate  'This work is done in a focused consortium of four partners: ETHZ is a leading centre of high-resolution energy system modelling; ICTA-UAB is a leading centre in the development of integrated sustainability assessment methods; TLU provides expertise in participatory design of trustworthy interactive systems; and FC.ID contributes its unique expertise combining modelling with participatory action research. ' %}
+        {% blocktrans %}
+        In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. Doing so involves methodological development, software development and implementation, and experimentation with a pilot study in Portugal. 
+        This work is done in a focused consortium of four partners: ETHZ is a leading centre of high-resolution energy system modelling; ICTA-UAB is a leading centre in the development of integrated sustainability assessment methods; TLU provides expertise in participatory design of trustworthy interactive systems; and FC.ID contributes its unique expertise combining modelling with participatory action research.
+        {% endblocktrans %}  
       </div>
  
   </div>
@@ -42,6 +48,7 @@
     </div>
     <div  id="signin_content" style="display: none;">
       <div  class='text-muted  text-center small p-1'> 
+        {% translate 'Sign in to SEEDS app' %}
       </div>
       <form class= "mt-2 " method="post">
         {% csrf_token %}
@@ -67,8 +74,8 @@
 
   <div class=' d-flex justify-content-center' style="background-color: rgba(67,114,227,.2)">
     <div class="p-5 text-dark d-flex flex-column">
-     <div class='h4 p-2 text-dark text-center'>  {% translate  'START USING IT'%} </div>
-     <div class='p-2 text-center'> <a href="{% url 'project_select_page' %}" class="text-white btn btn-info py-2 px-4 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;">  {% translate  'Try SEEDS App'%} </a></div>
+     <div class='h4 p-2 text-dark text-center'>  {% translate  'START USING IT NOW'%} </div>
+     <div class='p-2 text-center'> <a href="{% url 'project_select_page' %}" class="text-white px-5 btn btn-info py-2 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold; color:#278b84; font-size:14px;">  {% translate  'Try SEEDS App'%} </a></div>
     </div>
   <div>
 </div>
