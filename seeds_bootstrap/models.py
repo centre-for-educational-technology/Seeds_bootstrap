@@ -52,6 +52,9 @@ class Scenario(models.Model):
 
 
 class Vote(models.Model):
+    """
+    Model for storing voted response
+    """
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     submitted_user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -166,6 +169,26 @@ class TechStorage(models.Model):
                                 'location_id',
                                 'scenario_id',
                                 'technology_type'], name='unique_location_tech')
+
+
+class ActivityLog(models.Model):
+    """
+    Model to store activity logs.
+    Verbs:
+        signed-in : user signed in the seeds platform
+        submitted : user submitted the search query for filtering scenarios
+        saved     : user saved scenario or search parameters
+        compared  : user compared two scenarios
+        downloaded: user downloaded the result of search parameters
+        inspected : user inspected a scenario
+        voted     : user voted a scenario
+    """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    actor = models.EmailField(max_length=254)
+    sub_date = models.DateTimeField(auto_now_add=True)
+    verb = models.CharField(max_length=20)
+    object = models.CharField(max_length=20)
+    notes = models.CharField(max_length=200)
 
 
 """
@@ -296,5 +319,6 @@ admin.site.register(Project)
 admin.site.register(UserScenario)
 admin.site.register(Vote)
 admin.site.register(QueryParameters)
+admin.site.register(ActivityLog)
 
 # Function to check if item is in the list
