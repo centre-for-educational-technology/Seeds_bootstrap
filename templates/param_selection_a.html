@@ -17,14 +17,16 @@
 <div class=" align-center mt-2 mx-4 px-5 mb-5 pb-5" style="overflow:auto;">
     <h3> {% translate 'Define Scenario Settings'%} </h3>
     <div class="d-flex justify-content-around">
-        <div class="'text-secondary"> {% translate 'Parameters settings are available with the use of sliders.'%}
-            {% translate 'Parameters are divided into 3 groups. Energy system settings, Impact control, and Energy technologies.'%}
+        <div class="'text-secondary"> 
+            {% blocktrans %}
+            Use the range sliders to define your preferences. Parameters settings allow you to set the characteristics energy transition scenarios, and are divided into three groups: Energy System Settings, Energy Technology, and Impacts Control. These parameters will allow you to define the configurations of the energy transition scenario. Additional information regarding the parameters and metrics is available by clicking the information icons.
+            {% endblocktrans %}
         </div>
         <div class="small p-3 text-dark" style="border-top-left-radius: 3px;">
             <div> There are </div>
             <div class='d-flex justify-content-around  align-items-center'>
                 <div  class="h1 text-primary font-weight-bold" id='scenarios_response'> 35 </div>
-                <div class='p-2'><a href="#" id='submit_form' class='btn btn-primary btn-sm'>See results </a></div>
+                <div class='p-2'><a href="#" id='submit_form' class='btn btn-primary btn-sm'> {% translate 'Generate results' %} </a></div>
             </div>
             <div> scenarios matching your search parameters. </div>
         </div>
@@ -32,18 +34,14 @@
     <br/>
     <ul class="nav nav-tabs">
         <li class="mx-5"><a class="active" data-toggle="tab" href="#home">{% translate 'Energy system settings'%}</a></li>
-        <li class="mx-5"><a data-toggle="tab" href="#menu1">{% translate 'Impact control'%}</a></li>
-        <li class="mx-5"><a data-toggle="tab" href="#menu2">{% translate 'Energy technologies'%}</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu1">{% translate 'Impacts control'%}</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu2">{% translate 'Energy technology'%}</a></li>
     </ul>
     <form action="" method="post" id='search_form'>
         {% csrf_token %}
         <div class="tab-content">
             <div id="home" class="ml-5 pt-5 tab-pane fade in active show">
-                <p>{% blocktranslate %} 
-                    These parameters will allow you to define the configurations of the energy transition scenario.
-                    Additional information regarding the parameters and metrics is available by clicking the information
-                    icons.
-                    {% endblocktranslate %}</p> <br />
+      
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
@@ -145,9 +143,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows user to set the amount of power generation capacity (Tw)  deployed in the system.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets the amount of power generation capacity deployed in the system.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -166,9 +164,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows user to set how much storage capacity (e.g., battery, heat, hydrogen storage) is deployed in the system.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets how much storage capacity (e.g., battery, heat, hydrogen storage) is deployed in the system.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -187,9 +185,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows users to set the degree to which the system capacity is composed of community-scale infrastructure, such as rooftop photovoltaic panels and batteries.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets the degree to which the system capacity is composed of community-scale infrastructure, such as rooftop photovoltaic panels and batteries.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -208,9 +206,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows user to set the speed of the implementation by power generation capacity deployed per year compared to historical data.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets  the speed of the implementation by power generation capacity deployed per year compared to historical data
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -229,9 +227,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows users to set the degree of imported energy in the total primary energy supply. Includes both electricity and hydrogen imports
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets the degree of imported energy in the total primary energy supply. Includes both electricity and hydrogen imports.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -250,9 +248,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows users to set the degree to which heat for buildings is provided by electric technologies,such as Heat Pumps
-                                  {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets the degree to which heat for buildings is provided by electric technologies,such as Heat Pumps.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -271,9 +269,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows users to set the degree to which road transport is provided by electric vehicles
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets the degree to which road transport is provided by electric vehicles.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -281,18 +279,11 @@
                 </div>
             </div>
             <div id="menu1" class="ml-5  pt-5 tab-pane fade">
-
-                <p>
-                    {% blocktranslate %} These parameters will allow you to define the configurations of impact control.
-                    Additional information regarding the parameters and metrics is available by clicking the information
-                    icons.
-                    {% endblocktranslate %}
-                </p>
                 <div class="row">
                     
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Land Occupation'%} (m2 x year annual crop land) </div>
+                            <div>{% translate 'Agricultural Land Occupation (LOP)'%} (m2 x year annual crop land) </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-primary fa fa-info-circle"
@@ -303,7 +294,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Surplus Ore'%} (kg Cu) </div>
+                            <div>{% translate 'Surplus Ore Potential'%} (kg Cu) </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-primary fa fa-info-circle"
@@ -314,7 +305,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Global Warming'%} (kg CO2 to air)</div>
+                            <div>{% translate 'Global Warming Potential'%} (kg CO2 to air)</div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-primary fa fa-info-circle"
@@ -328,7 +319,7 @@
                 <div class="row mt-4">
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Water Comsumption'%}  (m3 water consumed)</div>
+                            <div>{% translate 'Water Comsumption Potential'%}  (m3 water consumed)</div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-primary fa fa-info-circle"
@@ -339,7 +330,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="d-flex justify-content-between px-4">
-                            <div>{% translate 'Freshwater Eutrophication'%} (Kg P to fresh water) </div>
+                            <div>{% translate 'Freshwater Eutrophication Potential'%} (Kg P to fresh water) </div>
                             <div>
                                 <span>
                                     <i style='color:#007bff;' class="text-primary fa fa-info-circle"
@@ -359,16 +350,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Land Use' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Agricultural Land Occupation' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much land will be occupied and transformed by the energy system designed.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Environmental Impacts associated with land use changes. Indicator: occupation and time integrated transformation. 
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -380,16 +371,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Mineral Resource scarcity' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Surplus Ore Potential' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set the amount of mineral resource scarcity, expressed as a Surplus Ore Potential (SOP), the energy system has. The SOP expresses the average extra amount of ore produced in the future by the extraction of a mineral resource considering all future production of that mineral resource.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Damage to the natural resource scarcity. Indicator: ore grade decrease.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -401,16 +392,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Climate change' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Global Warming Potential' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much integrated infrared radiative forcing increase of greenhouse gas (GHG), expressed in kg CO2-eq the energy system has.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Impact on global warming due to greenhouse gas emissions. Indicator: Infrared radiative forcing increase.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -422,16 +413,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Water use' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Water Consumption Potential' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much water will be consumed by the energy system designed.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Environmental Impact of the energy system on water resources. Indicator: increase of water consumed.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -443,32 +434,26 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Freshwater Eutrophication ' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Freshwater Eutrophication Potential' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allow users to set the Level of plant and algae growth they consider aceptable as consequence of a energy system implementation.
-                                {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Impact on water ecosystems, particularly due to eutrophication. Indicator: phosphorus increase in fresh water.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
                     </div>
             </div>
             <div id="menu2" class="ml-5 pt-5 tab-pane fade">
-                <p>{% blocktranslate %} 
-                    These parameters will allow you to define the configurations of energy technogoies.
-                    Additional information regarding the parameters and metrics is available by clicking the information
-                    icons.
-                    {% endblocktranslate %}</p>
                 <div class="row">
-
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>Photovoltic - Roof-mounted </div>
+                        <div>{% translate 'PV Roof-mounted'%} </div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
@@ -480,7 +465,7 @@
 
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>{% translate 'Photovoltic - Open-field'%}  </div>
+                        <div>{% translate 'PV Open-field'%}  </div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
@@ -492,7 +477,7 @@
                 
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>{% translate 'Hydrogen'%}</div>
+                        <div>{% translate 'Hydrogen CHP'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
@@ -541,7 +526,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>{% translate 'Wind - On-shore'%} </div>
+                        <div>{% translate 'Wind On-shore'%} </div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
@@ -552,7 +537,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>{% translate 'Wind - Off-shore'%}</div>
+                        <div>{% translate 'Wind Off-shore'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
@@ -576,7 +561,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="d-flex justify-content-between px-4">
-                        <div>{% translate 'Biofuels'%}</div>
+                        <div>{% translate 'Biofuels Supply (Domestic)'%}</div>
                         <div>
                             <span>
                                 <i style='color:#007bff;' class="text-primary fa fa-info-circle" data-toggle='modal'
@@ -607,16 +592,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Roof-mounted Photovltaic' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'PV Roof-mounted'%} 
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much of the system should be installed as Rooftop PV.
-                                 {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets how much of the system should be installed as Rooftop PV 
+                                 {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -629,16 +614,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Open-field Photovltaic' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'PV Open-field' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much of the system should be installed as Open field PV. 
-                                 {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets how much of the system should be installed as Open field PV 
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -657,9 +642,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much of the system should be installed as hydrogen CHP.
-                                 {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets how much of the system should be installed as Hydrogen CHP
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -671,16 +656,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind on-shore' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind On-shore' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much of the system should be installed as OnShore wind.
-                                 {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets how much of the system should be installed as On-Shore wind
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -692,16 +677,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind off-shore' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind Off-shore' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much of the system should be installed as OffShore wind.
-                                 {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets how much of the system should be installed as Offshore wind.
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -713,16 +698,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Transmission capacity' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Transmission' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Allows the user to set how much transmission capacity should be expanded.
-                                 {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets how much transmission capacity should be expanded.
+                                 {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -734,16 +719,16 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
-                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Biofuel supply (domestic)' %}
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Biofuel Supply (Domestic)' %}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
-                                Extent to which domestic sustainable biofuel resources are used.
-                                 {% endblocktranslate %}
+                                {% blocktrans %} 
+                                Sets the extent to which domestic sustainable biofuel resources are used
+                                {% endblocktrans %}
                                 
                             </div>
                         </div>
@@ -762,9 +747,9 @@
                                 </button>
                             </div>
                             <div class='modal-body'>
-                                {% blocktranslate %} 
+                                {% blocktrans %} 
                                 Extent to which batteries are deployed.
-                                 {% endblocktranslate %}
+                                 {% endblocktrans %}
                                 
                             </div>
                         </div>

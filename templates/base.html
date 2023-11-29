@@ -77,6 +77,13 @@
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'portfolio' query='saved_scenarios' %}" class="nav-link text-dark">{% translate 'My Portfolio' %}</a></li>
                 {% endif %}
+                <li><a href="#home-section" class="nav-link text-dark">{% translate 'Documentation' %}</a></li>
+                <li><a href="#home-section" class="nav-link text-dark">{% translate 'Help' %}</a></li>
+                <li><a href="#home-section" class="nav-link text-dark">{% translate 'About the Project' %}</a></li>
+                <li><a href="#home-section" class="nav-link text-dark">{% translate 'Contact' %}</a></li>
+                {% if user.is_superuser %}
+                <li><a href="{% url 'get_logs'  %}" class="nav-link text-dark">{% translate 'Activity Logs' %}</a></li>
+                {% endif %}
                 <!--
                 <li><a href="#team-section" class="nav-link text-dark">About us</a></li>
                 <li><a href="#documentation-section" class="nav-link text-dark">Documentation</a></li>
@@ -169,6 +176,8 @@
   <script src="{% static 'js/main.js' %}"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+  integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
   <script>
     {% block scr %}
