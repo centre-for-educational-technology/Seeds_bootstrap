@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 12:15+0300\n"
+"POT-Creation-Date: 2023-11-29 16:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,867 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: seeds_bootstrap/settings.py:130 templates/base.html:67
+
+#: seeds_bootstrap/settings.py:131 templates/base.html:67
+#: templates/base_inspect.html:65
 msgid "English"
 msgstr ""
 
-#: seeds_bootstrap/settings.py:130 templates/base.html:68
+#: seeds_bootstrap/settings.py:131 templates/base.html:68
+#: templates/base_inspect.html:66
 msgid "Portugese"
 msgstr ""
 
-#: templates/index.html:10
+#: templates/activity_log.html:12 templates/portfolio.html:12
+msgid "New Scenario"
+msgstr ""
+
+#: templates/activity_log.html:17
+msgid "Portfolio"
+msgstr ""
+
+#: templates/activity_log.html:22 templates/portfolio.html:22
+msgid "Saved Search"
+msgstr ""
+
+#: templates/activity_log.html:29 templates/portfolio.html:29
+msgid "Account settings"
+msgstr ""
+
+#: templates/activity_log.html:36 templates/portfolio.html:36
+msgid "Terms of Use"
+msgstr ""
+
+#: templates/activity_log.html:37 templates/portfolio.html:37
+msgid "Privacy policy"
+msgstr ""
+
+#: templates/activity_log.html:48
+msgid "Seeds users logs"
+msgstr ""
+
+#: templates/activity_log.html:56
+msgid "Check activity logs of Seeds users"
+msgstr ""
+
+#: templates/activity_log.html:59
+msgid "It seems like there are no activity logs recorded."
+msgstr ""
+
+#: templates/activity_log.html:62 templates/base.html:85
+msgid "Activity Logs"
+msgstr ""
+
+#: templates/activity_log.html:67
+msgid "User"
+msgstr ""
+
+#: templates/activity_log.html:68
+msgid "Action"
+msgstr ""
+
+#: templates/activity_log.html:69
+msgid "Object"
+msgstr ""
+
+#: templates/activity_log.html:70
+msgid "Timestamp"
+msgstr ""
+
+#: templates/base.html:76 templates/base_inspect.html:74
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:78 templates/base_inspect.html:76
+#: templates/portfolio.html:17 templates/portfolio.html:47
+msgid "My Portfolio"
+msgstr ""
+
+#: templates/base.html:80 templates/project_page.html:25
+msgid "Documentation"
+msgstr ""
+
+#: templates/base.html:81
+msgid "Help"
+msgstr ""
+
+#: templates/base.html:82
+msgid "About the Project"
+msgstr ""
+
+#: templates/base.html:83
+msgid "Contact"
+msgstr ""
+
+#: templates/base.html:131 templates/base_inspect.html:124
+msgid "SEEDS Project"
+msgstr ""
+
+#: templates/base.html:134 templates/base_inspect.html:127
 msgid ""
-"Stakeholder-Based Environmentally-sustainable and Economically Doable "
-"Scenarios for the Energy Transition"
+"The SEEDS project is supported by the CHIST-ERA grant CHIST-ERA-19-CES-004, "
+"the Swiss National Science Foundation grant number 195537, the Fundação para "
+"a Ciência e Tecnologia (FCT) grant number CHIST-ERA/0005/2019, the Spanish "
+"Agencia Estatal de Investigación with grant PCI2020-120710-2, and the "
+"Estonian Research Council grant number 4-8/20/26"
+msgstr ""
+
+#: templates/compare_scenario.html:17
+msgid "Comparison"
+msgstr ""
+
+#: templates/compare_scenario.html:19
+msgid ""
+"Here you can compare the features of the selected scenarios. Further actions "
+"are available using the toolbar on the bottom. Check the scenarios numbers "
+"and characteristic by clicking on the Detailed Report icon."
+msgstr ""
+
+#: templates/compare_scenario.html:30 templates/compare_scenario.html:75
+#: templates/show_results.html:477
+msgid "Inspect"
+msgstr ""
+
+#: templates/compare_scenario.html:124 templates/inspect_scenario.html:164
+msgid ""
+"The chart illustrates scenario performance across Global Warming Potential "
+"(GWP100), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water "
+"Depletion (WPC), and Freshwater Eutrophication Potential (FEP)."
+msgstr ""
+
+#: templates/index.html:10
+msgid "Welcome to SEEDS app!"
+msgstr ""
+
+#: templates/index.html:13
+msgid ""
+"\n"
+"        SEEDS stands for Stakeholder-Based Environmentally-sustainable And "
+"Economically Doable Scenarios for the Energy Transition\n"
+"        \n"
+"        "
+msgstr ""
+
+#: templates/index.html:19
+msgid ""
+"\n"
+"        In the SEEDS project a consortium of four European institutions is "
+"building an approach to integrate humans into energy transition scenario "
+"design, while accurately modelling the relevant technical, economic and "
+"environmental constraints. Doing so involves methodological development, "
+"software development and implementation, and experimentation with a pilot "
+"study in Portugal. \n"
+"        This work is done in a focused consortium of four partners: ETHZ is "
+"a leading centre of high-resolution energy system modelling; ICTA-UAB is a "
+"leading centre in the development of integrated sustainability assessment "
+"methods; TLU provides expertise in participatory design of trustworthy "
+"interactive systems; and FC.ID contributes its unique expertise combining "
+"modelling with participatory action research.\n"
+"        "
+msgstr ""
+
+#: templates/index.html:29
+msgid "Sign up"
+msgstr ""
+
+#: templates/index.html:30
+msgid "Sign in"
+msgstr ""
+
+#: templates/index.html:35
+msgid " Create your account to access all app resources"
+msgstr ""
+
+#: templates/index.html:40 templates/index.html:56
+msgid "Email address"
+msgstr ""
+
+#: templates/index.html:45
+msgid "Create a new account"
+msgstr ""
+
+#: templates/index.html:51
+msgid "Sign in to SEEDS app"
+msgstr ""
+
+#: templates/index.html:59
+msgid "Password"
+msgstr ""
+
+#: templates/index.html:65
+msgid "I forgot my password"
+msgstr ""
+
+#: templates/index.html:77
+msgid "START USING IT NOW"
+msgstr ""
+
+#: templates/index.html:78
+msgid "Try SEEDS App"
+msgstr ""
+
+#: templates/inspect_scenario.html:40 templates/show_results.html:62
+msgid "Need authentication"
+msgstr ""
+
+#: templates/inspect_scenario.html:47 templates/show_results.html:69
+msgid "This feature is supported for authenticated users only."
+msgstr ""
+
+#: templates/inspect_scenario.html:50 templates/show_results.html:72
+#: templates/show_results.html:185
+msgid "Close"
+msgstr ""
+
+#: templates/inspect_scenario.html:60 templates/portfolio.html:174
+#: templates/show_results.html:82
+msgid "Are you sure"
+msgstr ""
+
+#: templates/inspect_scenario.html:67 templates/show_results.html:89
+msgid ""
+"Confirming this choice will erase all settings defined for these scenarios."
+msgstr ""
+
+#: templates/inspect_scenario.html:70 templates/show_results.html:92
+msgid "Confirm"
+msgstr ""
+
+#: templates/inspect_scenario.html:71 templates/inspect_scenario.html:102
+#: templates/portfolio.html:131 templates/portfolio.html:162
+#: templates/portfolio.html:185 templates/show_results.html:93
+#: templates/show_results.html:114 templates/show_results.html:143
+msgid "Cancel"
+msgstr ""
+
+#: templates/inspect_scenario.html:85
+msgid "Would you like to add this scenario to your folder?"
+msgstr ""
+
+#: templates/inspect_scenario.html:94
+msgid "Title"
+msgstr ""
+
+#: templates/inspect_scenario.html:96
+msgid "Scenario will be saved with the label."
+msgstr ""
+
+#: templates/inspect_scenario.html:101 templates/show_results.html:142
+msgid "Save"
+msgstr ""
+
+#: templates/inspect_scenario.html:110 templates/inspect_scenario.html:138
+msgid "Would you be willing to accept this scenario?"
+msgstr ""
+
+#: templates/inspect_scenario.html:112 templates/inspect_scenario.html:140
+msgid ""
+"Assess the suitability of this system to help SEEDS ranking options for the "
+"Portuguese energy system"
+msgstr ""
+
+#: templates/inspect_scenario.html:130
+msgid "Cofirm"
+msgstr ""
+
+#: templates/inspect_scenario.html:150
+msgid "Vote"
+msgstr ""
+
+#: templates/inspect_scenario.html:161
+msgid "Scenario Performance"
+msgstr ""
+
+#: templates/inspect_scenario.html:210
+msgid "Total Energy"
+msgstr ""
+
+#: templates/inspect_scenario.html:218
+msgid "Photovoltaic"
+msgstr ""
+
+#: templates/inspect_scenario.html:224
+msgid "Roof PV"
+msgstr ""
+
+#: templates/inspect_scenario.html:228
+msgid "Open field PV"
+msgstr ""
+
+#: templates/inspect_scenario.html:238
+msgid "Wind"
+msgstr ""
+
+#: templates/inspect_scenario.html:244
+msgid "Off-shore"
+msgstr ""
+
+#: templates/inspect_scenario.html:248
+msgid "On-shore"
+msgstr ""
+
+#: templates/inspect_scenario.html:257
+msgid "Biofuels"
+msgstr ""
+
+#: templates/inspect_scenario.html:267
+msgid "Hydrogen"
+msgstr ""
+
+#: templates/inspect_scenario.html:278
+msgid "Electrification"
+msgstr ""
+
+#: templates/inspect_scenario.html:284
+msgid "Heat"
+msgstr ""
+
+#: templates/inspect_scenario.html:288
+msgid "Transport"
+msgstr ""
+
+#: templates/param_selection_a.html:18 templates/param_selection_b.html:18
+msgid "Define Scenario Settings"
+msgstr ""
+
+#: templates/param_selection_a.html:21 templates/param_selection_b.html:21
+msgid ""
+"\n"
+"            Use the range sliders to define your preferences. Parameters "
+"settings allow you to set the characteristics energy transition scenarios, "
+"and are divided into three groups: Energy System Settings, Energy "
+"Technology, and Impacts Control. These parameters will allow you to define "
+"the configurations of the energy transition scenario. Additional information "
+"regarding the parameters and metrics is available by clicking the "
+"information icons.\n"
+"            "
+msgstr ""
+
+#: templates/param_selection_a.html:29 templates/param_selection_b.html:29
+msgid "Generate results"
+msgstr ""
+
+#: templates/param_selection_a.html:36 templates/param_selection_b.html:36
+msgid "Energy system settings"
+msgstr ""
+
+#: templates/param_selection_a.html:37 templates/param_selection_b.html:37
+msgid "Impacts control"
+msgstr ""
+
+#: templates/param_selection_a.html:38 templates/param_selection_b.html:38
+msgid "Energy technology"
+msgstr ""
+
+#: templates/param_selection_a.html:48 templates/param_selection_b.html:48
+#: templates/show_results.html:215
+msgid "Power Generation Capacity"
+msgstr ""
+
+#: templates/param_selection_a.html:59 templates/param_selection_b.html:59
+#: templates/show_results.html:254
+msgid "Storage Capacity"
+msgstr ""
+
+#: templates/param_selection_a.html:70 templates/param_selection_b.html:70
+msgid "Community-led infrasctructure"
+msgstr ""
+
+#: templates/param_selection_a.html:84 templates/param_selection_b.html:84
+msgid "Implementation pace"
+msgstr ""
+
+#: templates/param_selection_a.html:96 templates/param_selection_a.html:223
+#: templates/param_selection_b.html:96 templates/param_selection_b.html:223
+#: templates/show_results.html:446
+msgid "Import dependency"
+msgstr ""
+
+#: templates/param_selection_a.html:107 templates/param_selection_a.html:244
+#: templates/param_selection_b.html:107 templates/param_selection_b.html:244
+msgid "Degree of electrification (heating)"
+msgstr ""
+
+#: templates/param_selection_a.html:121 templates/param_selection_a.html:265
+#: templates/param_selection_b.html:121 templates/param_selection_b.html:265
+msgid "Degree of electrification (transport)"
+msgstr ""
+
+#: templates/param_selection_a.html:139 templates/param_selection_b.html:139
+msgid "Power generation capacity"
+msgstr ""
+
+#: templates/param_selection_a.html:146 templates/param_selection_b.html:146
+msgid ""
+" \n"
+"                                Sets the amount of power generation capacity "
+"deployed in the system.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:160 templates/param_selection_b.html:160
+msgid "Power storage capacity"
+msgstr ""
+
+#: templates/param_selection_a.html:167 templates/param_selection_b.html:167
+msgid ""
+" \n"
+"                                Sets how much storage capacity (e.g., "
+"battery, heat, hydrogen storage) is deployed in the system.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:181 templates/param_selection_b.html:181
+msgid "Community led-infrastructure"
+msgstr ""
+
+#: templates/param_selection_a.html:188 templates/param_selection_b.html:188
+msgid ""
+" \n"
+"                                Sets the degree to which the system capacity "
+"is composed of community-scale infrastructure, such as rooftop photovoltaic "
+"panels and batteries.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:202 templates/param_selection_b.html:202
+msgid "Pace of Implementation"
+msgstr ""
+
+#: templates/param_selection_a.html:209 templates/param_selection_b.html:209
+msgid ""
+" \n"
+"                                Sets  the speed of the implementation by "
+"power generation capacity deployed per year compared to historical data\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:230 templates/param_selection_b.html:230
+msgid ""
+" \n"
+"                                Sets the degree of imported energy in the "
+"total primary energy supply. Includes both electricity and hydrogen "
+"imports.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:251 templates/param_selection_b.html:251
+msgid ""
+" \n"
+"                                Sets the degree to which heat for buildings "
+"is provided by electric technologies,such as Heat Pumps.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:272 templates/param_selection_b.html:272
+msgid ""
+" \n"
+"                                Sets the degree to which road transport is "
+"provided by electric vehicles.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:286 templates/param_selection_b.html:286
+msgid "Agricultural Land Occupation (LOP)"
+msgstr ""
+
+#: templates/param_selection_a.html:297 templates/param_selection_a.html:374
+#: templates/param_selection_b.html:297 templates/param_selection_b.html:374
+msgid "Surplus Ore Potential"
+msgstr ""
+
+#: templates/param_selection_a.html:308 templates/param_selection_a.html:395
+#: templates/param_selection_b.html:308 templates/param_selection_b.html:395
+#: templates/show_results.html:452
+msgid "Global Warming Potential"
+msgstr ""
+
+#: templates/param_selection_a.html:322 templates/param_selection_b.html:322
+msgid "Water Comsumption Potential"
+msgstr ""
+
+#: templates/param_selection_a.html:333 templates/param_selection_a.html:437
+#: templates/param_selection_b.html:333 templates/param_selection_b.html:437
+msgid "Freshwater Eutrophication Potential"
+msgstr ""
+
+#: templates/param_selection_a.html:353 templates/param_selection_b.html:353
+#: templates/show_results.html:425
+msgid "Agricultural Land Occupation"
+msgstr ""
+
+#: templates/param_selection_a.html:360 templates/param_selection_b.html:360
+msgid ""
+" \n"
+"                                Environmental Impacts associated with land "
+"use changes. Indicator: occupation and time integrated transformation. \n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:381 templates/param_selection_b.html:381
+msgid ""
+" \n"
+"                                Damage to the natural resource scarcity. "
+"Indicator: ore grade decrease.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:402 templates/param_selection_b.html:402
+msgid ""
+" \n"
+"                                Impact on global warming due to greenhouse "
+"gas emissions. Indicator: Infrared radiative forcing increase.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:416 templates/param_selection_b.html:416
+msgid "Water Consumption Potential"
+msgstr ""
+
+#: templates/param_selection_a.html:423 templates/param_selection_b.html:423
+msgid ""
+" \n"
+"                                Environmental Impact of the energy system on "
+"water resources. Indicator: increase of water consumed.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:444 templates/param_selection_b.html:444
+msgid ""
+" \n"
+"                                Impact on water ecosystems, particularly due "
+"to eutrophication. Indicator: phosphorus increase in fresh water.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:456 templates/param_selection_a.html:595
+#: templates/param_selection_b.html:456 templates/param_selection_b.html:595
+#: templates/show_results.html:360 templates/show_results.html:450
+msgid "PV Roof-mounted"
+msgstr ""
+
+#: templates/param_selection_a.html:468 templates/param_selection_a.html:617
+#: templates/param_selection_b.html:468 templates/param_selection_b.html:617
+#: templates/show_results.html:373 templates/show_results.html:451
+msgid "PV Open-field"
+msgstr ""
+
+#: templates/param_selection_a.html:480 templates/param_selection_a.html:638
+#: templates/param_selection_b.html:480 templates/param_selection_b.html:638
+msgid "Hydrogen CHP"
+msgstr ""
+
+#: templates/param_selection_a.html:529 templates/param_selection_a.html:659
+#: templates/param_selection_b.html:529 templates/param_selection_b.html:659
+#: templates/show_results.html:332 templates/show_results.html:448
+msgid "Wind On-shore"
+msgstr ""
+
+#: templates/param_selection_a.html:540 templates/param_selection_a.html:680
+#: templates/param_selection_b.html:540 templates/param_selection_b.html:680
+#: templates/show_results.html:346 templates/show_results.html:449
+msgid "Wind Off-shore"
+msgstr ""
+
+#: templates/param_selection_a.html:551 templates/param_selection_a.html:701
+#: templates/param_selection_b.html:551 templates/param_selection_b.html:701
+#: templates/show_results.html:241
+msgid "Transmission"
+msgstr ""
+
+#: templates/param_selection_a.html:564 templates/param_selection_b.html:564
+msgid "Biofuels Supply (Domestic)"
+msgstr ""
+
+#: templates/param_selection_a.html:575 templates/param_selection_b.html:575
+msgid "Battery"
+msgstr ""
+
+#: templates/param_selection_a.html:602 templates/param_selection_b.html:602
+msgid ""
+" \n"
+"                                Sets how much of the system should be "
+"installed as Rooftop PV \n"
+"                                 "
+msgstr ""
+
+#: templates/param_selection_a.html:624 templates/param_selection_b.html:624
+msgid ""
+" \n"
+"                                Sets how much of the system should be "
+"installed as Open field PV \n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:645 templates/param_selection_b.html:645
+msgid ""
+" \n"
+"                                Sets how much of the system should be "
+"installed as Hydrogen CHP\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:666 templates/param_selection_b.html:666
+msgid ""
+" \n"
+"                                Sets how much of the system should be "
+"installed as On-Shore wind\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:687 templates/param_selection_b.html:687
+msgid ""
+" \n"
+"                                Sets how much of the system should be "
+"installed as Offshore wind.\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:708 templates/param_selection_b.html:708
+msgid ""
+" \n"
+"                                Sets how much transmission capacity should "
+"be expanded.\n"
+"                                 "
+msgstr ""
+
+#: templates/param_selection_a.html:722 templates/param_selection_b.html:722
+msgid "Biofuel Supply (Domestic)"
+msgstr ""
+
+#: templates/param_selection_a.html:729 templates/param_selection_b.html:729
+msgid ""
+" \n"
+"                                Sets the extent to which domestic "
+"sustainable biofuel resources are used\n"
+"                                "
+msgstr ""
+
+#: templates/param_selection_a.html:743 templates/param_selection_b.html:743
+msgid "Battery storage"
+msgstr ""
+
+#: templates/param_selection_a.html:750 templates/param_selection_b.html:750
+msgid ""
+" \n"
+"                                Extent to which batteries are deployed.\n"
+"                                 "
+msgstr ""
+
+#: templates/portfolio.html:50 templates/portfolio.html:56
+msgid "Store and organise your favourite scenarios"
+msgstr ""
+
+#: templates/portfolio.html:59
+msgid "It seems like your portfolio is still empty."
+msgstr ""
+
+#: templates/portfolio.html:61
+msgid ""
+" \n"
+"                        Click <b>Start</b> to begin selecting your favourite "
+"energy transition scenarios. \n"
+"                        "
+msgstr ""
+
+#: templates/portfolio.html:65
+msgid "Start"
+msgstr ""
+
+#: templates/portfolio.html:69 templates/portfolio.html:72
+msgid "Your saved scenarios"
+msgstr ""
+
+#: templates/portfolio.html:78 templates/show_results.html:135
+msgid "Name"
+msgstr ""
+
+#: templates/portfolio.html:80
+msgid "Last Modified"
+msgstr ""
+
+#: templates/portfolio.html:81
+msgid "Actions"
+msgstr ""
+
+#: templates/portfolio.html:112 templates/portfolio.html:143
+msgid "Update the saved scenario details"
+msgstr ""
+
+#: templates/portfolio.html:122 templates/portfolio.html:153
+msgid "Label"
+msgstr ""
+
+#: templates/portfolio.html:125 templates/portfolio.html:156
+msgid "Saved scenario details will be updated."
+msgstr ""
+
+#: templates/portfolio.html:130 templates/portfolio.html:161
+msgid "Update"
+msgstr ""
+
+#: templates/portfolio.html:181
+msgid "Confirming this choice will delete the saved scenario."
+msgstr ""
+
+#: templates/portfolio.html:184
+msgid "Delete"
+msgstr ""
+
+#: templates/portfolio_home.html:87
+msgid "All rights reserved"
+msgstr ""
+
+#: templates/project_page.html:11
+msgid "Join a Project"
+msgstr ""
+
+#: templates/project_page.html:13
+msgid ""
+"We call Projects the different case studies proposed by the research team "
+"which helps SEEDS researchers to close the human-computer loop. Preferences "
+"expressed by our users will help to tailor the algorithms used by our tool "
+"for the ranking of optimal solutions."
+msgstr ""
+
+#: templates/project_page.html:25
+msgid "Find out more in our"
+msgstr ""
+
+#: templates/project_page.html:29
+msgid "Join"
+msgstr ""
+
+#: templates/select_location_page.html:18
+msgid ""
+"\n"
+"        Please select the location where you want to implement a RES-based "
+"energy system. <br/>\n"
+"        You can use the menu below to select one of the 18 subregions or "
+"select a location by clicking on the map.\n"
+"        "
+msgstr ""
+
+#: templates/show_results.html:17
+msgid "Your search parameters have been saved in your searches."
+msgstr ""
+
+#: templates/show_results.html:40
+msgid "Scenario Inspection"
+msgstr ""
+
+#: templates/show_results.html:41
+msgid ""
+"The table below presents to you the overall indicators of each scenario "
+"generated. You can select scenarios for detailed inspection clicking on "
+"Inspect, on the right side of the table. Further actions are available to "
+"explore and download the generated options."
+msgstr ""
+
+#: templates/show_results.html:104
+msgid "Saved successsfully !"
+msgstr ""
+
+#: templates/show_results.html:111
+msgid "Your search parameters have been saved in your saved search."
+msgstr ""
+
+#: templates/show_results.html:126
+msgid "Save this query parameters?"
+msgstr ""
+
+#: templates/show_results.html:137
+msgid "Search parameters will be saved with the specified label."
+msgstr ""
+
+#: templates/show_results.html:154
+msgid "Compare two scenarios"
+msgstr ""
+
+#: templates/show_results.html:172
+msgid "You need to select two scenarios for comparison."
+msgstr ""
+
+#: templates/show_results.html:180
+msgid "Compare"
+msgstr ""
+
+#: templates/show_results.html:199
+msgid "Energy System Settings"
+msgstr ""
+
+#: templates/show_results.html:228
+msgid "Total Energy Supply"
+msgstr ""
+
+#: templates/show_results.html:267 templates/show_results.html:445
+msgid "Implementation Pace"
+msgstr ""
+
+#: templates/show_results.html:280
+msgid "Community-led  Infrastructured"
+msgstr ""
+
+#: templates/show_results.html:293
+msgid "Electrification (Heating)"
+msgstr ""
+
+#: templates/show_results.html:306
+msgid "Electrification (Transport)"
+msgstr ""
+
+#: templates/show_results.html:317
+msgid "Energy Technology"
+msgstr ""
+
+#: templates/show_results.html:384
+msgid "Impacts Control"
+msgstr ""
+
+#: templates/show_results.html:399
+msgid "Global Warming Potential (GWP)"
+msgstr ""
+
+#: templates/show_results.html:412
+msgid "Water Consumption"
+msgstr ""
+
+#: templates/show_results.html:441 templates/starting_page.html:33
+#: templates/starting_page.html:82
+msgid "Scenario"
+msgstr ""
+
+#: templates/show_results.html:442
+msgid "Power capacity"
+msgstr ""
+
+#: templates/show_results.html:443
+msgid "Storage capacity"
+msgstr ""
+
+#: templates/show_results.html:444
+msgid "Community-led Infrastructure"
+msgstr ""
+
+#: templates/show_results.html:453
+msgid "Water consumption"
+msgstr ""
+
+#: templates/show_results.html:454
+msgid "Land occupation"
+msgstr ""
+
+#: templates/starting_page.html:21
+msgid "Select a Starting Point"
+msgstr ""
+
+#: templates/starting_page.html:23
+msgid ""
+"These examples will assis you in how to design your energy transition "
+"scenarios, giving you a starting point for selecting and adjusting the "
+"parameters."
+msgstr ""
+
+#: templates/starting_page.html:76 templates/starting_page.html:127
+msgid "Start with this"
 msgstr ""
