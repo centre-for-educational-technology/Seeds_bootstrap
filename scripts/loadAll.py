@@ -53,13 +53,15 @@ project = Project.objects.create(name="PT 2050 - Decarbonisation",
                                  description="This project gathers information and preferences of SEEDS tool users to tailor the modelling of transition scenarios for the Portuguese energy system regarding decarbonisation targets proposed for the year 2050.",
                                  configuration="{}")
 
+print('Starting loading CSV files into database')
+
 for g in geo.itertuples():
     continue
     # print('inserting:',g.index,g.region_name)
     s = ScenarioLocation.objects.create(project=project,
                                         location=g.index, region_name=g.region_name)
 
-print('Location data stored')
+print('    Location data stored')
 
 
 def getLocation(location):
@@ -76,8 +78,8 @@ scenario['id'] = scenario.index
 scenario['id'] = scenario['id'].astype('int')
 # Iterating through all data and populate Scenario table
 for s in scenario.itertuples():
-    print('Scenario id:', int(s.id))
     try:
+        """
         print(dict(project=project,
                    power_capacity=s.power,
                    storage_capacity=s.storage,
@@ -97,6 +99,7 @@ for s in scenario.itertuples():
                    freshwater_eutrophication=s.freshwater_eutrophication,
                    battery=s.battery
                    ))
+        """
         s_record = Scenario.objects.create(project=project, power_capacity=s.power,
                                            storage_capacity=s.storage,
                                            community_infrastructure=s.infra,
@@ -121,8 +124,6 @@ for s in scenario.itertuples():
         print(e)
 
         break
-    print('------>')
-
     tech_gen_s = tech_gen.loc[tech_gen['scenario'] == s.id, :]
     tech_sto_s = tech_sto.loc[tech_sto['scenario'] == s.id, :]
 
@@ -132,15 +133,12 @@ for s in scenario.itertuples():
                                                tech_gen_record.location),
                                            technology_type=tech_gen_record.tech_type,
                                            energy_generation=tech_gen_record.value)
-
-    print('------>Tech Gen done')
     for tech_sto_record in tech_sto_s.itertuples():
         ts = TechStorage.objects.create(project=project, scenario=s_record,
                                         location=getLocation(
                                             tech_sto_record.location),
                                         technology_type=tech_sto_record.tech_type,
                                         energy_storage=tech_sto_record.value)
-    print('------>Tech Sto done')
     impact_s = impact.loc[tech_gen['scenario'] == s.id, :]
 
     """
@@ -176,8 +174,6 @@ for s in scenario.itertuples():
                                              carriers_type='transport',
                                              electrification_rate=ele_road_record.electrification_rate_road_transport)
 
-    print('------>Electrification done')
-
     """
         print({'scenario':s.id,
               'location':ele_road_s.locs,
@@ -193,8 +189,6 @@ for s in scenario.itertuples():
                                               energy_tech_record.locs),
                                           technology_type=energy_tech_record.techs,
                                           energy_supply=energy_tech_record.energy_supply)
-    print('------>Energy supply done')
-
     # Populating transmission table
     transmission_s = transmission[transmission['spores'] == s.id]
     for transmission_record in transmission_s.itertuples():
@@ -202,6 +196,6 @@ for s in scenario.itertuples():
                                                from_location=transmission_record.exporting_region,
                                                to_location=transmission_record.importing_region,
                                                transmission_capacity=transmission_record.transmission_capacity)
-    print('------>Transmission done')
+    print('  Scenario: {} data saved in database.'.format(s.id))
 
-print('Data loading finished')
+print('Completed !')
