@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.admin.views.decorators import staff_member_required
 from django.forms.models import model_to_dict
 from register import views as rv
 from register.forms import RegisterForm
@@ -14,7 +15,7 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from register import forms as reg_forms
 from django.contrib.sessions.models import Session
-from .models import Scenario, TechGeneration, TechStorage, ScenarioLocation, Project, QueryParameters
+from .models import Scenario, TechGeneration, TechStorage, ScenarioLocation, Project, QueryParameters, ActivityLog
 from .models import EnergySupply, EnergyTransmission, Vote, UserScenario, Electrification
 import pandas as pd
 import pprint as pp
@@ -92,6 +93,14 @@ def map(request):
 
 def reduce_intensity(c, intensity=.2):
     return c.replace('0.8', '0.2')
+
+
+def create_log_entry(project_id, actor, verb, object, notes):
+    project = Project.objects.get(id=project_id)
+    object = ActivityLog(project=project, actor=actor.email,
+                         verb=verb, object=object, notes=notes)
+    object.save()
+    return
 
 
 def get_mapdata(scenario_id):
@@ -174,6 +183,7 @@ def standardise(value, min, max):
 
 
 def filter_scenarios(search_params):
+    print('------>', search_params)
     scenarios_community = Scenario.objects.all().filter(
         community_infrastructure__range=(search_params['community_min'], search_params['community_max']))
     print('community objects:', len(scenarios_community))
@@ -200,11 +210,32 @@ def filter_scenarios(search_params):
     print('human objects:', len(scenarios_surplus))
     scenarios_water = scenarios_surplus.filter(
         water_consumption__range=(search_params['water_min'], search_params['water_max'])).order_by('id')
-
+    print('water objects:', len(scenarios_water))
     scenarios_fresh = scenarios_water.filter(
         freshwater_eutrophication__range=(search_params['fresh_min'], search_params['fresh_max'])).order_by('id')
 
-    return scenarios_fresh
+    scenarios_roof_pv = scenarios_fresh.filter(
+        roof_mounted_pv__range=(search_params['photo_roof_min'], search_params['photo_roof_max'])).order_by('id')
+    print('photo objects roof:', len(scenarios_roof_pv))
+    scenarios_open_field_pv = scenarios_roof_pv.filter(
+        open_field_pv__range=(search_params['photo_open_field_min'], search_params['photo_open_field_max'])).order_by('id')
+    print('photo objects field:', len(scenarios_open_field_pv))
+    scenarios_wind_onshore = scenarios_open_field_pv.filter(
+        wind_onshore__range=(search_params['wind_onshore_min'], search_params['wind_onshore_max'])).order_by('id')
+    print('wind on objects:', len(scenarios_wind_onshore))
+    scenarios_wind_offshore = scenarios_wind_onshore.filter(
+        wind_offshore__range=(search_params['wind_offshore_min'], search_params['wind_offshore_max'])).order_by('id')
+    print('wind off objects:', len(scenarios_wind_offshore))
+    scenarios_hydrogen = scenarios_wind_offshore.filter(
+        hydrogen__range=(search_params['hydrogen_min'], search_params['hydrogen_max'])).order_by('id')
+    print('hydrogen objects:', len(scenarios_hydrogen))
+    scenarios_biofuel = scenarios_hydrogen.filter(
+        bio_fuel__range=(search_params['bio_min'], search_params['bio_max'])).order_by('id')
+    print('bio objects:', len(scenarios_biofuel))
+    scenarios_battery = scenarios_biofuel.filter(
+        battery__range=(search_params['battery_min'], search_params['battery_max'])).order_by('id')
+    print('battery objects:', len(scenarios_battery))
+    return scenarios_battery
 
 
 def get_filtered_scenarios(request, project_id):
@@ -318,8 +349,10 @@ def get_filtered_scenarios(request, project_id):
 
         transmission_min = request.POST['transmission_0']
         transmission_max = request.POST['transmission_1']
-        bio_min = request.POST['bio_0']
-        bio_max = request.POST['bio_1']
+        bio_min = rescale(
+            request.POST['bio_0'], param_config['bio']['min'], param_config['bio']['max'])
+        bio_max = rescale(
+            request.POST['bio_1'], param_config['bio']['min'], param_config['bio']['max'])
         battery_min = rescale(
             request.POST['battery_0'], param_config['battery']['min'], param_config['battery']['max'])
 
@@ -343,6 +376,13 @@ def get_filtered_scenarios(request, project_id):
         search_params['battery_min'] = battery_min
         search_params['battery_max'] = battery_max
         scenarios_filtered = filter_scenarios(search_params)
+
+        # create log entry
+
+        create_log_entry(project_id, request.user, 'submitted',
+                         'search parameters', '')
+        print('created log entry')
+
     return scenarios_filtered, search_params
 
 
@@ -412,6 +452,9 @@ def save_search_params(request, label):
             print(data)
             q = QueryParameters(**data)
             q.save()
+        create_log_entry(1, request.user, 'saved',
+                         'saved search parameters', '')
+
         return HttpResponse('success')
     else:
         return HttpResponse('failure')
@@ -599,7 +642,6 @@ def get_scenario_details(scenario_id):
 
 
 def get_energy_supply(scenario_id):
-
     scenario = Scenario.objects.get(id=scenario_id)
     supply = EnergySupply.objects.all().filter(scenario=scenario)
     energy = {}
@@ -693,6 +735,9 @@ def compare(request, sc_1, sc_2):
     impact_a = get_impact_graph_data(scenarios, sc_1)
     impact_b = get_impact_graph_data(scenarios, sc_2)
 
+    # log entry
+    create_log_entry(1, request.user, 'compared',
+                     'scenarios: {} and {}'.format(sc_1, sc_2), '')
     return render(request, 'compare_scenario.html', {'data1': data1,
                                                      'data2': data2,
                                                      'mapdata1': mapdata1,
@@ -761,6 +806,13 @@ def select_starting_point(request, project_id):
                                                   'impact_b': impact_b})
 
 
+@staff_member_required
+def get_activity_log(request):
+    logs = ActivityLog.objects.all()
+    print('Length:', len(logs))
+    return render(request, 'activity_log.html', {'logs': logs, 'json_format': serializers.serialize('json', logs)})
+
+
 def inspect(request, project_id, scenario_id):
     scenario = Scenario.objects.get(id=scenario_id)
     data = get_scenario_details(scenario_id)
@@ -782,6 +834,9 @@ def inspect(request, project_id, scenario_id):
             obj = Vote(project=project_obj, response=response,
                        submitted_user=submitted_user, scenario=scenario_obj)
             obj.save()
+            # log entry
+            create_log_entry(project_id, request.user, 'voted',
+                             'scenario: {}'.format(scenario_id), '')
             messages.success(request, "Your vote has been saved.")
         else:
             user = request.user
@@ -790,8 +845,14 @@ def inspect(request, project_id, scenario_id):
             obj = UserScenario.objects.create(
                 submitted_user=user, label=label, project=project, scenario=scenario)
             print('Object saved', obj)
+            # log entry
+            create_log_entry(project_id, request.user, 'saved',
+                             'scenario: {}'.format(scenario_id), '')
             messages.success(
                 request, "Scenario has been added to your portfolio.")
+    else:
+        create_log_entry(1, request.user, 'inspected',
+                         'scenario: {}'.format(scenario_id), '')
     return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id, 'mapdata': map_data, 'impact_a': impact_a})
 
 
@@ -841,10 +902,15 @@ def portfolio_actions(request, query, command, id, label):
                 print('update :', object)
                 object.label = label
                 object.save()
+                create_log_entry(1, request.user, 'updated',
+                                 'saved scenario', '')
                 messages.success(
                     request,  'Scenario has been updated successfully !')
             elif command == 'delete':
                 UserScenario.objects.all().filter(submitted_user=request.user, id=id).delete()
+                # log entry
+                create_log_entry(1, request.user, 'deleted',
+                                 'saved scenario entry', '')
                 messages.success(
                     request,  'Scenario has been deleted successfully !')
 
@@ -856,9 +922,13 @@ def portfolio_actions(request, query, command, id, label):
                 object = QueryParameters.objects.all().get(id=id)
                 object.label = label
                 object.save()
+                create_log_entry(1, request.user, 'updated',
+                                 'saved search parameters entry', '')
                 messages.success(
                     request,  'Search parameter entry has been updated successfully !')
             elif command == 'delete':
+                create_log_entry(1, request.user, 'deleted',
+                                 'saved search parameters entry', '')
                 messages.success(
                     request,  'Search parameter entry has been deleted successfully !')
                 QueryParameters.objects.all().filter(submitted_user=request.user, id=id).delete()

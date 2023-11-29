@@ -63,6 +63,8 @@ urlpatterns = i18n_patterns(
     path('login/', v.login, name='login'),
     path('logout/', v.logout, name='logout'),
 
+    path('logs/', views.get_activity_log, name='get_logs'),
+
     path('portfolio/<query>',
          login_required(views.portfolio), name='portfolio'),
     path('portfolio/<query>/<command>/<id>/<label>',
