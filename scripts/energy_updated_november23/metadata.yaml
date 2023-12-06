@@ -1,0 +1,67 @@
+basic_data:
+  generated_building_heat:
+    short_description: Generated building heat by technology
+    long_description: Heat generated for use in buildings (residential & commercial), differentiated by heat-generating technology. See names.csvfor further information about explicit technology names
+  generated_district_heat:
+    short_description: Generated district heat by technology
+    long_description: Heat generated for use in district-heating networks, differentiated by heat-generating technology. See names.csvfor further information about explicit technology names
+  generated_road_transport:
+    short_description: Generated road transport by technology
+    long_description: Transport-energy (motion) used by road vehicles (cars and trucks), differentiated by type of vehicle-technology. See names.csvfor further information about explicit vehicle-technology names
+  energy_supply:
+    short_description: Primary energy supply
+    long_description: Energy content harnessed from primary energy sources(such as biofuels or renwables) to then produce electricity, heat, motion or other fuels
+    current_value: 234 # IEA data, 2020
+  nameplate_capacity:
+    short_description: Installed capacity of technology
+    long_description: Installed capacity of a given energy-generating technology (e.g. rooftop solar) in a given model region (e.g. PRT-1_1, which is the Aveiro region)
+  storage_capacity:
+    short_description: Installed capacity of storage technology
+    long_description: Installed storage capacity of a given energy-storing technology (e.g. battery) in a given model region (e.g. PRT-1_1, which is the Aveiro region)
+  transmission_capacity:
+    short_description: Electricity transmission capacity
+    long_description: Total electricity transmission capacity in the country
+    current_value: 0.3
+performance_metrics:
+  max_regional_share:
+    short_description: Highest concentration of onshore wind capacity in a region
+    long_description: Highest concentration of onshore wind capacity in any single region with respect to the total onshore wind capacity installed in the country. Its a proxy for how unfair the distribution of onshore wind infrastructure is
+    good range: [0, 0.2]
+    neutral range: [0.21, 0.4]
+    bad range: [0.41, 1]
+  biofuel_use_rate:
+    short_description: Rate of use of biofuel resources
+    long_description: Extent to which domestic sustainable biofuel resources are used
+    good range: [0, 0.4]
+    neutral range: [0.41, 0.6]
+    bad range: [0.61, 1]
+  electrification_rate_road_transport:
+    short_description: Rate of electrification in road transport
+    long_description: Extent to which road transport is provided by electric vehicles
+    good range: [0.6, 1]
+    neutral range: [0.41, 0.6]
+    bad range: [0, 0.4]
+  electrification_rate_heat_building:
+    short_description: Rate of electrification in heat for buildings
+    long_description: Extent to which heat for buildings is provided by electric technologies,such as Heat Pumps
+    good range: [0.71, 1]
+    neutral range: [0.51, 0.7]
+    bad range: [0, 0.5]
+  deployment_acceleration_rate:
+    short_description: Required increase in the pace of infrastructure deployment
+    long_description: Required increase in the pace of infrastructure deployment compared to historical data.1 means same as historical, higher values means multiples of historical data
+    good range: [1, 2]
+    neutral range: [2.1, 3.0]
+    bad range: [3.1, 15]
+  import_dependency:
+    short_description: Degree of dependency on imported energy supply
+    long_description: Degree of dependency on imported energy in the total primary energy supply.Includes both electricity and hydrogen imports
+    good range: [0, 0.05]
+    neutral range: [0.06, 0.15]
+    bad range: [0.16, 1]
+  citizen_leadership_degree:
+    short_description: Degree of bottom-up (citizen) leadership in infrastructure deployment
+    long_description: Degree of bottom-up (citizen) leadership in infrastructure deployment.Values are qualitative and normalised across all SPORES
+    good range: [0.66, 1]
+    neutral range: [0.33, 0.66]
+    bad range: [0, 0.33]

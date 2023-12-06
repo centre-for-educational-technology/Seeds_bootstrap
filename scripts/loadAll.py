@@ -5,6 +5,8 @@ from seeds_bootstrap.models import Electrification
 from seeds_bootstrap.models import EnergySupply
 from seeds_bootstrap.models import EnergyTransmission
 from seeds_bootstrap.models import Project
+from seeds_bootstrap.models import GeneratedHeat, GeneratedTransport
+from seeds_bootstrap.models import FlowOut
 
 import pandas as pd
 import geopandas
@@ -18,6 +20,20 @@ scenario = pd.read_csv(
 impact = pd.read_csv('{}/Impact.csv'.format(base))
 tech_gen = pd.read_csv('{}/TechGeneration.csv'.format(base))
 tech_sto = pd.read_csv('{}/TechStorage.csv'.format(base))
+transmission = pd.read_csv('{}/energy_updated_november23/transmission_capacity.csv'.format(base))
+energy_tech = pd.read_csv('{}/energy_updated_november23/energy_supply.csv'.format(base))
+
+ele_heat = pd.read_csv(
+    '{}/energy_updated_november23/electrification_rate_heat_building.csv'.format(base))
+ele_road = pd.read_csv(
+    '{}/energy_updated_november23/electrification_rate_road_transport.csv'.format(base))
+
+flow_out = pd.read_csv('{}/energy_updated_november23/flow_out_sum.csv'.format(base))
+build_heat = pd.read_csv('{}/energy_updated_november23/generated_building_heat.csv'.format(base))
+district_heat = pd.read_csv('{}/energy_updated_november23/generated_district_heat.csv'.format(base))
+road_transport = pd.read_csv('{}/energy_updated_november23/generated_road_transport.csv'.format(base))
+
+
 scenario['import_dep'] = scenario['import']
 
 power_tech = ['chp_biofuel_extraction',
@@ -36,16 +52,6 @@ power_tech = ['chp_biofuel_extraction',
               'roof_mounted_pv',
               'wind_offshore']
 
-
-transmission = pd.read_csv('{}/energy/transmission_capacity.csv'.format(base))
-energy_tech = pd.read_csv('{}/energy/energy_supply.csv'.format(base))
-
-
-ele_heat = pd.read_csv(
-    '{}/energy/electrification_rate_heat_building.csv'.format(base))
-ele_road = pd.read_csv(
-    '{}/energy/electrification_rate_road_transport.csv'.format(base))
-
 geo = geopandas.read_file('{}/portugal_regions.geojson'.format(base))
 
 scenario = scenario.replace({np.nan: None})
@@ -56,13 +62,11 @@ project = Project.objects.create(name="PT 2050 - Decarbonisation",
 print('Starting loading CSV files into database')
 
 for g in geo.itertuples():
-    continue
+
     # print('inserting:',g.index,g.region_name)
     s = ScenarioLocation.objects.create(project=project,
                                         location=g.index, region_name=g.region_name)
-
 print('    Location data stored')
-
 
 def getLocation(location):
     l = ScenarioLocation.objects.filter(location=location)
@@ -106,6 +110,7 @@ for s in scenario.itertuples():
                                            import_dependency=s.import_dep,
                                            implementation_pace=s.pace,
                                            bio_fuel=s.bio,
+                                           max_regional_share=s.max_regional_share,
                                            wind_onshore=s.wind_onshore,
                                            wind_offshore=s.wind_offshore,
                                            open_field_pv=s.open_field_pv,
@@ -139,24 +144,6 @@ for s in scenario.itertuples():
                                             tech_sto_record.location),
                                         technology_type=tech_sto_record.tech_type,
                                         energy_storage=tech_sto_record.value)
-    impact_s = impact.loc[tech_gen['scenario'] == s.id, :]
-
-    """
-    # 
-    for impact_s_record in impact_s.itertuples():
-
-        iss = Impact.objects.create(project=project, scenario=s_record,
-                                    location=getLocation(
-                                        impact_s_record.location),
-                                    technology_type=impact_s_record.tech_type,
-                                    land_occupation=impact_s_record.land_occupation,
-                                    marine_toxicity=impact_s_record.marine_toxicity,
-                                    human_toxicity=impact_s_record.human_toxicity,
-                                    metal_depletion=impact_s_record.metal_depletion,
-                                    fossil_depletion=impact_s_record.fossil_depletion)
-
-    print('------>Impact done')
-    """
 
     # Populating electrification tables
     ele_heat_s = ele_heat[ele_heat['spores'] == s.id]
@@ -174,12 +161,6 @@ for s in scenario.itertuples():
                                              carriers_type='transport',
                                              electrification_rate=ele_road_record.electrification_rate_road_transport)
 
-    """
-        print({'scenario':s.id,
-              'location':ele_road_s.locs,
-              'carriers_type':'transport',
-              'electrification_rate':ele_road_s.electrification_rate_road_transport})
-        """
 
     # Populating energy supply table
     energy_tech_s = energy_tech[energy_tech['spores'] == s.id]
@@ -196,6 +177,54 @@ for s in scenario.itertuples():
                                                from_location=transmission_record.exporting_region,
                                                to_location=transmission_record.importing_region,
                                                transmission_capacity=transmission_record.transmission_capacity)
+        
+    # Populating GeneratedHeat table
+    build_heat_s = build_heat[build_heat['spores'] == s.id]
+    district_heat_s = district_heat[district_heat['spores'] == s.id]
+    
+    for build_heat_record  in build_heat_s.itertuples():
+        bh = GeneratedHeat.objects.create(project=project, scenario=s_record,
+                                          location = getLocation(
+                                              build_heat_record.locs),
+                                          technology_type=build_heat_record.techs,
+                                          heat_type = 'building',
+                                          heat = build_heat_record.generated_building_heat)
+        
+    for dis_heat_record  in district_heat_s.itertuples():
+        bh = GeneratedHeat.objects.create(project=project, scenario=s_record,
+                                          location = getLocation(
+                                              dis_heat_record.locs),
+                                          technology_type=dis_heat_record.techs,
+                                          heat_type = 'district',
+                                          heat = dis_heat_record.generated_district_heat)
+
+        
+    # Populating GeneratedTransport table 
+    road_transport_s = road_transport[road_transport['spores'] == s.id]
+    for road_transport_record  in road_transport_s.itertuples():
+        gt = GeneratedTransport.objects.create(project=project, scenario=s_record,
+                                          location = getLocation(
+                                              road_transport_record.locs),
+                                          technology_type=road_transport_record.techs,
+                                          transport = road_transport_record.generated_road_transport)
+        
+    # Populating FlowOut table 
+    flow_out_s = flow_out[flow_out['spores'] == s.id]
+    for flow_out_record  in flow_out_s.itertuples():
+        if np.isnan(flow_out_record.flow_out_sum):
+            fo = FlowOut.objects.create(project=project, scenario=s_record,
+                                          location = getLocation(
+                                              flow_out_record.locs),
+                                          technology_type=flow_out_record.techs,
+                                          carriers = flow_out_record.carriers)
+        else:
+            fo = FlowOut.objects.create(project=project, scenario=s_record,
+                                          location = getLocation(
+                                              flow_out_record.locs),
+                                          technology_type=flow_out_record.techs,
+                                          carriers = flow_out_record.carriers,
+                                          flow_out_sum = flow_out_record.flow_out_sum)
+        
     print('  Scenario: {} data saved in database.'.format(s.id))
 
 print('Completed !')
