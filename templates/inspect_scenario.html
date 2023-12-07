@@ -12,10 +12,12 @@
     display: none;
   }
 </style>
-
+<div class="mt-4 mx-4 px-4 ">
+  <a class="text-muted" href="" onclick="history.back();"> <span class='fa fa-arrow-left fa-2x'></span><a>
+</div>
 <div class='d-flex px-4 mx-4  justify-content-between'>
   <div class='py-1'>
-    <h2> Scenario  {{data.scenario.id}} </h2> 
+    <h2> Scenario  {{data.scenario.id}} </h2>
   </div>
 
   {% if user.is_authenticated %}
@@ -89,13 +91,13 @@ aria-hidden="true">
                 </button>
             </div>
             <div class='modal-body'>
-              
+
                 <div class="form-group">
                   <label for="exampleInputEmail1">Label</label>
                   <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="Enter label">
                   <small  class="form-text text-muted">{% translate 'Scenario will be saved with the label.'%}</small>
                 </div>
-              
+
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">{% translate 'Save'%}</button>
@@ -107,7 +109,7 @@ aria-hidden="true">
     </div>
 <!--
 <div class="p-2 m-5 bg-white shadow-sm border-light rounded rounded-bottom text-center">
-  <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p> 
+  <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p>
   <p class="p-1">
     {% translate 'Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system'%}
   </p>
@@ -135,7 +137,7 @@ aria-hidden="true">
             </div>
             <div class='modal-body'>
               <div class="p-2 m-5 text-center">
-                <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p> 
+                <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p>
                 <p class="p-1">
                   {% translate 'Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system'%}
                 </p>
@@ -144,11 +146,11 @@ aria-hidden="true">
                   <a id="unlike" href="#" class='rounded bg-light btn  px-5'> <span class='font-weight-bold'>X</span> </a>
                 </div>
               </div>
-                
+
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">{% translate 'Vote'%}</button>
-              
+
             </div>
           </form>
         </div>
@@ -203,7 +205,7 @@ aria-hidden="true">
             </a>
           </div>
       </div>
-      
+
     </div>
     <div class='col col-4 p-3'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
@@ -211,7 +213,7 @@ aria-hidden="true">
         <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/year</p>
 
         <a class="m-3  d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'> 
+          <div class='p-2 m-2 bg-light rounded'>
             <img width="50px" src="{% static 'images/PHOTOVOLTAIC.png'%}">
           </div>
           <div class='p-2'>
@@ -231,7 +233,7 @@ aria-hidden="true">
         </div>
 
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'> 
+          <div class='p-2 m-2 bg-light rounded'>
             <img width="50px" src="{% static 'images/wind.png'%}">
           </div>
           <div class='p-2'>
@@ -250,7 +252,7 @@ aria-hidden="true">
           </div>
         </div>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'> 
+          <div class='p-2 m-2 bg-light rounded'>
             <img width="50px" src="{% static 'images/bio.png'%}">
           </div>
           <div class='p-2'>
@@ -260,7 +262,7 @@ aria-hidden="true">
         </a>
 
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'> 
+          <div class='p-2 m-2 bg-light rounded'>
             <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
           </div>
           <div class='p-2'>
@@ -268,10 +270,10 @@ aria-hidden="true">
             <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/year</div>
           </div>
         </a>
-       
+
 
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'> 
+          <div class='p-2 m-2 bg-light rounded'>
             <img width="50px" src="{% static 'images/ELECTRIC.png'%}">
           </div>
           <div class='p-2'>
@@ -295,7 +297,7 @@ aria-hidden="true">
 
     </div>
   </div>
-  
+
 
   <div </div>
     {% endblock%}
@@ -341,7 +343,7 @@ aria-hidden="true">
       showlegend: false,
     }
     Plotly.newPlot("impact_control", data, layout,config)
-    
+
     var data_supply = [{
       type: "pie",
       values: {{ data.energy_supply_pie_values | safe}},
@@ -359,7 +361,7 @@ aria-hidden="true">
     Plotly.newPlot('energy_supply', data_supply, layout_supply,config)
 
 
-  
+
 
     var power_data = {{data.power_bar_data | safe}};
     var layout = {
@@ -386,11 +388,11 @@ aria-hidden="true">
     height: 240,
     width: 500,
     showlegend: false,
-   
+
     legend:{orientation: 'h', side:'top'}
     };
     Plotly.newPlot('power_storage', storage_data,layout,config);
-  
+
     var solar_map_data = [{
       type: "choroplethmapbox",
       geojson:"{% static 'portugal_regions.geojson' %}",
@@ -402,7 +404,7 @@ aria-hidden="true">
       showscale:false,
 
       marker_line_width:1,
-  
+
     }]
     var wind_map_data = [{
       type: "choroplethmapbox",
@@ -416,7 +418,7 @@ aria-hidden="true">
       showscale:false,
     }]
     var map_layout = {
-  
+
       height: 500,
       width: 200,
       showlegend: false,
@@ -453,11 +455,11 @@ aria-hidden="true">
       title:'Agricultural Land Occupation',
       width: 500,
       showlegend: false,
-   
+
     };
     Plotly.newPlot('impact_land_a', data_a, layout_a,config);
 
-   
+
     var trace1_a = {
       x: {{impact_a.surplus_ore.others.x | safe}},
       y: {{impact_a.surplus_ore.others.y | safe}},
@@ -557,5 +559,5 @@ aria-hidden="true">
       showlegend: false,
     };
     Plotly.newPlot('impact_freshwater_a', data_a, layout_a,config);
-   
+
     {% endblock%}
