@@ -133,7 +133,7 @@ aria-hidden="true">
               
                 <div class="form-group">
                   <label for="exampleInputEmail1">   {% translate 'Name'%}</label>
-                  <input type="text" class="form-control" id="search_param_name" name="label" aria-describedby="emailHelp" placeholder="Enter label">
+                  <input type="text" class="form-control" id="search_param_name" name="label" aria-describedby="emailHelp" placeholder="">
                   <small  class="form-text text-muted">   {% translate 'Search parameters will be saved with the specified label.'%}</small>
                 </div>
               
@@ -160,7 +160,7 @@ aria-hidden="true">
             <div class='modal-body'>
               <template class='align-text-center' x-if="check()">
                 <div class="p-2">
-                <p> Scenarios selected for side-by-side comparison </p>
+                <p> {% translate 'Scenarios selected for side-by-side comparison' %} </p>
                 <div class='d-flex justify-content-center'>
                   <p class='px-4 py-1 mx-1  bg-light text-muted rounded'  x-text='selected_scenarios[0]'></p>
                   <p class='px-4 py-1 mx-1 bg-light text-muted rounded'  x-text='selected_scenarios[1]'></p>

@@ -212,7 +212,7 @@ aria-hidden="true">
     <div class='col col-4 p-3'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
         <p class='small text-muted font-weight-bold'>{% translate 'Total Energy'%} </p>
-        <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/year</p>
+        <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/{%translate 'year'%}</p>
 
         <a class="m-3  d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2 m-2 bg-light rounded'> 
@@ -220,7 +220,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Photovoltaic'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'> {{data.total_pv |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'> {{data.total_pv |floatformat:2 }} TWh/{%translate 'year'%}</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseOne">
@@ -240,7 +240,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Wind'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_wind |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_wind |floatformat:2 }} TWh/{%translate 'year'%}</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseTwo">
@@ -259,7 +259,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Biofuels'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.bio_fuel |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.bio_fuel |floatformat:2 }} TWh/{%translate 'year'%}</div>
           </div>
         </a>
 
@@ -269,7 +269,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Electrification'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_electrification |floatformat:2 }} TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_electrification |floatformat:2 }} TWh/{%translate 'year'%}</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapsefive">
@@ -288,7 +288,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Electrolysers'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/year</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/{%translate 'year'%}</div>
           </div>
         </a>
        
@@ -357,7 +357,7 @@ aria-hidden="true">
       automargin: true
     }]
     var layout_supply = {
-      title: "{% translate 'Total energy supply'%}: {{data.energy_supply_total}} Twh/year",
+      title: "{% translate 'Total energy supply'%}: {{data.energy_supply_total}} Twh/{%translate 'year'%}",
       height: 400,
       width: 400,
       showlegend: false
@@ -369,7 +369,7 @@ aria-hidden="true">
 
     var power_data = {{data.power_bar_data | safe}};
     var layout = {
-    title: 'Power generation',
+    title: "{% translate 'Power generation'%}",
     barmode: 'stack',
     xaxis:{
         range:[0,{{data.total_generation}} + 20]
@@ -384,7 +384,7 @@ aria-hidden="true">
 
     var storage_data = {{data.storage_bar_data | safe}};
     var layout = {
-    title: 'Power storage',
+    title: "{% translate 'Power storage'%}",
     barmode: 'stack',
     xaxis:{
         range:[0,{{data.total_storage}} + 20]

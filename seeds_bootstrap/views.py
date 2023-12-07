@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.utils.translation import gettext as _
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import serializers
@@ -96,6 +97,7 @@ def reduce_intensity(c, intensity=.2):
 
 
 def create_log_entry(project_id, actor, verb, object, notes):
+    return
     project = Project.objects.get(id=project_id)
     object = ActivityLog(project=project, actor=actor.email,
                          verb=verb, object=object, notes=notes)
@@ -488,8 +490,11 @@ def get_scenario_details(scenario_id):
         tmp.append(standardise(
             val, param_config[impact_names[ind]]['min'], param_config[impact_names[ind]]['max']))
 
+    radial_chart_theta_acroynm = ['LOP', 'GWP',
+                          'WPC', 'SOP', 'FEP']
+
     data['radial_r'] = tmp
-    data['radial_theta'] = radial_chart_theta
+    data['radial_theta'] = radial_chart_theta_acroynm
 
     bar_chart_data = []
 
@@ -834,7 +839,7 @@ def inspect(request, project_id, scenario_id):
             # log entry
             create_log_entry(project_id, request.user, 'voted',
                              'scenario: {}'.format(scenario_id), '')
-            messages.success(request, "Your vote has been saved.")
+            messages.success(request, _("Your vote has been saved."))
         else:
             user = request.user
             project = Project.objects.get(id=project_id)
@@ -846,7 +851,7 @@ def inspect(request, project_id, scenario_id):
             create_log_entry(project_id, request.user, 'saved',
                              'scenario: {}'.format(scenario_id), '')
             messages.success(
-                request, "Scenario has been added to your portfolio.")
+                request, _("Scenario has been added to your portfolio."))
     else:
         create_log_entry(1, request.user, 'inspected',
                          'scenario: {}'.format(scenario_id), '')
@@ -877,7 +882,7 @@ def vote(request, selection, scenario):
     obj = Vote(project=project_obj, response=response,
                submitted_user=submitted_user, scenario=scenario_obj)
     obj.save()
-    messages.success(request, "Your vote has been saved")
+    messages.success(request, _("Your vote has been saved."))
     return redirect('inspect', scenario_id=scenario)
 
 
@@ -902,14 +907,14 @@ def portfolio_actions(request, query, command, id, label):
                 create_log_entry(1, request.user, 'updated',
                                  'saved scenario', '')
                 messages.success(
-                    request,  'Scenario has been updated successfully !')
+                    request,  _('Scenario has been updated successfully !'))
             elif command == 'delete':
                 UserScenario.objects.all().filter(submitted_user=request.user, id=id).delete()
                 # log entry
                 create_log_entry(1, request.user, 'deleted',
                                  'saved scenario entry', '')
                 messages.success(
-                    request,  'Scenario has been deleted successfully !')
+                    request,  _('Scenario has been deleted successfully !'))
 
             scenarios = UserScenario.objects.all().filter(submitted_user=request.user)
             return render(request, 'portfolio.html', {'scenarios': scenarios, 'title': 'Your scenarios', 'query': query})
@@ -922,12 +927,12 @@ def portfolio_actions(request, query, command, id, label):
                 create_log_entry(1, request.user, 'updated',
                                  'saved search parameters entry', '')
                 messages.success(
-                    request,  'Search parameter entry has been updated successfully !')
+                    request,  _('Search parameter entry has been updated successfully !'))
             elif command == 'delete':
                 create_log_entry(1, request.user, 'deleted',
                                  'saved search parameters entry', '')
                 messages.success(
-                    request,  'Search parameter entry has been deleted successfully !')
+                    request,  _('Search parameter entry has been deleted successfully !'))
                 QueryParameters.objects.all().filter(submitted_user=request.user, id=id).delete()
 
             params = QueryParameters.objects.all().filter(submitted_user=request.user)
