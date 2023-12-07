@@ -19,10 +19,12 @@
             <div class='p-3'>
                 <h4 class='font-weight-bold'> {{project.name}}</h4>
                 <p>
-                   {{ project.description }}
+                    {% blocktrans %}
+                    This project gathers information and preferences of SEEDS tool users to tailor the modelling of transition scenarios for the Portuguese energy system regarding decarbonisation targets proposed for the year 2050. 
+                   {% endblocktrans %}
                 </p>
                 <p class='mt-2'>
-                    {% translate 'Find out more in our'%} <a href='#'>Documentation</a>.
+                    {% translate 'Find out more in our'%} <a href='#'>{% translate 'Documentation' %}</a>.
                 </p>
             </div>
             <div class='p-2 align-center'>

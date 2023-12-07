@@ -15,24 +15,26 @@
 <div class="mt-4 mx-4 px-4 ">
   <a class="text-muted" href="" onclick="history.back();"> <span class='fa fa-arrow-left fa-2x'></span><a>
 </div>
-<div class='d-flex px-4 mx-4  justify-content-between'>
+<div class='d-flex px-4 mx-4 pt-3  justify-content-between'>
   <div class='py-1'>
-    <h2> Scenario  {{data.scenario.id}} </h2>
+    <h2 class=''> {% translate 'Scenario' %}  {{data.scenario.id}} </h2> 
   </div>
-
-  {% if user.is_authenticated %}
   <div class='d-flex  p-2 m-2'>
+  {% if user.is_authenticated %}
+  
     <i style="cursor:pointer" class="fa fa-download  bg-primary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
     <i style="cursor:pointer" class="fa fa-star   bg-primary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#vote_modal"></i>
-  </div>
+  
   {% else %}
-  <div class='d-flex  p-2 m-2'>
+  
     <i style="cursor:pointer" class="fa fa-download  bg-secondary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#disable_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
     <i style="cursor:pointer" class="fa fa-star   bg-secondary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#disable_modal"></i>
-  </div>
-  {% endif %}
+  
+    {% endif %}
+ 
+</div>      
 </div>
 <div class="modal fade" id="disable_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
@@ -84,20 +86,20 @@ aria-hidden="true">
             <input type='hidden' name='form_type' value='save'>
             <input type='hidden' name='project_id' value='{{project_id}}'>
             <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">{% translate 'Save this scenario in your portfolio'%}
+                <h5 class="modal-title" id="exampleModalLabel">{% translate 'Would you like to add this scenario to your folder?'%}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class='modal-body'>
-
+              
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Label</label>
+                  <label for="exampleInputEmail1">{% translate 'Title'%}</label>
                   <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="Enter label">
                   <small  class="form-text text-muted">{% translate 'Scenario will be saved with the label.'%}</small>
                 </div>
-
+              
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">{% translate 'Save'%}</button>
@@ -109,7 +111,7 @@ aria-hidden="true">
     </div>
 <!--
 <div class="p-2 m-5 bg-white shadow-sm border-light rounded rounded-bottom text-center">
-  <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p>
+  <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p> 
   <p class="p-1">
     {% translate 'Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system'%}
   </p>
@@ -137,7 +139,7 @@ aria-hidden="true">
             </div>
             <div class='modal-body'>
               <div class="p-2 m-5 text-center">
-                <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p>
+                <p class='p-1 h5'> {% translate 'Would you be willing to accept this scenario?'%}</p> 
                 <p class="p-1">
                   {% translate 'Assess the suitability of this system to help SEEDS ranking options for the Portuguese energy system'%}
                 </p>
@@ -146,11 +148,11 @@ aria-hidden="true">
                   <a id="unlike" href="#" class='rounded bg-light btn  px-5'> <span class='font-weight-bold'>X</span> </a>
                 </div>
               </div>
-
+                
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">{% translate 'Vote'%}</button>
-
+              
             </div>
           </form>
         </div>
@@ -163,7 +165,7 @@ aria-hidden="true">
         <p class='text-muted font-weight-bold'>{% translate 'Scenario Performance'%}</p>
         <div class='d-flex flex-row'>
           <div class="px-2 small py-2 w-50">
-            {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP1000), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).'%}
+            {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP100), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).'%}
           </div>
           <div class="px-5 py-2">
             <div class='' id='impact_control'></div>
@@ -205,7 +207,7 @@ aria-hidden="true">
             </a>
           </div>
       </div>
-
+      
     </div>
     <div class='col col-4 p-3'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
@@ -213,11 +215,11 @@ aria-hidden="true">
         <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/year</p>
 
         <a class="m-3  d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'>
+          <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/PHOTOVOLTAIC.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Photovoltic'%}</div>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Photovoltaic'%}</div>
             <div class='h4 px-2 text-dark font-weight-bold'> {{data.total_pv |floatformat:2 }} TWh/year</div>
           </div>
         </a>
@@ -233,7 +235,7 @@ aria-hidden="true">
         </div>
 
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'>
+          <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/wind.png'%}">
           </div>
           <div class='p-2'>
@@ -252,7 +254,7 @@ aria-hidden="true">
           </div>
         </div>
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'>
+          <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/bio.png'%}">
           </div>
           <div class='p-2'>
@@ -261,19 +263,8 @@ aria-hidden="true">
           </div>
         </a>
 
-        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'>
-            <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
-          </div>
-          <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Hydrogen'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/year</div>
-          </div>
-        </a>
-
-
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
-          <div class='p-2 m-2 bg-light rounded'>
+          <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/ELECTRIC.png'%}">
           </div>
           <div class='p-2'>
@@ -291,13 +282,26 @@ aria-hidden="true">
             <p class='display-5 text-right pr-3 pb-3'>{{data.electrification.transport_percentage |floatformat:2}}%</p>
           </div>
         </div>
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2 m-2 bg-light rounded'> 
+            <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
+          </div>
+          <div class='p-2'>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Electrolysers'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/year</div>
+          </div>
+        </a>
+       
+
+        
+        
 
 
       </div>
 
     </div>
   </div>
-
+  
 
   <div </div>
     {% endblock%}
@@ -338,12 +342,12 @@ aria-hidden="true">
           range: [0,1]
         }
       },
-      width: 300,
-      margin : {l:35, r:15, t:15, b:15},
+      width: 320,
+      margin : {l:35, r:35, t:15, b:15},
       showlegend: false,
     }
     Plotly.newPlot("impact_control", data, layout,config)
-
+    
     var data_supply = [{
       type: "pie",
       values: {{ data.energy_supply_pie_values | safe}},
@@ -353,7 +357,7 @@ aria-hidden="true">
       automargin: true
     }]
     var layout_supply = {
-      title: 'Total energy supply: {{data.energy_supply_total}} Twh/year',
+      title: "{% translate 'Total energy supply'%}: {{data.energy_supply_total}} Twh/year",
       height: 400,
       width: 400,
       showlegend: false
@@ -361,7 +365,7 @@ aria-hidden="true">
     Plotly.newPlot('energy_supply', data_supply, layout_supply,config)
 
 
-
+  
 
     var power_data = {{data.power_bar_data | safe}};
     var layout = {
@@ -388,11 +392,11 @@ aria-hidden="true">
     height: 240,
     width: 500,
     showlegend: false,
-
+   
     legend:{orientation: 'h', side:'top'}
     };
     Plotly.newPlot('power_storage', storage_data,layout,config);
-
+  
     var solar_map_data = [{
       type: "choroplethmapbox",
       geojson:"{% static 'portugal_regions.geojson' %}",
@@ -404,7 +408,7 @@ aria-hidden="true">
       showscale:false,
 
       marker_line_width:1,
-
+  
     }]
     var wind_map_data = [{
       type: "choroplethmapbox",
@@ -418,7 +422,7 @@ aria-hidden="true">
       showscale:false,
     }]
     var map_layout = {
-
+  
       height: 500,
       width: 200,
       showlegend: false,
@@ -452,14 +456,14 @@ aria-hidden="true">
 
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Agricultural Land Occupation',
+      title:"{% translate 'Agricultural Land Occupation'%}",
       width: 500,
       showlegend: false,
-
+   
     };
     Plotly.newPlot('impact_land_a', data_a, layout_a,config);
 
-
+   
     var trace1_a = {
       x: {{impact_a.surplus_ore.others.x | safe}},
       y: {{impact_a.surplus_ore.others.y | safe}},
@@ -479,7 +483,7 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Surplus Ore',
+      title:"{% translate 'Surplus Ore Potential' %}",
       width: 500,
       showlegend: false,
     };
@@ -504,7 +508,7 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Global Warming',
+      title:"{% translate 'Global Warming Potential' %}",
       width: 500,
       showlegend: false,
     };
@@ -529,7 +533,7 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Water Consumption',
+      title:"{% translate 'Water Consumption' %}",
       width: 500,
       showlegend: false,
     };
@@ -554,10 +558,10 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Freshwater Eutrophication',
+      title:"{% translate 'Freshwater Eutrophication Potential' %}",
       width: 500,
       showlegend: false,
     };
     Plotly.newPlot('impact_freshwater_a', data_a, layout_a,config);
-
+   
     {% endblock%}

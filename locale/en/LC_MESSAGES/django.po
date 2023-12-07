@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-29 16:24+0200\n"
+"POT-Creation-Date: 2023-12-07 14:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: register/templates/sign_up.html:34
+msgid "Sign Up"
+msgstr ""
+
+#: register/templates/sign_up.html:36
+msgid ""
+"Create an account using your email address and get access to all resources "
+"of the SEEDS tool."
+msgstr ""
+
+#: register/templates/sign_up.html:42
+msgid "First name"
+msgstr ""
+
+#: register/templates/sign_up.html:43
+msgid "Last name"
+msgstr ""
+
+#: register/templates/sign_up.html:44
+msgid "Email"
+msgstr ""
+
+#: register/templates/sign_up.html:45 register/templates/sign_up.html:57
+#: templates/index.html:59
+msgid "Password"
+msgstr ""
+
+#: register/templates/sign_up.html:65
+msgid ""
+"\n"
+"                                <p> Password must contain </p>\n"
+"                                <p> - at least 8 characters </p>\n"
+"                                <p> - one uppercase character </p>\n"
+"                                <p> - one number </p> <br />\n"
+"                                <p> Password can not be too similar to your "
+"other personal\n"
+"                                                        information.</p>\n"
+"                                <br />\n"
+"                                <p> Password can not be entirely numeric.</"
+"p>\n"
+"                                "
+msgstr ""
+
+#: register/templates/sign_up.html:81
+msgid "Repeat password"
+msgstr ""
+
+#: register/templates/sign_up.html:88
+msgid "Create account"
+msgstr ""
+
+#: register/templates/sign_up.html:94
+msgid ""
+"\n"
+"        <small class=\"d-flex justify-content-center\">By clicking the Sign "
+"Up button, you are\n"
+"                                creating a SEEDS,</small>\n"
+"        <small class=\"d-flex justify-content-center\"> account, and you "
+"agree with SEEDS Terms of\n"
+"                                use.</small>\n"
+"        "
+msgstr ""
+
 #: seeds_bootstrap/settings.py:131 templates/base.html:67
 #: templates/base_inspect.html:65
 msgid "English"
@@ -26,6 +89,30 @@ msgstr ""
 #: seeds_bootstrap/settings.py:131 templates/base.html:68
 #: templates/base_inspect.html:66
 msgid "Portugese"
+msgstr ""
+
+#: seeds_bootstrap/views.py:838 seeds_bootstrap/views.py:881
+msgid "Your vote has been saved."
+msgstr ""
+
+#: seeds_bootstrap/views.py:850
+msgid "Scenario has been added to your portfolio."
+msgstr ""
+
+#: seeds_bootstrap/views.py:906
+msgid "Scenario has been updated successfully !"
+msgstr ""
+
+#: seeds_bootstrap/views.py:913
+msgid "Scenario has been deleted successfully !"
+msgstr ""
+
+#: seeds_bootstrap/views.py:926
+msgid "Search parameter entry has been updated successfully !"
+msgstr ""
+
+#: seeds_bootstrap/views.py:931
+msgid "Search parameter entry has been deleted successfully !"
 msgstr ""
 
 #: templates/activity_log.html:12 templates/portfolio.html:12
@@ -65,6 +152,7 @@ msgid "It seems like there are no activity logs recorded."
 msgstr ""
 
 #: templates/activity_log.html:62 templates/base.html:85
+#: templates/base_inspect.html:83
 msgid "Activity Logs"
 msgstr ""
 
@@ -93,27 +181,28 @@ msgstr ""
 msgid "My Portfolio"
 msgstr ""
 
-#: templates/base.html:80 templates/project_page.html:25
+#: templates/base.html:80 templates/base_inspect.html:78
+#: templates/project_page.html:27
 msgid "Documentation"
 msgstr ""
 
-#: templates/base.html:81
+#: templates/base.html:81 templates/base_inspect.html:79
 msgid "Help"
 msgstr ""
 
-#: templates/base.html:82
+#: templates/base.html:82 templates/base_inspect.html:80
 msgid "About the Project"
 msgstr ""
 
-#: templates/base.html:83
+#: templates/base.html:83 templates/base_inspect.html:81
 msgid "Contact"
 msgstr ""
 
-#: templates/base.html:131 templates/base_inspect.html:124
+#: templates/base.html:131 templates/base_inspect.html:125
 msgid "SEEDS Project"
 msgstr ""
 
-#: templates/base.html:134 templates/base_inspect.html:127
+#: templates/base.html:134 templates/base_inspect.html:128
 msgid ""
 "The SEEDS project is supported by the CHIST-ERA grant CHIST-ERA-19-CES-004, "
 "the Swiss National Science Foundation grant number 195537, the Fundação para "
@@ -200,10 +289,6 @@ msgstr ""
 msgid "Sign in to SEEDS app"
 msgstr ""
 
-#: templates/index.html:59
-msgid "Password"
-msgstr ""
-
 #: templates/index.html:65
 msgid "I forgot my password"
 msgstr ""
@@ -214,6 +299,11 @@ msgstr ""
 
 #: templates/index.html:78
 msgid "Try SEEDS App"
+msgstr ""
+
+#: templates/inspect_scenario.html:18 templates/show_results.html:441
+#: templates/starting_page.html:33 templates/starting_page.html:82
+msgid "Scenario"
 msgstr ""
 
 #: templates/inspect_scenario.html:40 templates/show_results.html:62
@@ -334,6 +424,45 @@ msgstr ""
 
 #: templates/inspect_scenario.html:288
 msgid "Transport"
+msgstr ""
+
+#: templates/inspect_scenario.html:354
+msgid "Total energy supply"
+msgstr ""
+
+#: templates/inspect_scenario.html:366
+msgid "Power generation"
+msgstr ""
+
+#: templates/inspect_scenario.html:381
+msgid "Power storage"
+msgstr ""
+
+#: templates/inspect_scenario.html:453 templates/param_selection_a.html:353
+#: templates/param_selection_b.html:353 templates/show_results.html:425
+msgid "Agricultural Land Occupation"
+msgstr ""
+
+#: templates/inspect_scenario.html:480 templates/param_selection_a.html:297
+#: templates/param_selection_a.html:374 templates/param_selection_b.html:297
+#: templates/param_selection_b.html:374
+msgid "Surplus Ore Potential"
+msgstr ""
+
+#: templates/inspect_scenario.html:505 templates/param_selection_a.html:308
+#: templates/param_selection_a.html:395 templates/param_selection_b.html:308
+#: templates/param_selection_b.html:395 templates/show_results.html:452
+msgid "Global Warming Potential"
+msgstr ""
+
+#: templates/inspect_scenario.html:530 templates/show_results.html:412
+msgid "Water Consumption"
+msgstr ""
+
+#: templates/inspect_scenario.html:555 templates/param_selection_a.html:333
+#: templates/param_selection_a.html:437 templates/param_selection_b.html:333
+#: templates/param_selection_b.html:437
+msgid "Freshwater Eutrophication Potential"
 msgstr ""
 
 #: templates/param_selection_a.html:18 templates/param_selection_b.html:18
@@ -481,29 +610,8 @@ msgstr ""
 msgid "Agricultural Land Occupation (LOP)"
 msgstr ""
 
-#: templates/param_selection_a.html:297 templates/param_selection_a.html:374
-#: templates/param_selection_b.html:297 templates/param_selection_b.html:374
-msgid "Surplus Ore Potential"
-msgstr ""
-
-#: templates/param_selection_a.html:308 templates/param_selection_a.html:395
-#: templates/param_selection_b.html:308 templates/param_selection_b.html:395
-#: templates/show_results.html:452
-msgid "Global Warming Potential"
-msgstr ""
-
 #: templates/param_selection_a.html:322 templates/param_selection_b.html:322
 msgid "Water Comsumption Potential"
-msgstr ""
-
-#: templates/param_selection_a.html:333 templates/param_selection_a.html:437
-#: templates/param_selection_b.html:333 templates/param_selection_b.html:437
-msgid "Freshwater Eutrophication Potential"
-msgstr ""
-
-#: templates/param_selection_a.html:353 templates/param_selection_b.html:353
-#: templates/show_results.html:425
-msgid "Agricultural Land Occupation"
 msgstr ""
 
 #: templates/param_selection_a.html:360 templates/param_selection_b.html:360
@@ -664,7 +772,7 @@ msgid ""
 "                                 "
 msgstr ""
 
-#: templates/portfolio.html:50 templates/portfolio.html:56
+#: templates/portfolio.html:56
 msgid "Store and organise your favourite scenarios"
 msgstr ""
 
@@ -684,8 +792,12 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: templates/portfolio.html:69 templates/portfolio.html:72
+#: templates/portfolio.html:69
 msgid "Your saved scenarios"
+msgstr ""
+
+#: templates/portfolio.html:72
+msgid "Your saved searches"
 msgstr ""
 
 #: templates/portfolio.html:78 templates/show_results.html:135
@@ -740,22 +852,22 @@ msgid ""
 "for the ranking of optimal solutions."
 msgstr ""
 
-#: templates/project_page.html:25
+#: templates/project_page.html:22
+msgid ""
+"\n"
+"                    This project gathers information and preferences of "
+"SEEDS tool users to tailor the modelling of transition scenarios for the "
+"Portuguese energy system regarding decarbonisation targets proposed for the "
+"year 2050. \n"
+"                   "
+msgstr ""
+
+#: templates/project_page.html:27
 msgid "Find out more in our"
 msgstr ""
 
-#: templates/project_page.html:29
+#: templates/project_page.html:31
 msgid "Join"
-msgstr ""
-
-#: templates/select_location_page.html:18
-msgid ""
-"\n"
-"        Please select the location where you want to implement a RES-based "
-"energy system. <br/>\n"
-"        You can use the menu below to select one of the 18 subregions or "
-"select a location by clicking on the map.\n"
-"        "
 msgstr ""
 
 #: templates/show_results.html:17
@@ -836,15 +948,6 @@ msgstr ""
 
 #: templates/show_results.html:399
 msgid "Global Warming Potential (GWP)"
-msgstr ""
-
-#: templates/show_results.html:412
-msgid "Water Consumption"
-msgstr ""
-
-#: templates/show_results.html:441 templates/starting_page.html:33
-#: templates/starting_page.html:82
-msgid "Scenario"
 msgstr ""
 
 #: templates/show_results.html:442

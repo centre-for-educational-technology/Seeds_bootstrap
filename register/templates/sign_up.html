@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block body %}
@@ -31,18 +31,18 @@
         {% endif %}
 
         <div class="text-dark pt-5 px-5">
-            <h3 class='font-weight-bold m-0'> Sign Up </h3>
+            <h3 class='font-weight-bold m-0'> {% translate 'Sign Up' %} </h3>
             <p class='p-0 text-muted'>
-                Create an account using your email address and get access to all resources of the SEEDS tool
+                {% translate 'Create an account using your email address and get access to all resources of the SEEDS tool.' %}
             </p>
         </div>
         <div class="row justify-content-around">
         <form class='col-6' method="post">
             {% csrf_token %}
-            <div class="form-group form-primary font-weight-bold">First name {{form.first_name }} </div>
-            <div class="form-group form-primary font-weight-bold"> Last name {{form.last_name}} </div>
-            <div class="form-group form-primary font-weight-bold"> Email {{form.email}}</div>
-            <div class="form-group pass_show font-weight-bold"> Password <span><i style='color:#007bff;'
+            <div class="form-group form-primary font-weight-bold">{% translate 'First name' %} {{form.first_name }} </div>
+            <div class="form-group form-primary font-weight-bold"> {% translate 'Last name' %} {{form.last_name}} </div>
+            <div class="form-group form-primary font-weight-bold"> {% translate 'Email' %} {{form.email}}</div>
+            <div class="form-group pass_show font-weight-bold"> {% translate 'Password' %} <span><i style='color:#007bff;'
                                             class='text-primary fa fa-info-circle ml-2' data-toggle='modal'
                                             data-placement='top' data-target="#pwd"></i></span>
                 {{form.password1}}
@@ -54,7 +54,7 @@
                         <div class="modal-header border-bottom-0">
                             <h5 class="modal-title" id="exampleModalLabel"><span><i
                                                             style='color:#007bff;'
-                                                            class='fa fa-info-circle mr-2'></i></span>Password</h5>
+                                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Password' %}</h5>
                             <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -62,6 +62,7 @@
                         </div>
                         <div class='modal-body'>
                             <div>
+                                {% blocktrans %}
                                 <p> Password must contain </p>
                                 <p> - at least 8 characters </p>
                                 <p> - one uppercase character </p>
@@ -70,29 +71,32 @@
                                                         information.</p>
                                 <br />
                                 <p> Password can not be entirely numeric.</p>
+                                {% endblocktrans %}
                             </div>
                         </div>
                     </div>
                 </div>
                                     
             </div>
-            <div class="form-group pass_show font-weight-bold"> Repeat password
+            <div class="form-group pass_show font-weight-bold"> {% translate 'Repeat password'%}
                 {{form.password2}}
             </div>
  
             <div class="row pt-4">
                 <div class="col-md-12">
                     <input type="submit" class="btn btn-primary py-2 px-3 btn-pill btn-md btn-block waves-effect text-center m-b-20"
-                                            style=" font-weight:bold;" name="submit" value="Create account">
+                                            style=" font-weight:bold;" name="submit" value="{% translate 'Create account'%}">
                     <!-- <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"><i class="fa fa-lock"></i> Signup Now </button> -->
                 </div>
             </div>
         </form>
     </div>
+        {%blocktrans %}
         <small class="d-flex justify-content-center">By clicking the Sign Up button, you are
                                 creating a SEEDS,</small>
         <small class="d-flex justify-content-center"> account, and you agree with SEEDS Terms of
                                 use.</small>
+        {%endblocktrans%}
     </div>
     </div>
 {% endblock %}
