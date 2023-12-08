@@ -3,7 +3,85 @@ body {
   line-height: 1.7;
   color: gray;
   font-weight: 300;
-  font-size: 1.1rem; }
+  min-height: 900px;
+  font-size: 1.1rem; 
+  margin-bottom: 100px;
+}
+
+.index-title {
+width: 315px;
+height: 84px;
+
+font-weight: 500;
+font-size: 50px;
+leading-trim: both;
+text-edge: cap;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.04em;
+color: #252C37;
+}
+.index-subtitle {
+
+height: 60px;
+left: 80px;
+top: 214px;
+
+font-weight: 500;
+font-size: 20px;
+line-height: 18px;
+leading-trim: both;
+text-edge: cap;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* utils/neutrals/dark */
+color: #4F5969;
+}
+
+.index-content {
+  leading-trim: both;
+text-edge: cap;
+letter-spacing: 0.5px;
+font-weight: 100;
+font-size: 19px;
+align-items: center;
+
+}
+
+.btn-try-seeds {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 12px;
+  gap: 4px;
+
+  height: 36px;  
+background: #278B84;
+border-radius: 100px;
+
+
+
+
+
+font-weight: 700;
+font-size: 14px;
+
+display: flex;
+align-items: center;
+/* common/text/on-primary */
+color: #FFFFFF;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+}
 
 ::-moz-selection {
   background: #000;
@@ -64,17 +142,15 @@ h1, h2, h3, h4, h5,
     opacity: 1;
     visibility: visible; }
 html, body {
-      height: 100%;
       margin: 0;
     }
 .site-wrap{
- 
  min-height: 100%;
 }
 
 
 .btn {
-  font-size: 12px;
+  font-size: 14px;
   padding: 8px 12px; }
   .btn:hover, .btn:active, .btn:focus {
     outline: none;
@@ -350,7 +426,9 @@ html, body {
         .site-navbar .site-navigation .site-menu .has-children > a:before {
           position: absolute;
           content: "\e313";
-          font-size: 16px;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 20px;
           top: 50%;
           right: 0;
           -webkit-transform: translateY(-50%);
@@ -359,6 +437,9 @@ html, body {
           font-family: 'icomoon'; }
       .site-navbar .site-navigation .site-menu .has-children .dropdown {
         visibility: hidden;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 20px;
         opacity: 0;
         top: 100%;
         position: absolute;
@@ -881,7 +962,7 @@ html, body {
 
 }
   .footer-section p {
-    font-size: .2rem; }
+     }
   .footer-section h3 {
     font-size: .9rem;
     letter-spacing: .1rem;
@@ -1204,3 +1285,5 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 } 
+
+
