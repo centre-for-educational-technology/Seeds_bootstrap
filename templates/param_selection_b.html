@@ -33,6 +33,32 @@
             {% endblocktrans %}
         </div>
     </div>
+    <div class='d-flex flex-row-reverse p-2 m-2'>
+        
+        <i title="restart"  class="fa fa-undo  pr-2 bg-primary text-white p-3 rounded-top mx-2 rounded-bottom btn btn-primary"  data-toggle='modal' data-placement='top' data-target="#back_modal"></i> 
+        
+      </div>
+    <div class="modal fade" id="back_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">   {% translate 'Are you sure'%}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+              {% translate 'Confirming this choice will erase all settings defined for these scenarios.'%}
+            </div>
+            <div class="modal-footer">
+              <a href="{% url 'interface' project_id=1 starting_scenario='b'%}" type="button" class="btn btn-primary"> {% translate 'Confirm'%}</a>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">   {% translate 'Cancel'%}</button>
+            </div>
+        </div>
+      </div>
+    </div>
     <br/>
     <ul class="nav nav-pills nav-fill" role="tablist">
         <li class="mx-5 nav-item"><a class="nav-link active" data-toggle="tab" href="#home">{% translate 'Energy system settings'%}</a></li>
