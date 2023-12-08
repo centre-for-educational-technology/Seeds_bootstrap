@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-07 14:36+0200\n"
+"POT-Creation-Date: 2023-12-07 17:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,27 +110,27 @@ msgstr "Inglês"
 msgid "Portugese"
 msgstr "Português"
 
-#: seeds_bootstrap/views.py:838 seeds_bootstrap/views.py:881
+#: seeds_bootstrap/views.py:842 seeds_bootstrap/views.py:885
 msgid "Your vote has been saved."
 msgstr "Seu voto foi salvo."
 
-#: seeds_bootstrap/views.py:850
+#: seeds_bootstrap/views.py:854
 msgid "Scenario has been added to your portfolio."
 msgstr "O cenário foi adicionado ao seu portfólio."
 
-#: seeds_bootstrap/views.py:906
+#: seeds_bootstrap/views.py:910
 msgid "Scenario has been updated successfully !"
 msgstr "O cenário foi atualizado com sucesso!"
 
-#: seeds_bootstrap/views.py:913
+#: seeds_bootstrap/views.py:917
 msgid "Scenario has been deleted successfully !"
 msgstr "O cenário foi excluído com sucesso!"
 
-#: seeds_bootstrap/views.py:926
+#: seeds_bootstrap/views.py:930
 msgid "Search parameter entry has been updated successfully !"
 msgstr "A entrada do parâmetro de pesquisa foi atualizada com sucesso!"
 
-#: seeds_bootstrap/views.py:931
+#: seeds_bootstrap/views.py:935
 msgid "Search parameter entry has been deleted successfully !"
 msgstr "A entrada do parâmetro de pesquisa foi excluída com sucesso!"
 
@@ -257,7 +257,7 @@ msgstr ""
 msgid "Inspect"
 msgstr "Inspecionar"
 
-#: templates/compare_scenario.html:124 templates/inspect_scenario.html:164
+#: templates/compare_scenario.html:124 templates/inspect_scenario.html:168
 msgid ""
 "The chart illustrates scenario performance across Global Warming Potential "
 "(GWP100), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water "
@@ -352,68 +352,68 @@ msgstr "Comece a utilizar agora"
 msgid "Try SEEDS App"
 msgstr "Experimente a aplicação do SEEDS"
 
-#: templates/inspect_scenario.html:18 templates/show_results.html:441
+#: templates/inspect_scenario.html:20 templates/show_results.html:441
 #: templates/starting_page.html:33 templates/starting_page.html:82
 msgid "Scenario"
 msgstr "Cenário"
 
-#: templates/inspect_scenario.html:40 templates/show_results.html:62
+#: templates/inspect_scenario.html:44 templates/show_results.html:62
 msgid "Need authentication"
 msgstr "Precisa de autenticação"
 
-#: templates/inspect_scenario.html:47 templates/show_results.html:69
+#: templates/inspect_scenario.html:51 templates/show_results.html:69
 msgid "This feature is supported for authenticated users only."
 msgstr "Este recurso é compatível apenas com usuários autenticados."
 
-#: templates/inspect_scenario.html:50 templates/show_results.html:72
+#: templates/inspect_scenario.html:54 templates/show_results.html:72
 #: templates/show_results.html:185
 msgid "Close"
 msgstr "Fechar"
 
-#: templates/inspect_scenario.html:60 templates/portfolio.html:174
+#: templates/inspect_scenario.html:64 templates/portfolio.html:174
 #: templates/show_results.html:82
 msgid "Are you sure"
 msgstr "Tem a certeza"
 
-#: templates/inspect_scenario.html:67 templates/show_results.html:89
+#: templates/inspect_scenario.html:71 templates/show_results.html:89
 msgid ""
 "Confirming this choice will erase all settings defined for these scenarios."
 msgstr ""
 "A confirmação desta escolha apagará todas as configurações definidas para "
 "estes cenários."
 
-#: templates/inspect_scenario.html:70 templates/show_results.html:92
+#: templates/inspect_scenario.html:74 templates/show_results.html:92
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: templates/inspect_scenario.html:71 templates/inspect_scenario.html:102
+#: templates/inspect_scenario.html:75 templates/inspect_scenario.html:106
 #: templates/portfolio.html:131 templates/portfolio.html:162
 #: templates/portfolio.html:185 templates/show_results.html:93
 #: templates/show_results.html:114 templates/show_results.html:143
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/inspect_scenario.html:85
+#: templates/inspect_scenario.html:89
 msgid "Would you like to add this scenario to your folder?"
 msgstr "Gostaria de adicionar este cenário à sua pasta?"
 
-#: templates/inspect_scenario.html:94
+#: templates/inspect_scenario.html:98
 msgid "Title"
 msgstr "Título"
 
-#: templates/inspect_scenario.html:96
+#: templates/inspect_scenario.html:100
 msgid "Scenario will be saved with the label."
 msgstr "O cenário será guardado com o título"
 
-#: templates/inspect_scenario.html:101 templates/show_results.html:142
+#: templates/inspect_scenario.html:105 templates/show_results.html:142
 msgid "Save"
 msgstr "Guardar"
 
-#: templates/inspect_scenario.html:110 templates/inspect_scenario.html:138
+#: templates/inspect_scenario.html:114 templates/inspect_scenario.html:142
 msgid "Would you be willing to accept this scenario?"
 msgstr "Estaria disposta a aceitar este cenario?"
 
-#: templates/inspect_scenario.html:112 templates/inspect_scenario.html:140
+#: templates/inspect_scenario.html:116 templates/inspect_scenario.html:144
 msgid ""
 "Assess the suitability of this system to help SEEDS ranking options for the "
 "Portuguese energy system"
@@ -421,100 +421,108 @@ msgstr ""
 "Avalie a adequação deste sistema para ajudar as opções de classificação do "
 "SEEDS para o sistema energético português"
 
-#: templates/inspect_scenario.html:130
+#: templates/inspect_scenario.html:134
 msgid "Cofirm"
 msgstr "Confirmar"
 
-#: templates/inspect_scenario.html:150
+#: templates/inspect_scenario.html:154
 msgid "Vote"
 msgstr "Votar"
 
-#: templates/inspect_scenario.html:161
+#: templates/inspect_scenario.html:165
 msgid "Scenario Performance"
 msgstr "Desempenho do cenário"
 
-#: templates/inspect_scenario.html:210
+#: templates/inspect_scenario.html:214
 msgid "Total Energy"
 msgstr "Energia Total"
 
-#: templates/inspect_scenario.html:218
+#: templates/inspect_scenario.html:215 templates/inspect_scenario.html:223
+#: templates/inspect_scenario.html:243 templates/inspect_scenario.html:262
+#: templates/inspect_scenario.html:272 templates/inspect_scenario.html:291
+#: templates/inspect_scenario.html:360
+msgid "year"
+msgstr "ano"
+
+#: templates/inspect_scenario.html:222
 msgid "Photovoltaic"
 msgstr "Fotovoltaico"
 
-#: templates/inspect_scenario.html:224
+#: templates/inspect_scenario.html:228
 msgid "Roof PV"
 msgstr "Fotovoltaica do telhado"
 
-#: templates/inspect_scenario.html:228
+#: templates/inspect_scenario.html:232
 msgid "Open field PV"
 msgstr "PV de campo aberto"
 
-#: templates/inspect_scenario.html:238
+#: templates/inspect_scenario.html:242
 msgid "Wind"
 msgstr "Vento"
 
-#: templates/inspect_scenario.html:244
+#: templates/inspect_scenario.html:248
 msgid "Off-shore"
 msgstr ""
 
-#: templates/inspect_scenario.html:248
+#: templates/inspect_scenario.html:252
 msgid "On-shore"
 msgstr ""
 
-#: templates/inspect_scenario.html:257
+#: templates/inspect_scenario.html:261
 msgid "Biofuels"
 msgstr "Biocombustíveis"
 
-#: templates/inspect_scenario.html:267
-msgid "Hydrogen"
-msgstr "Hidrogênio"
-
-#: templates/inspect_scenario.html:278
+#: templates/inspect_scenario.html:271
 msgid "Electrification"
 msgstr "Eletrificação"
 
-#: templates/inspect_scenario.html:284
+#: templates/inspect_scenario.html:277
 msgid "Heat"
 msgstr ""
 
-#: templates/inspect_scenario.html:288
+#: templates/inspect_scenario.html:281
 msgid "Transport"
 msgstr ""
 
-#: templates/inspect_scenario.html:354
+#: templates/inspect_scenario.html:290 templates/param_selection_a.html:480
+#: templates/param_selection_b.html:480
+msgid "Electrolysers"
+msgstr ""
+
+#: templates/inspect_scenario.html:360
 msgid "Total energy supply"
 msgstr "Fornecimento total de energia"
 
-#: templates/inspect_scenario.html:366
+#: templates/inspect_scenario.html:372
 msgid "Power generation"
 msgstr "Geração de energia"
 
-#: templates/inspect_scenario.html:381
+#: templates/inspect_scenario.html:387
 msgid "Power storage"
 msgstr "Armazenamento de energia"
 
-#: templates/inspect_scenario.html:453 templates/param_selection_a.html:353
+#: templates/inspect_scenario.html:459 templates/param_selection_a.html:353
 #: templates/param_selection_b.html:353 templates/show_results.html:425
 msgid "Agricultural Land Occupation"
 msgstr "Ocupação de Solos Agrícolas"
 
-#: templates/inspect_scenario.html:480 templates/param_selection_a.html:297
+#: templates/inspect_scenario.html:486 templates/param_selection_a.html:297
 #: templates/param_selection_a.html:374 templates/param_selection_b.html:297
 #: templates/param_selection_b.html:374
 msgid "Surplus Ore Potential"
 msgstr "Depleção de metais"
 
-#: templates/inspect_scenario.html:505 templates/param_selection_a.html:308
+#: templates/inspect_scenario.html:511 templates/param_selection_a.html:308
 #: templates/param_selection_a.html:395 templates/param_selection_b.html:308
 #: templates/param_selection_b.html:395 templates/show_results.html:452
 msgid "Global Warming Potential"
 msgstr "Potencial de Aquecimento Global"
 
-#: templates/inspect_scenario.html:530 templates/show_results.html:412
+#: templates/inspect_scenario.html:536 templates/show_results.html:412
 msgid "Water Consumption"
 msgstr "Depleção de água"
 
-#: templates/inspect_scenario.html:555 templates/param_selection_a.html:333
+#: templates/inspect_scenario.html:561 templates/param_selection_a.html:333
 #: templates/param_selection_a.html:437 templates/param_selection_b.html:333
 #: templates/param_selection_b.html:437
 msgid "Freshwater Eutrophication Potential"
@@ -757,11 +765,6 @@ msgstr "PV montado no telhado"
 msgid "PV Open-field"
 msgstr "PV em campo aberto"
 
-#: templates/param_selection_a.html:480 templates/param_selection_a.html:638
-#: templates/param_selection_b.html:480 templates/param_selection_b.html:638
-msgid "Hydrogen CHP"
-msgstr "Hidrogênio chp"
-
 #: templates/param_selection_a.html:529 templates/param_selection_a.html:659
 #: templates/param_selection_b.html:529 templates/param_selection_b.html:659
 #: templates/show_results.html:332 templates/show_results.html:448
@@ -803,6 +806,10 @@ msgid ""
 "installed as Open field PV \n"
 "                                "
 msgstr "Define quanto do sistema deve ser instalado como PV de campo aberto"
+
+#: templates/param_selection_a.html:638 templates/param_selection_b.html:638
+msgid "Hydrogen CHP"
+msgstr "Hidrogênio chp"
 
 #: templates/param_selection_a.html:645 templates/param_selection_b.html:645
 msgid ""
@@ -1013,6 +1020,10 @@ msgstr "Os parâmetros de pesquisa serão salvos com o rótulo especificado."
 msgid "Compare two scenarios"
 msgstr "Compare dois cenários"
 
+#: templates/show_results.html:163
+msgid "Scenarios selected for side-by-side comparison"
+msgstr "Cenários selecionados para comparação lado a lado"
+
 #: templates/show_results.html:172
 msgid "You need to select two scenarios for comparison."
 msgstr "Você precisa selecionar dois cenários para comparação."
@@ -1095,6 +1106,11 @@ msgstr ""
 msgid "Start with this"
 msgstr "Comece com este"
 
+#~ msgid "Hydrogen"
+#~ msgstr "Hidrogênio"
+
+# msgid "Power generation"
+# msgstr "Geração de energia"
 #, fuzzy
 #~| msgid "Surplus Ore Potential"
 #~ msgid "Surplus Ore"
