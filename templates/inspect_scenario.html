@@ -96,7 +96,7 @@ aria-hidden="true">
               
                 <div class="form-group">
                   <label for="exampleInputEmail1">{% translate 'Title'%}</label>
-                  <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="Enter label">
+                  <input type="text" class="form-control" id="label" name="label" aria-describedby="emailHelp" placeholder="">
                   <small  class="form-text text-muted">{% translate 'Scenario will be saved with the label.'%}</small>
                 </div>
               
@@ -352,6 +352,7 @@ aria-hidden="true">
       type: "pie",
       values: {{ data.energy_supply_pie_values | safe}},
       labels: {{ data.energy_supply_pie_labels | safe}},
+      marker: { colors: {{data.energy_supply_pie_colors | safe}}},
       textinfo: "label+percent",
       textposition: "outside",
       automargin: true
@@ -404,6 +405,9 @@ aria-hidden="true">
       z: {{ mapdata.solar.z | safe}},
       locations:{{ mapdata.solar.locations | safe}},
       text:{{ mapdata.solar.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#f6e3ce"], [1, "#D2770B"]], 
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
 
@@ -417,6 +421,9 @@ aria-hidden="true">
       z: {{ mapdata.wind.z | safe}},
       locations:{{ mapdata.wind.locations | safe}},
       text:{{ mapdata.wind.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#ebeeea"], [1, "#3F5A33"]], 
       hovertemplate: 'Wind: %{z:.2f} TW<br>%{text}<extra></extra>',
       marker_line_width:1,
       showscale:false,
