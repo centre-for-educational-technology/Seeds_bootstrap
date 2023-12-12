@@ -13,16 +13,18 @@
   }
 
 </style>
+
 <div class="mt-4 mx-4 px-5 ">
   <a class="text-muted" href="{% url 'project_select_page'%}"> <span class='fa fa-arrow-left fa-2x'></span><a>
 </div>
 <div class='d-flex px-4 mx-4 justify-content-between'>
   <div class='p-4'>
-    <h2> {% translate 'Select a Starting Point'%} </h2>
-    <p class='text-muted'>
+    <h2> {% translate 'Select a Starting Point'%} </h2> 
+    <p class='text-muted'> 
       {% translate 'These examples will assis you in how to design your energy transition scenarios, giving you a starting point for selecting and adjusting the parameters.'%}
     </p>
   </div>
+
 
 </div>
 <div class="p-2 pb-5">
@@ -72,7 +74,7 @@
         </div>
       </div>
       <div class='d-flex justify-content-center'>
-       <a href='{% url 'interface' project_id=data1.scenario.project.id starting_scenario='a' %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>   {% translate 'Start with this'%}</a>
+       <a href="{% url 'interface' project_id=data1.scenario.project.id starting_scenario='a'  %}" class='px-4 py-1  btn-primary text-light  text-primary border border-primary' style='border-radius:3rem ; font-weight:bold;' >   {% translate 'Start with this'%}</a>
       </div>
     </div>
 
@@ -92,7 +94,7 @@
         </div>
       </div>
       <div class='my-3'>
-
+        
         <div id="carouselExampleControls" class="carousel slide" data-interval="false" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -121,13 +123,13 @@
           </a>
         </div>
       </div>
-
+    
       <div class='d-flex justify-content-center'>
-        <a href='{% url 'interface' project_id=data2.scenario.project.id starting_scenario='b'  %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>   {% translate 'Start with this'%}</a>
+        <a href="{% url 'interface' project_id=data2.scenario.project.id starting_scenario='b' %}" class='px-4 py-1 btn-primary text-light   border border-primary' style='border-radius:3rem ; font-weight:bold;' >   {% translate 'Start with this'%}</a>
        </div>
     </div>
   </div>
-
+  
 </div>
 
     {% endblock%}
@@ -164,13 +166,14 @@
       },
       showlegend: true
     }
-
-
+    
+    
 
     var data_supply = [{
       type: "pie",
       values: {{ data1.energy_supply_pie_values | safe}},
       labels: {{ data1.energy_supply_pie_labels | safe}},
+      marker: { colors: {{data1.energy_supply_pie_colors | safe}}},
       textinfo: "label+percent",
       textposition: "outside",
       automargin: true
@@ -187,25 +190,25 @@
       type: "pie",
       values: {{ data2.energy_supply_pie_values | safe}},
       labels: {{ data2.energy_supply_pie_labels | safe}},
+      marker: { colors: {{data2.energy_supply_pie_colors | safe}}},
       textinfo: "label+percent",
       textposition: "outside",
       automargin: true
     }]
-
+   
     Plotly.newPlot('energy_supply_b', data_supply, layout_supply,config)
 
     var power_data = {{data1.power_bar_data | safe}};
     var layout = {
-    barmode: 'stack',
-    xaxis:{
+      barmode: 'stack',
+      xaxis:{
         range:[0,{{data1.total_generation}} + 20]
-    },
-    height: 50,
-    width: 170,
-    showlegend: false,
-    legend:{orientation: 'h', side:'top'},
-    margin : {l:55, r:5, t:0, b:25},
-
+      },
+      height: 50,
+      width: 170,
+      showlegend: false,
+      legend:{orientation: 'h', side:'top'},
+      margin : {l:55, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_generation_a', power_data,layout,config);
 
@@ -251,7 +254,7 @@
     margin : {l:55, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_storage_b', storage_data,layout,config);
-
+  
     var solar_map_data_a = [{
       type: "choroplethmapbox",
       geojson:"{% static 'portugal_regions.geojson' %}",
@@ -259,11 +262,15 @@
       z: {{ mapdata1.solar.z | safe}},
       locations:{{ mapdata1.solar.locations | safe}},
       text:{{ mapdata1.solar.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#f6e3ce"], [1, "#D2770B"]], 
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
       name:'Solar',
+      marker: {'color':'#3F5A33'},
       marker_line_width:1,
-
+  
     }]
     var wind_map_data_a = [{
       type: "choroplethmapbox",
@@ -272,6 +279,9 @@
       z: {{ mapdata1.wind.z | safe}},
       locations:{{ mapdata1.wind.locations | safe}},
       text:{{ mapdata1.wind.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#ebeeea"], [1, "#3F5A33"]], 
       hovertemplate: 'Wind: %{z:.2f} TW<br>%{text}<extra></extra>',
       marker_line_width:1,
       showscale:false,
@@ -284,11 +294,14 @@
       z: {{ mapdata2.solar.z | safe}},
       locations:{{ mapdata2.solar.locations | safe}},
       text:{{ mapdata2.solar.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#f6e3ce"], [1, "#D2770B"]], 
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
 
       marker_line_width:1,
-
+  
     }]
     var wind_map_data_b = [{
       type: "choroplethmapbox",
@@ -297,12 +310,15 @@
       z: {{ mapdata2.wind.z | safe}},
       locations:{{ mapdata2.wind.locations | safe}},
       text:{{ mapdata2.wind.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#ebeeea"], [1, "#3F5A33"]], 
       hovertemplate: 'Wind: %{z:.2f}  TW<br>%{text}<extra></extra>',
       marker_line_width:1,
       showscale:false,
     }]
     var map_layout = {
-
+  
       height: 300,
       width: 100,
       showlegend: false,
@@ -314,7 +330,7 @@
       }
       }
       var map_layout2 = {
-
+  
         height: 300,
         width: 100,
         showlegend: false,
@@ -333,7 +349,7 @@
 
     // Impact visualization for scenario a
 
-
+    
     var trace1_a = {
       x: {{impact_a.land_occupation.others.x | safe}},
       y: {{impact_a.land_occupation.others.y | safe}},
@@ -357,11 +373,11 @@
       title:'Agricultural Land Occupation',
       width: 500,
       showlegend: false,
-
+   
     };
     Plotly.newPlot('impact_land_a', data_a, layout_a,config);
 
-
+   
     var trace1_a = {
       x: {{impact_a.surplus_ore.others.x | safe}},
       y: {{impact_a.surplus_ore.others.y | safe}},

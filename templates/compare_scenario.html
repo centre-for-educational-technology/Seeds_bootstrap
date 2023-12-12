@@ -17,12 +17,12 @@
 </div>
 <div class='d-flex px-4 mx-4 justify-content-between'>
   <div>
-    <h2> {% translate 'Comparison'%} </h2>
-    <p class='text-muted'>
+    <h2> {% translate 'Comparison'%} </h2> 
+    <p class='text-muted'> 
       {% translate 'Here you can compare the features of the selected scenarios. Further actions are available using the toolbar on the bottom. Check the scenarios numbers and characteristic by clicking on the Detailed Report icon.'%}
     </p>
 
-
+ 
   </div>
 </div>
 <div class="p-2 ">
@@ -84,7 +84,7 @@
           <div class='p-0 m-2' id='power_storage_b'></div>
         </div>
         <div class='col'>
-
+          
           <div class='p-1 d-flex align-items-start' id="solar_map_b"></div>
           <div class='p-1 d-flex align-items-end'  id="wind_map_b"></div>
         </div>
@@ -164,11 +164,12 @@
       showlegend: true
     }
     Plotly.newPlot("impact_control", data, layout,config)
-
+    
     var data_supply = [{
       type: "pie",
       values: {{ data1.energy_supply_pie_values | safe}},
       labels: {{ data1.energy_supply_pie_labels | safe}},
+      marker: { colors: {{data1.energy_supply_pie_colors | safe}}},
       textinfo: "label+percent",
       textposition: "outside",
       automargin: true
@@ -178,7 +179,7 @@
       width: 230,
       showlegend: false,
       margin : {l:0, r:0, t:0, b:0},
-
+ 
       }
     Plotly.newPlot('energy_supply_a', data_supply, layout_supply,config)
 
@@ -186,17 +187,18 @@
       type: "pie",
       values: {{ data2.energy_supply_pie_values | safe}},
       labels: {{ data2.energy_supply_pie_labels | safe}},
+      marker: { colors: {{data2.energy_supply_pie_colors | safe}}},
       textinfo: "label+percent",
       textposition: "outside",
       automargin: true
     }]
     var layout_supply = {
-
+ 
       height: 230,
       width: 230,
       showlegend: false,
       margin : {l:0, r:0, t:0, b:0},
-
+ 
       }
     Plotly.newPlot('energy_supply_b', data_supply, layout_supply,config)
 
@@ -255,7 +257,7 @@
     margin : {l:50, r:5, t:0, b:25},
     };
     Plotly.newPlot('power_storage_b', storage_data,layout,config);
-
+  
     var solar_map_data_a = [{
       type: "choroplethmapbox",
       geojson:"{% static 'portugal_regions.geojson' %}",
@@ -263,11 +265,14 @@
       z: {{ mapdata1.solar.z | safe}},
       locations:{{ mapdata1.solar.locations | safe}},
       text:{{ mapdata1.solar.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#f6e3ce"], [1, "#D2770B"]], 
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
 
       marker_line_width:1,
-
+  
     }]
     var wind_map_data_a = [{
       type: "choroplethmapbox",
@@ -276,6 +281,9 @@
       z: {{ mapdata1.wind.z | safe}},
       locations:{{ mapdata1.wind.locations | safe}},
       text:{{ mapdata1.wind.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#ebeeea"], [1, "#3F5A33"]], 
       hovertemplate: 'Wind: %{z:.2f} TW<br>%{text}<extra></extra>',
       marker_line_width:1,
       showscale:false,
@@ -288,10 +296,13 @@
       z: {{ mapdata2.solar.z | safe}},
       locations:{{ mapdata2.solar.locations | safe}},
       text:{{ mapdata2.solar.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#f6e3ce"], [1, "#D2770B"]], 
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
       marker_line_width:1,
-
+  
     }]
     var wind_map_data_b = [{
       type: "choroplethmapbox",
@@ -300,6 +311,9 @@
       z: {{ mapdata2.wind.z | safe}},
       locations:{{ mapdata2.wind.locations | safe}},
       text:{{ mapdata2.wind.text | safe}},
+      autocolorscale: false,
+      colorscale: [
+        [0.0, "#ebeeea"], [1, "#3F5A33"]], 
       hovertemplate: 'Wind: %{z:.2f} TW<br>%{text}<extra></extra>',
       marker_line_width:1,
       showscale:false,
@@ -317,7 +331,7 @@
       }
       }
       var map_layout2 = {
-
+  
         height: 300,
       width: 120,
       showlegend: false,
@@ -358,11 +372,11 @@
       title:'Agricultural Land Occupation',
       width: 500,
       showlegend: false,
-
+   
     };
     Plotly.newPlot('impact_land_a', data_a, layout_a,config);
 
-
+   
     var trace1_a = {
       x: {{impact_a.surplus_ore.others.x | safe}},
       y: {{impact_a.surplus_ore.others.y | safe}},

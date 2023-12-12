@@ -87,6 +87,23 @@ POWER_TECHS = ['chp_biofuel_extraction',
                'roof_mounted_pv',
                'wind_offshore']
 
+POWER_TECHS_COLORS = {'chp_biofuel_extraction':'#C78281',
+               'chp_hydrogen':'#08A4A7',
+               'chp_methane_extraction':'#B14F7E',
+               'chp_wte_back_pressure':'#A4A708',
+               'electrolysis':'#A708A4',
+               'existing_pv':'#894E07',
+               'existing_wind':'#5B814A',
+               'hydro_reservoir':'#00169F',
+               'hydro_run_of_river':'#0021EC',
+               'open_field_pv':'#F3911D',
+               'pumped_hydro':'#0097EC',
+               'wind_onshore':'#73A25E',
+               'battery':'#73E600',
+               'ccgt':'#DDB3C8',
+               'roof_mounted_pv':'#FDB735',
+               'wind_offshore':'#69B578'}
+
 
 def map(request):
     return render(request, 'map.html')
@@ -97,12 +114,13 @@ def reduce_intensity(c, intensity=.2):
 
 
 def create_log_entry(project_id, actor, verb, object, notes):
-    return
-    project = Project.objects.get(id=project_id)
-    object = ActivityLog(project=project, actor=actor.email,
+    try: 
+        project = Project.objects.get(id=project_id)
+        object = ActivityLog(project=project, actor=actor.email,
                          verb=verb, object=object, notes=notes)
-    object.save()
-    return
+        object.save()
+    except:
+        return
 
 
 def get_mapdata(scenario_id):
@@ -438,6 +456,7 @@ def get_saved_search(request, search_id):
 
 @csrf_exempt
 def save_search_params(request, label):
+    
     if request.method == 'POST':
         if request.user.is_authenticated:
             data = {}
@@ -489,7 +508,7 @@ def get_scenario_details(scenario_id):
               param_config[impact_names[ind]]['max'])
         tmp.append(standardise(
             val, param_config[impact_names[ind]]['min'], param_config[impact_names[ind]]['max']))
-
+        
     radial_chart_theta_acroynm = ['LOP', 'GWP',
                           'WPC', 'SOP', 'FEP']
 
@@ -516,6 +535,7 @@ def get_scenario_details(scenario_id):
             "y": ['Power'],
             "x": [float(value)],
             "name": key,
+            "marker": { 'color':POWER_TECHS_COLORS[key]},
             "type": 'bar',
             "orientation": 'h'
         }
@@ -542,6 +562,7 @@ def get_scenario_details(scenario_id):
             "y": ['Storage'],
             "x": [float(value)],
             "name": key,
+            "marker": { 'color':POWER_TECHS_COLORS[key]},
             "type": 'bar',
             "orientation": 'h'
         }
@@ -555,12 +576,13 @@ def get_scenario_details(scenario_id):
     count_storage_tech = len(pie_chart_data['labels'])
     sum_storage = sum(pie_chart_data['values'])
 
-    energy, energy_data, total_supply = get_energy_supply(scenario_id)
+    energy, energy_data, total_supply, pie_colors = get_energy_supply(scenario_id)
     generation_labels = list(data['generation'].keys())
     generation_values = list(data['generation'].values())
 
     data['energy_supply_pie_labels'] = list(energy_data.keys())
     data['energy_supply_pie_values'] = list(energy_data.values())
+    data['energy_supply_pie_colors'] = list(pie_colors.values())
     data['energy_supply_total'] = total_supply
 
     data['generation_labels'] = generation_labels
@@ -672,7 +694,14 @@ def get_energy_supply(scenario_id):
     pie_energy_supply_data['Wind'] += energy['existing_wind'] + \
         energy['wind_offshore'] + energy['wind_onshore']
 
-    return energy, pie_energy_supply_data, total_supply
+
+    pie_energy_supply_colors = {'Solar':'#D2770B',
+                              'Biofule_waste':'#9B1E1D',
+                              'Electricity_import':'#E6E600',
+                              'Hydro':'#00659F',
+                              'Wind':'#3F5A33'}
+
+    return energy, pie_energy_supply_data, total_supply, pie_energy_supply_colors
 
 
 def get_sankey_data(scenario_id):
