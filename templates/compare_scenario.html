@@ -30,7 +30,7 @@
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
         <p class='h3  font-weight-bold'>Scenario {{data1.scenario.id}}</p>
-        <a href='{% url 'inspect' project_id=data1.scenario.project.id scenario_id=data1.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>{% translate 'Inspect'%}</a>
+        <a href='{% url 'inspect' project_id=data1.scenario.project.id scenario_id=data1.scenario.id %}' class='px-4 py-1  btn btn-primary  border border-primary' style='border-radius:3rem'>{% translate 'Inspect'%}</a>
       </div>
       <div class='row mt-3 pr-3 col-12 '>
         <div class='col mr-3 p-0'>
@@ -75,7 +75,7 @@
     <div class='col col-5 p-4 bg-white shadow-sm border-light rounded'>
       <div class='d-flex flex-row justify-content-between align-content-center'>
         <p class='h3  font-weight-bold'>Scenario {{data2.scenario.id}}</p>
-        <a href='{% url 'inspect' project_id=data2.scenario.project.id scenario_id=data2.scenario.id %}' class='px-4 py-1  bg-primary text-light  text-primary border border-primary' style='border-radius:3rem'>{% translate 'Inspect'%}</a>
+        <a href='{% url 'inspect' project_id=data2.scenario.project.id scenario_id=data2.scenario.id %}' class='px-4 py-1  btn btn-primary  border border-primary' style='border-radius:3rem'>{% translate 'Inspect'%}</a>
       </div>
       <div class='row mt-3 pr-3 col-12 p-4 '>
         <div class='col mr-3 p-0'>
@@ -84,7 +84,6 @@
           <div class='p-0 m-2' id='power_storage_b'></div>
         </div>
         <div class='col'>
-          
           <div class='p-1 d-flex align-items-start' id="solar_map_b"></div>
           <div class='p-1 d-flex align-items-end'  id="wind_map_b"></div>
         </div>
@@ -175,10 +174,10 @@
       automargin: true
     }]
     var layout_supply = {
-      height: 230,
-      width: 230,
+      height: 330,
+      width: 330,
       showlegend: false,
-      margin : {l:0, r:0, t:0, b:0},
+      margin : {l:5, r:5, t:5, b:5},
  
       }
     Plotly.newPlot('energy_supply_a', data_supply, layout_supply,config)
@@ -192,27 +191,29 @@
       textposition: "outside",
       automargin: true
     }]
-    var layout_supply = {
- 
-      height: 230,
-      width: 230,
-      showlegend: false,
-      margin : {l:0, r:0, t:0, b:0},
- 
-      }
+
     Plotly.newPlot('energy_supply_b', data_supply, layout_supply,config)
 
     var power_data = {{data1.power_bar_data | safe}};
     var layout = {
     barmode: 'stack',
     xaxis:{
-        range:[0,{{data1.total_generation}} + 20]
+      range:[0,{{data1.total_power_generation}} + 10]
     },
-    height: 60,
-    width: 150,
+    yaxis:{showticklabels:false,},
+    height: 90,
+    width: 300,
     showlegend: false,
+    title: {
+      text: 'Power generation capacity',
+      font: {
+          size: 13
+      },
+      yref: 'paper',
+  },
     legend:{orientation: 'h', side:'top'},
-    margin : {l:40, r:5, t:0, b:25},
+    margin : {l:20, r:5, t:25, b:25},
+    
     };
     Plotly.newPlot('power_generation_a', power_data,layout,config);
 
@@ -220,13 +221,20 @@
     var layout = {
     barmode: 'stack',
     xaxis:{
-        range:[0,{{data1.total_storage}} + 20]
+      range:[0,{{data1.total_system_balance_capacity}} + 10]
     },
-    height: 60,
-    width: 150,
+    yaxis:{showticklabels:false,},
+    title: {
+      text: 'System balance capacity',
+      font: {
+          size: 13
+      },
+    },
+    height: 90,
+    width: 300,
     showlegend: false,
     legend:{orientation: 'h', side:'top'},
-    margin : {l:50, r:5, t:0, b:25},
+    margin : {l:20, r:5, t:25, b:25},
     };
     Plotly.newPlot('power_storage_a', storage_data,layout,config);
 
@@ -234,27 +242,41 @@
     var layout = {
     barmode: 'stack',
     xaxis:{
-        range:[0,{{data2.total_generation}} + 20]
+      range:[0,{{data2.total_power_generation}} + 10]
     },
-    height: 60,
-    width: 150,
+    yaxis:{showticklabels:false,},
+    title: {
+      text: 'Power generation capacity',
+      font: {
+          size: 13
+      },
+    },
+    height: 90,
+    width: 300,
     showlegend: false,
     legend:{orientation: 'h', side:'top'},
-    margin : {l:40, r:5, t:0, b:25},
+    margin : {l:20, r:5, t:25, b:25},
     };
     Plotly.newPlot('power_generation_b', power_data,layout,config);
 
     var storage_data = {{data2.storage_bar_data | safe}};
     var layout = {
     barmode: 'stack',
-    xaxis:{
-        range:[0,{{data2.total_storage}} + 20]
+    title: {
+      text: 'System balance capacity',
+      font: {
+          size: 13
+      },
     },
-    height: 60,
-    width: 150,
+    xaxis:{
+      range:[0,{{data2.total_system_balance_capacity}} + 10]
+    },
+    yaxis:{showticklabels:false,},
+    height: 90,
+    width: 300,
     showlegend: false,
     legend:{orientation: 'h', side:'top'},
-    margin : {l:50, r:5, t:0, b:25},
+    margin : {l:20, r:5, t:25, b:25},
     };
     Plotly.newPlot('power_storage_b', storage_data,layout,config);
   
@@ -270,7 +292,12 @@
         [0.0, "#f6e3ce"], [1, "#D2770B"]], 
       hovertemplate: 'Solar: %{z:.2f} TW<br>%{text}<extra></extra>',
       showscale:false,
-
+      title: {
+        text: 'Solar',
+        font: {
+            size: 11
+        },
+      },
       marker_line_width:1,
   
     }]
@@ -320,25 +347,25 @@
     }]
     var map_layout = {
       height: 300,
-      width: 120,
+      width: 150,
       showlegend: false,
 
       margin : {l:0, r:20, t:0, b:0,pad:5},
       mapbox:{
           style:'carto-positron',
-          zoom:4.4,
+          zoom:4.8,
           center:{lat:39.5,lon:-8}
       }
       }
       var map_layout2 = {
   
         height: 300,
-      width: 120,
+      width: 150,
       showlegend: false,
         margin : {l:20, r:0, t:0, b:0},
         mapbox:{
             style:'carto-positron',
-            zoom:4.4,
+            zoom:4.8,
             center:{lat:39.5,lon:-8}
         }
         }

@@ -87,12 +87,48 @@ POWER_TECHS = ['chp_biofuel_extraction',
                'roof_mounted_pv',
                'wind_offshore']
 
-POWER_TECHS_COLORS = {'chp_biofuel_extraction':'#C78281',
+POWER_GEN_TECHS = ['chp_biofuel_extraction',
+               'chp_hydrogen',
+               'chp_methane_extraction',
+               'chp_wte_back_pressure',
+               'existing_pv',
+               'existing_wind',
+               'hydro_reservoir',
+               'hydro_run_of_river',
+               'open_field_pv',
+               'wind_onshore',
+               'roof_mounted_pv',
+               'wind_offshore']
+
+SYSTEM_BALANCE_TECHS = ['electrolysis','ccgt','transmission','pumped_hydro','battery']
+SYSTEM_BALANCE_LABELS = {'electrolysis':'Electrolysers','ccgt':'Syngas CCGT turbine',
+                         'transmission':'Transmission','pumped_hydro':'Pumped Hydro','battery':'Battery'}
+SYSTEM_BALANCE_COLORS = {'electrolysis':'#A708A4','ccgt':'#DDB3C8',
+                         'transmission':'#FDB735',
+                         'pumped_hydro':'#0097EC','battery':'#73E600'}
+
+POWER_TECHS_LABELS = {'chp_biofuel_waste':'CHP Biofuel & Waste',
+               'chp_hydrogen':'CHP Hydrogen',
+               'chp_methane_extraction':'CHP Methane',
+               'electrolysis':'Electrolysis',
+               'hydro_reservoir':'Hydro Reservoir',
+               'hydro_run_of_river':'Hydro River',
+               'solar':'Solar',
+               'pumped_hydro':'Pumped Hyrdo',
+               'wind':'Wind',
+               'hydro':'Hydro',
+               'battery':'#73E600',
+               'ccgt':'#DDB3C8',}
+
+POWER_TECHS_COLORS = {'chp_biofuel_waste':'#C78281',
+                      'chp_biofuel_extraction':'#C78281',
                'chp_hydrogen':'#08A4A7',
                'chp_methane_extraction':'#B14F7E',
                'chp_wte_back_pressure':'#A4A708',
                'electrolysis':'#A708A4',
                'existing_pv':'#894E07',
+               'solar':'#894E07',
+               'wind':'#5B814A',
                'existing_wind':'#5B814A',
                'hydro_reservoir':'#00169F',
                'hydro_run_of_river':'#0021EC',
@@ -527,48 +563,92 @@ def get_scenario_details(scenario_id):
         else:
             data['generation'][ob.technology_type] = ob.energy_generation
         total_generation += ob.energy_generation
-        if 'hydro_' in ob.technology_type:
+        if 'hydro' in ob.technology_type:
             total_hydro += ob.energy_generation
 
+    processed_power_gen_colors = {'solar':'#D2770B',
+                              'chp_biofuel_waste':'#9B1E1D',
+                              'Electricity_import':'#E6E600',
+                              'hydro':'#00659F',
+                              'wind':'#3F5A33',
+                              'chp_hydrogen':'#08A4A7',
+                              'chp_methane_extraction':'#B14F7E',}
+    ###### Preparing final power generation data for chart
+    final_generation_data = {}
+    final_generation_data['wind'] = 0
+    final_generation_data['solar'] = 0
+    final_generation_data['chp_biofuel_waste'] = 0
+    final_generation_data['hydro'] = 0
     for key, value in data['generation'].items():
+        value = float(value)
+        if key in POWER_GEN_TECHS:
+            if 'wind' in key:
+                final_generation_data['wind'] =+ value
+            elif 'pv' in key:
+                final_generation_data['solar'] =+ value
+            elif 'chp_bio' in key or 'chp_wte' in key:
+                final_generation_data['chp_biofuel_waste'] =+ value
+            elif 'hydro' in key:
+                final_generation_data['hydro'] =+ value
+            elif key in final_generation_data.keys():
+                final_generation_data[key] =+ value
+            else:
+                final_generation_data[key] = value
+    print('Power gen data=====>')
+    print(final_generation_data)
+
+    data['total_power_gen'] = 0
+    for key, value in final_generation_data.items():
         trace = {
             "y": ['Power'],
             "x": [float(value)],
-            "name": key,
-            "marker": { 'color':POWER_TECHS_COLORS[key]},
+            "name": POWER_TECHS_LABELS[key],
+            "marker": { 'color':processed_power_gen_colors[key]},
             "type": 'bar',
             "orientation": 'h'
         }
+        data['total_power_gen'] =+ value
         bar_chart_data.append(trace)
 
     data['power_bar_data'] = bar_chart_data
+    ################
+
 
     pie_chart_data = {}
     pie_values = {}
 
     total_storage = 0
+    ###### Preparing final System balancing data for chart
+    total_transmission = 0
+    for ob in transmission:
+        data['transmission']['from'] = ob.from_location
+        data['transmission']['to'] = ob.to_location
+        data['transmission']['transmission'] = ob.transmission_capacity
+        total_transmission += ob.transmission_capacity
 
-    storage_chart_data = []
-    for ob in tech_sto:
-        if ob.technology_type in data['storage']:
-            data['storage'][ob.technology_type] += float(ob.energy_storage)
-        else:
-            data['storage'][ob.technology_type] = float(ob.energy_storage)
+    system_data = {'ccgt':0,'electrolysis':0,'transmission':0,'pumped_hydro':0,'battery':0}
 
-        total_storage += ob.energy_storage
+    for key, value in data['generation'].items():
+        if key in system_data.keys():
+            system_data[key] += float(value)
 
-    for key, value in data['storage'].items():
+    # transmission represents total transmission capacity (inflow + outflow)
+    system_data['transmission'] = total_transmission
+
+    system_chart_data = []
+    for key, value in system_data.items():
         trace = {
-            "y": ['Storage'],
+            "y": ['System Balance'],
             "x": [float(value)],
-            "name": key,
-            "marker": { 'color':POWER_TECHS_COLORS[key]},
+            "name": SYSTEM_BALANCE_LABELS[key],
+            "marker": { 'color':SYSTEM_BALANCE_COLORS[key]},
             "type": 'bar',
             "orientation": 'h'
         }
-        storage_chart_data.append(trace)
+        system_chart_data.append(trace)
 
-    data['storage_bar_data'] = storage_chart_data
+    data['storage_bar_data'] = system_chart_data
+    data['total_system_balance_capacity'] = sum([float(item) for item in system_data.values()])
 
     pie_chart_data['labels'] = list(pie_values.keys())
     pie_chart_data['values'] = list(pie_values.values())
@@ -609,12 +689,7 @@ def get_scenario_details(scenario_id):
     data['electrification']['transport_percentage'] = data['electrification']['transport'] * \
         100 / float(total_electrification)
 
-    total_transmission = 0
-    for ob in transmission:
-        data['transmission']['from'] = ob.from_location
-        data['transmission']['to'] = ob.to_location
-        data['transmission']['transmission'] = ob.transmission_capacity
-        total_transmission += ob.transmission_capacity
+    
 
     data['total_storage'] = total_storage
     data['total_supply'] = total_supply
@@ -679,16 +754,16 @@ def get_energy_supply(scenario_id):
 
     pie_energy_supply_data = {}
     pie_energy_supply_data['Solar'] = 0
-    pie_energy_supply_data['Biofuel_waste'] = 0
-    pie_energy_supply_data['Electricity_import'] = 0
+    pie_energy_supply_data['Biofuel & waste'] = 0
+    pie_energy_supply_data['Electricity import'] = 0
     pie_energy_supply_data['Hydro'] = 0
     pie_energy_supply_data['Wind'] = 0
 
-    pie_energy_supply_data['Biofuel_waste'] += energy['biofuel_supply'] + \
+    pie_energy_supply_data['Biofuel & waste'] += energy['biofuel_supply'] + \
         energy['waste_supply']
     pie_energy_supply_data['Solar'] += energy['open_field_pv'] + \
         energy['roof_mounted_pv'] + energy['existing_pv']
-    pie_energy_supply_data['Electricity_import'] += energy['el_import']
+    pie_energy_supply_data['Electricity import'] += energy['el_import']
     pie_energy_supply_data['Hydro'] += energy['hydro_reservoir'] + \
         energy['hydro_run_of_river']
     pie_energy_supply_data['Wind'] += energy['existing_wind'] + \
@@ -696,8 +771,8 @@ def get_energy_supply(scenario_id):
 
 
     pie_energy_supply_colors = {'Solar':'#D2770B',
-                              'Biofule_waste':'#9B1E1D',
-                              'Electricity_import':'#E6E600',
+                              'Biofuel & waste':'#9B1E1D',
+                              'Electricity import':'#E6E600',
                               'Hydro':'#00659F',
                               'Wind':'#3F5A33'}
 

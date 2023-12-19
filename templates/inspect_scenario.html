@@ -291,6 +291,16 @@ aria-hidden="true">
             <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/{%translate 'year'%}</div>
           </div>
         </a>
+
+        <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
+          <div class='p-2 m-2 bg-light rounded'> 
+            <img width="50px" src="{% static 'images/Battery.png'%}">
+          </div>
+          <div class='p-2'>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Battery'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.battery |floatformat:2 }} TWh/{%translate 'year'%}</div>
+          </div>
+        </a>
        
 
         
@@ -370,30 +380,34 @@ aria-hidden="true">
 
     var power_data = {{data.power_bar_data | safe}};
     var layout = {
-    title: "{% translate 'Power generation'%}",
+    title: "{% translate 'Power generation capacity'%}",
     barmode: 'stack',
     xaxis:{
-        range:[0,{{data.total_generation}} + 20]
+        range:[0,{{data.total_power_generation}} + 10]
     },
-    height: 240,
+    yaxis:{showticklabels:false,},
+    hovertemplate: '%{z:.2f} TW<br>%{text}<extra></extra>',
+    height: 160,
     width: 500,
-
+    margin : {l:20, r:5, t:60, b:45},
     showlegend: false,
-    legend:{orientation: 'h', side:'top'}
+    legend: {"orientation": "h",xanchor: 'top',},
+  
     };
     Plotly.newPlot('power_generation', power_data,layout,config);
 
     var storage_data = {{data.storage_bar_data | safe}};
     var layout = {
-    title: "{% translate 'Power storage'%}",
+    title: "{% translate 'System balance capacity'%}",
     barmode: 'stack',
     xaxis:{
-        range:[0,{{data.total_storage}} + 20]
+        range:[0,{{data.total_system_balance_capacity}} + 10]
     },
-    height: 240,
+    yaxis:{showticklabels:false,},
+    height: 160,
     width: 500,
+    margin : {l:20, r:5, t:60, b:45},
     showlegend: false,
-   
     legend:{orientation: 'h', side:'top'}
     };
     Plotly.newPlot('power_storage', storage_data,layout,config);
