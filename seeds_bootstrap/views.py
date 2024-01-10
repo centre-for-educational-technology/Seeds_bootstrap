@@ -55,20 +55,21 @@ param_config = {'battery': {'max': 0.0444797482359873, 'min': 2.6183049409038122
                                               'min': 40539809.033321954},
                 'global_warming': {'max': 3550705057804.7417, 'min': 89357470400.92726},
                 'hydro_run_of_river': {'max': 1.6155, 'min': 1.6155},
-                'import': {'max': 0.1561112495614454, 'min': 0.0003012119877652},
+                'import': {'max': 0.2, 'min': 0},
                 'import_dep': {'max': 0.1561112495614454, 'min': 0.0003012119877652},
-                'infra': {'max': 1.0, 'min': 0.1881200008807587},
-                'land_occupation': {'max': 216513993113.64584, 'min': 20280814758.748016},
-                'open_field_pv': {'max': 121.84232420443844, 'min': 2.231546741630743},
+                'infra': {'max': 1.0, 'min': 0},
+                'land_occupation': {'max': 216513993115, 'min': 20280814757},
+                'open_field_pv': {'max': 125, 'min': 0},
                 'pace': {'max': 13.096833998642731, 'min': 3.729211861614511},
                 'power': {'max': 159.63839465280677, 'min': 40.8581235544374},
-                'roof_mounted_pv': {'max': 31.87839696159167, 'min': 0.0006874053401419},
+                'roof_mounted_pv': {'max': 26, 'min': 0},
                 'scenario': {'max': 260.0, 'min': 0.0},
                 'storage': {'max': 6.303784879568456, 'min': 5.898367317341074},
                 'surplus_ore': {'max': 655458310608.2251, 'min': 9926424157.968464},
                 'water_consumption': {'max': 61979898600.96115, 'min': 859061013.8176432},
-                'wind_offshore': {'max': 12.2881549166774, 'min': 0.003085515351798},
-                'wind_onshore': {'max': 44.36655376398457, 'min': 1.5571043872453}}
+                'wind_offshore': {'max': 13, 'min': 0},
+                'wind_onshore': {'max': 45, 'min': 0},
+                'hydrogen': {'max': 8, 'min': 0}}
 
 POWER_TECHS = ['chp_biofuel_extraction',
                'chp_hydrogen',
@@ -117,8 +118,8 @@ POWER_TECHS_LABELS = {'chp_biofuel_waste':'CHP Biofuel & Waste',
                'pumped_hydro':'Pumped Hyrdo',
                'wind':'Wind',
                'hydro':'Hydro',
-               'battery':'#73E600',
-               'ccgt':'#DDB3C8',}
+               'battery':'Battery',
+               'ccgt':'Syngaz CCGT turbine',}
 
 POWER_TECHS_COLORS = {'chp_biofuel_waste':'#C78281',
                       'chp_biofuel_extraction':'#C78281',
@@ -242,7 +243,9 @@ def filter_scenarios(search_params):
     print('------>', search_params)
     scenarios_community = Scenario.objects.all().filter(
         community_infrastructure__range=(search_params['community_min'], search_params['community_max']))
+    
     print('community objects:', len(scenarios_community))
+    
     scenarios_power = scenarios_community.filter(
         power_capacity__range=(search_params['power_min'], search_params['power_max']))
     print('power objects:', len(scenarios_power))
@@ -253,43 +256,70 @@ def filter_scenarios(search_params):
         implementation_pace__range=(search_params['implementation_min'], search_params['implementation_max']))
     print('impl objects:', len(scenarios_implementation))
     scenarios_import = scenarios_implementation.filter(
-        import_dependency__range=(search_params['import_min'], search_params['import_max'])).order_by('id')
-
+        import_dependency__range=(search_params['import_min'], search_params['import_max']))
+    print('import objects:', len(scenarios_import))
     scenarios_land = scenarios_import.filter(
-        land_occupation__range=(search_params['land_min'], search_params['land_max'])).order_by('id')
+        land_occupation__range=(search_params['land_min'], search_params['land_max']))
     print('land objects:', len(scenarios_land))
     scenarios_global = scenarios_land.filter(
-        global_warming__range=(search_params['global_min'], search_params['global_max'])).order_by('id')
+        global_warming__range=(search_params['global_min'], search_params['global_max']))
     print('global objects:', len(scenarios_global))
     scenarios_surplus = scenarios_global.filter(
-        surplus_ore__range=(search_params['surplus_min'], search_params['surplus_max'])).order_by('id')
-    print('human objects:', len(scenarios_surplus))
+        surplus_ore__range=(search_params['surplus_min'], search_params['surplus_max']))
+    print('surplus objects:', len(scenarios_surplus))
     scenarios_water = scenarios_surplus.filter(
-        water_consumption__range=(search_params['water_min'], search_params['water_max'])).order_by('id')
+        water_consumption__range=(search_params['water_min'], search_params['water_max']))
     print('water objects:', len(scenarios_water))
     scenarios_fresh = scenarios_water.filter(
-        freshwater_eutrophication__range=(search_params['fresh_min'], search_params['fresh_max'])).order_by('id')
+        freshwater_eutrophication__range=(search_params['fresh_min'], search_params['fresh_max']))
 
     scenarios_roof_pv = scenarios_fresh.filter(
-        roof_mounted_pv__range=(search_params['photo_roof_min'], search_params['photo_roof_max'])).order_by('id')
+        roof_mounted_pv__range=(search_params['photo_roof_min'], search_params['photo_roof_max']))
+    
+    # There are scenarios with nan values for pv_roof
+    if (int(search_params['photo_roof_min']) == 0) and (int(search_params['photo_roof_max']== 26)):
+        scenarios_roof_pv = scenarios_fresh
+    #print(int(search_params['photo_roof_min']), int(search_params['photo_roof_max']))
+    #print((int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_min']== 26)))
     print('photo objects roof:', len(scenarios_roof_pv))
+    
     scenarios_open_field_pv = scenarios_roof_pv.filter(
-        open_field_pv__range=(search_params['photo_open_field_min'], search_params['photo_open_field_max'])).order_by('id')
+        open_field_pv__range=(search_params['photo_open_field_min'], search_params['photo_open_field_max']))
+    
+    if (int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_max']== 125)):
+        scenarios_open_field_pv = scenarios_roof_pv 
+
     print('photo objects field:', len(scenarios_open_field_pv))
     scenarios_wind_onshore = scenarios_open_field_pv.filter(
-        wind_onshore__range=(search_params['wind_onshore_min'], search_params['wind_onshore_max'])).order_by('id')
+        wind_onshore__range=(search_params['wind_onshore_min'], search_params['wind_onshore_max']))
+    print(search_params['wind_onshore_min'],search_params['wind_onshore_max'])
+    if (int(search_params['wind_onshore_min']) == 0) and (int(search_params['wind_onshore_max']== 45)):
+        scenarios_wind_onshore = scenarios_open_field_pv
+
     print('wind on objects:', len(scenarios_wind_onshore))
     scenarios_wind_offshore = scenarios_wind_onshore.filter(
-        wind_offshore__range=(search_params['wind_offshore_min'], search_params['wind_offshore_max'])).order_by('id')
+        wind_offshore__range=(search_params['wind_offshore_min'], search_params['wind_offshore_max']))
+    if (int(search_params['wind_offshore_min']) == 0) and (int(search_params['wind_offshore_max']== 13)):
+        scenarios_wind_offshore = scenarios_wind_onshore
+
     print('wind off objects:', len(scenarios_wind_offshore))
     scenarios_hydrogen = scenarios_wind_offshore.filter(
-        hydrogen__range=(search_params['hydrogen_min'], search_params['hydrogen_max'])).order_by('id')
+        hydrogen__range=(search_params['hydrogen_min'], search_params['hydrogen_max']))
+    if (int(search_params['hydrogen_min']) == 0) and (int(search_params['hydrogen_max']== 125)):
+        scenarios_open_field_pv = scenarios_roof_pv
+
     print('hydrogen objects:', len(scenarios_hydrogen))
     scenarios_biofuel = scenarios_hydrogen.filter(
-        bio_fuel__range=(search_params['bio_min'], search_params['bio_max'])).order_by('id')
+        bio_fuel__range=(search_params['bio_min'], search_params['bio_max']))
+    if (int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_max']== 125)):
+        scenarios_open_field_pv = scenarios_roof_pv
+
     print('bio objects:', len(scenarios_biofuel))
     scenarios_battery = scenarios_biofuel.filter(
         battery__range=(search_params['battery_min'], search_params['battery_max'])).order_by('id')
+    if (int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_max']== 125)):
+        scenarios_open_field_pv = scenarios_roof_pv
+
     print('battery objects:', len(scenarios_battery))
     return scenarios_battery
 
@@ -380,10 +410,10 @@ def get_filtered_scenarios(request, project_id):
             request.POST['photo-open-field_0'], param_config['open_field_pv']['min'], param_config['open_field_pv']['max'])
         photo_open_field_max = rescale(
             request.POST['photo-open-field_1'], param_config['open_field_pv']['min'], param_config['open_field_pv']['max'])
-
-        # @todo: add hydrogen in scenario table
-        hydrogen_min = request.POST['hydrogen_0']
-        hydrogen_max = request.POST['hydrogen_1']
+        print('Photo open field min:',photo_open_field_max,photo_open_field_min)
+       
+        hydrogen_min = rescale(request.POST['hydrogen_0'], param_config['hydrogen']['min'], param_config['hydrogen']['max'])
+        hydrogen_max = rescale(request.POST['hydrogen_1'], param_config['hydrogen']['min'], param_config['hydrogen']['max'])
 
         """
         hydro_river_min = request.POST['hydro-river_0']
