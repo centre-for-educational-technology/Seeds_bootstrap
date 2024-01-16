@@ -576,7 +576,7 @@ def get_scenario_details(scenario_id):
             val, param_config[impact_names[ind]]['min'], param_config[impact_names[ind]]['max']))
         
     radial_chart_theta_acroynm = ['LOP', 'GWP',
-                          'WPC', 'SOP', 'FEP']
+                          'WCP', 'SOP', 'FEP']
 
     data['radial_r'] = tmp
     data['radial_theta'] = radial_chart_theta_acroynm
@@ -613,17 +613,19 @@ def get_scenario_details(scenario_id):
         value = float(value)
         if key in POWER_GEN_TECHS:
             if 'wind' in key:
-                final_generation_data['wind'] =+ value
+                final_generation_data['wind'] += value
             elif 'pv' in key:
-                final_generation_data['solar'] =+ value
+                final_generation_data['solar'] += value
             elif 'chp_bio' in key or 'chp_wte' in key:
-                final_generation_data['chp_biofuel_waste'] =+ value
+                final_generation_data['chp_biofuel_waste'] += value
             elif 'hydro' in key:
-                final_generation_data['hydro'] =+ value
+                final_generation_data['hydro'] += value
             elif key in final_generation_data.keys():
-                final_generation_data[key] =+ value
+                final_generation_data[key] += value
             else:
                 final_generation_data[key] = value
+
+    
     print('Power gen data=====>')
     print(final_generation_data)
 
@@ -631,13 +633,14 @@ def get_scenario_details(scenario_id):
     for key, value in final_generation_data.items():
         trace = {
             "y": ['Power'],
-            "x": [float(value)],
+            "x": [str(round(value, 2))],
             "name": POWER_TECHS_LABELS[key],
+            "text":POWER_TECHS_LABELS[key],
             "marker": { 'color':processed_power_gen_colors[key]},
             "type": 'bar',
             "orientation": 'h'
         }
-        data['total_power_gen'] =+ value
+        data['total_power_gen'] += value
         bar_chart_data.append(trace)
 
     data['power_bar_data'] = bar_chart_data
@@ -669,8 +672,9 @@ def get_scenario_details(scenario_id):
     for key, value in system_data.items():
         trace = {
             "y": ['System Balance'],
-            "x": [float(value)],
+            "x": [str(round(value, 2))],
             "name": SYSTEM_BALANCE_LABELS[key],
+            "text": SYSTEM_BALANCE_LABELS[key],
             "marker": { 'color':SYSTEM_BALANCE_COLORS[key]},
             "type": 'bar',
             "orientation": 'h'
@@ -764,9 +768,15 @@ def get_scenario_details(scenario_id):
         onshore * 100 / data['total_wind'])
     data['wind_offshore_percentage'] = '{:.2}'.format(
         offshore * 100 / data['total_wind'])
+    
+    # this is processed data with combining categories, e.g., wind on shore, offshore to wind
+    data['final_generation_data'] = final_generation_data
+
     print('Scenario:', model_to_dict(data['scenario']))
     print("wind:", data['total_wind'])
     print('generation:', data['generation'])
+    print('Final generation data:',final_generation_data)
+    print('System data:',system_data)
     return data
 
 
