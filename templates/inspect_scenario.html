@@ -165,7 +165,7 @@ aria-hidden="true">
         <p class='text-muted font-weight-bold'>{% translate 'Scenario Performance'%}</p>
         <div class='d-flex flex-row'>
           <div class="px-2 small py-2 w-50">
-            {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP100), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WPC), and Freshwater Eutrophication Potential (FEP).'%}
+            {% translate 'The chart illustrates scenario performance across Global Warming Potential (GWP100), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water Depletion (WCP), and Freshwater Eutrophication Potential (FEP).'%}
           </div>
           <div class="px-5 py-2">
             <div class='' id='impact_control'></div>
@@ -211,16 +211,17 @@ aria-hidden="true">
     </div>
     <div class='col col-4 p-3'>
       <div class='p-4 rounded-top rounded-bottom bg-white'>
-        <p class='small text-muted font-weight-bold'>{% translate 'Total Energy'%} </p>
-        <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/{%translate 'year'%}</p>
-
+        
+        <p class='small text-muted font-weight-bold'>{% translate 'Power generation'%} </p>
+       <!-- <p class='h4 font-weight-bold'> {{data.total_supply |floatformat:2 }} TWh/{%translate 'year'%}</p>
+          -->
         <a class="m-3  d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/PHOTOVOLTAIC.png'%}">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Photovoltaic'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'> {{data.total_pv |floatformat:2 }} TWh/{%translate 'year'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'> {{data.final_generation_data.solar |floatformat:2 }} GW</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseOne">
@@ -240,7 +241,7 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Wind'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_wind |floatformat:2 }} TWh/{%translate 'year'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.final_generation_data.wind |floatformat:2 }} GW</div>
           </div>
         </a>
         <div class="collapse py-2 pl-5" id="collapseTwo">
@@ -259,19 +260,20 @@ aria-hidden="true">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Biofuels'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.bio_fuel |floatformat:2 }} TWh/{%translate 'year'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.final_generation_data.chp_biofuel_waste |floatformat:2 }} GW</div>
           </div>
         </a>
-
+        <!--
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/ELECTRIC.png'%}">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Electrification'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_electrification |floatformat:2 }} TWh/{%translate 'year'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.total_electrification |floatformat:2 }} GW</div>
           </div>
         </a>
+        
         <div class="collapse py-2 pl-5" id="collapsefive">
           <div class='bg-light m-2 rounded-top rounded-bottom'>
             <p class='small pl-4 pt-2'> {% translate 'Heat'%} </p>
@@ -282,26 +284,27 @@ aria-hidden="true">
             <p class='display-5 text-right pr-3 pb-3'>{{data.electrification.transport_percentage |floatformat:2}}%</p>
           </div>
         </div>
+        -->
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/HYDROGEN.png'%}">
           </div>
           <div class='p-2'>
-            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Electrolysers'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.hydrogen |floatformat:2 }}  TWh/{%translate 'year'%}</div>
+            <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Hydro'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.final_generation_data.hydro |floatformat:2 }}  GW</div>
           </div>
         </a>
-
+        <!--
         <a class="m-3 d-flex shadow-sm border-light bgd-flex collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class=' d-flex px-4 rounded-top rounded-bottom bg-white border-secondary'>
           <div class='p-2 m-2 bg-light rounded'> 
             <img width="50px" src="{% static 'images/BATTERY.png'%}">
           </div>
           <div class='p-2'>
             <div class='px-2 small' style='font-size:.5rem;'>{% translate 'Battery'%}</div>
-            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.battery |floatformat:2 }} TWh/{%translate 'year'%}</div>
+            <div class='h4 px-2 text-dark font-weight-bold'>{{data.scenario.battery |floatformat:2 }} GW</div>
           </div>
         </a>
-       
+        -->
 
         
         
@@ -368,25 +371,22 @@ aria-hidden="true">
       automargin: true
     }]
     var layout_supply = {
-      title: "{% translate 'Total energy supply'%}: {{data.energy_supply_total}} Twh/{%translate 'year'%}",
+      title: "{% translate 'Total energy supply'%}: {{data.energy_supply_total}} TWh/{%translate 'year'%}",
       height: 400,
       width: 400,
       showlegend: false
       }
     Plotly.newPlot('energy_supply', data_supply, layout_supply,config)
 
-
-  
-
     var power_data = {{data.power_bar_data | safe}};
     var layout = {
-    title: "{% translate 'Power generation capacity'%}",
+    title: "{% translate 'Power generation capacity'%}(GW)",
     barmode: 'stack',
     xaxis:{
-        range:[0,{{data.total_power_generation}} + 10]
+        range:[0,{{data.total_power_gen}} + 10]
     },
     yaxis:{showticklabels:false,},
-    hovertemplate: '%{z:.2f} TW<br>%{text}<extra></extra>',
+    hovertemplate: '%{x[0]:.2f} GW<br>%{name}<extra></extra>',
     height: 160,
     width: 500,
     margin : {l:20, r:5, t:60, b:45},
@@ -398,7 +398,7 @@ aria-hidden="true">
 
     var storage_data = {{data.storage_bar_data | safe}};
     var layout = {
-    title: "{% translate 'System balance capacity'%}",
+    title: "{% translate 'System balance capacity'%}(GW)",
     barmode: 'stack',
     xaxis:{
         range:[0,{{data.total_system_balance_capacity}} + 10]
@@ -477,7 +477,7 @@ aria-hidden="true">
 
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:"{% translate 'Agricultural Land Occupation'%}",
+      title:"{% translate 'Agricultural Land Occupation'%} (m2/year) <br> <span style='font-size: 12px;'>{% translate 'Environmental Impacts associated with land use changes' %}</span> ",
       width: 500,
       showlegend: false,
    
@@ -504,7 +504,7 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:"{% translate 'Surplus Ore Potential' %}",
+      title:"{% translate 'Surplus Ore Potential' %}(kg Cu) <br> <span style='font-size: 12px;'>{% translate 'Damage to the natrual resource scarcity' %}</span>",
       width: 500,
       showlegend: false,
     };
@@ -529,7 +529,7 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:"{% translate 'Global Warming Potential' %}",
+      title:"{% translate 'Global Warming Potential' %}(kg CO2 to air) <br> <span style='font-size: 12px;'>{% translate 'Impact on global warming due to greenhouse gas emissions'%}</span>",
       width: 500,
       showlegend: false,
     };
@@ -554,7 +554,7 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:"{% translate 'Water Consumption' %}",
+      title:"{% translate 'Water Consumption' %} (m3 water consumed) <br> <span style='font-size: 12px;'>{% translate 'Environmental Impact of the energy system on water resources'%}</span>",
       width: 500,
       showlegend: false,
     };
@@ -579,7 +579,7 @@ aria-hidden="true">
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:"{% translate 'Freshwater Eutrophication Potential' %}",
+      title:"{% translate 'Freshwater Eutrophication Potential' %}(kg P to fresh water) <br> <span style='font-size: 12px;'>{% translate 'Impact on water ecosystems, particularly due to eutrophication' %}</span>",
       width: 500,
       showlegend: false,
     };

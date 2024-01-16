@@ -1,0 +1,180 @@
+{% extends 'base.html'%}
+{%block body%}
+<style>
+    a.active {
+        font-weight: bold;
+        border-bottom: #007bff;
+    }
+    .al-range-slider__input {
+        display: none;
+    }
+</style>
+
+<div class="m-5 p-5  border-top">
+    <p class='text-small'> Back </p>
+    <h3>  Scenario Insepction </h3>
+    <p class="'text-secondary"> </p>
+    <br/>
+    <ul class="nav nav-tabs">
+        <li class="mx-5"><a class="active" data-toggle="tab" href="#home">Energy system settings</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu1">Impact control</a></li>
+        <li class="mx-5"><a data-toggle="tab" href="#menu2">Energy technologies</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="home" class="ml-5 pt-2 tab-pane fade in active show">
+            <p>These scenarios are selected based on selected parameters range.</p> <br />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Scenario ID</th>
+                        <th>Power capacity (Tw)</th>
+                        <th>Storage capacity (Twh)</th>
+                        <th>Community infrastructure</th>
+                        <th>Implementation pace</th>
+                        <th>Import dependency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scenario in page_obj %}
+                    <tr>
+                        <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
+                        <td>{{scenario.id}}</td>
+                        <td>{{scenario.power_capacity |floatformat:2}}</td>
+                        <td>{{scenario.storage_capacity |floatformat:2}}</td>
+                        <td>{{scenario.community_infrastructure |floatformat:2}}</td>
+                        <td>{{scenario.implementation_pace |floatformat:2}}</td>
+                        <td>{{scenario.import_dependency |floatformat:2}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div id="menu1" class="ml-5  pt-5 tab-pane fade" x:data = "{}">
+            <p>
+                
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Scenario ID</th>
+                        <th>Climate change</th>
+                        <th>Land occupation</th>
+                        <th>Marince toxicity</th>
+                        <th>Metal depletion</th>
+                        <th>Human toxicity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scenario in page_obj %}
+                    <tr>
+                        <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
+                        <td>{{scenario.id}}</td>
+                        <td>{{scenario.climate_change |floatformat:2}}</td>
+                        <td>{{scenario.land_occupation |floatformat:2}}</td>
+                        
+                        <td>{{scenario.marine_toxicity |floatformat:2}}</td>
+                        <td>{{scenario.metal_depletion |floatformat:2}}</td>
+                        <td>{{scenario.human_toxicity |floatformat:2}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div id="menu2" class="ml-5 pt-5 tab-pane fade">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Scenario ID</th>
+                        <th>OnShore Wind</th>
+                        <th>Off-shore Wind</th>
+                        <th>Open-field Solar</th>
+                        <th>Roof-mounted Solar</th>
+                        <th>Hydro Run-of-River</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scenario in page_obj %}
+                    <tr>
+                        <td><input type='checkbox' value='{{scenario.id}}' name='scenario'></td>
+                        <td>{{scenario.id}}</td>
+                        <td>{{scenario.wind_onshore |floatformat:2}}</td>
+                        <td>{{scenario.wind_offshore |floatformat:2}}</td>
+                        
+                        <td>{{scenario.open_field_pv |floatformat:2}}</td>
+                        <td>{{scenario.roof_mounted_pv |floatformat:2}}</td>
+                        <td>{{scenario.hydro_run_of_river |floatformat:2}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            <h3>Menu 3</h3>
+            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            </p>
+        </div>
+    </div>
+    <br />
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+
+            {% for page_number in page_range %}
+            {% if page_number == page_obj.number %}
+            <li class="page-item active"><a class="page-link" href="?page={{ page_number }}">{{page_number}}</a>
+            </li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="#">{{page_number}}</a></li>
+            {% endif %}
+            {% endfor %}
+
+        </ul>
+    </nav>
+
+
+
+</div>
+{% endblock%}
+{% block scr %}
+const options = {
+range: { min: 0, max: 100, step: 10 },
+initialSelectedValues: { from: 0, to: 20 },
+grid: { minTicksStep: 1, marksStep: 1 },
+theme: "light",
+showInputs: false,
+};
+const fracOptions = {
+range: { min: 0, max: 1, step: .05 },
+initialSelectedValues: { from: .1, to: .5 },
+grid: { minTicksStep: 2, marksStep: 2 },
+theme: "light",
+
+};
+
+const paceOptions = {
+range: { min: 0, max: 13, step: 1 },
+initialSelectedValues: { from: 1, to: 3 },
+grid: { minTicksStep: 2, marksStep: 2 },
+theme: "light",
+showInputs: false,
+};
+
+$('#power').alRangeSlider(fracOptions);
+$('#storage').alRangeSlider(fracOptions);
+$('#community').alRangeSlider(fracOptions);
+$('#implement').alRangeSlider(paceOptions);
+$('#import').alRangeSlider(fracOptions);
+$('#heat').alRangeSlider(fracOptions);
+
+$('#land').alRangeSlider(options);
+$('#marine').alRangeSlider(fracOptions);
+$('#human').alRangeSlider(fracOptions);
+$('#co2').alRangeSlider(fracOptions);
+
+{% endblock%}

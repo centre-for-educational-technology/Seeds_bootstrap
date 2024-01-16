@@ -33,7 +33,7 @@
       <div class='d-flex flex-row justify-content-between align-content-center'>
         <p class='h3  font-weight-bold'>{% translate 'Scenario'%} A</p>
       </div>
-      <div class='row mt-3 pr-3 col-12 '>
+      <div class='row mr-3 pr-3 col-12 '>
         <div class='col mr-3 p-0'>
           <div class='m-1' id='power_generation_a'></div>
           <div class='p-1' id='energy_supply_a'></div>
@@ -82,7 +82,7 @@
       <div class='d-flex flex-row justify-content-between align-content-center'>
         <p class='h3  font-weight-bold'>{% translate 'Scenario'%} B</p>
       </div>
-      <div class='row mt-3 pr-3 col-12 p-4 '>
+      <div class='row mr-3 pr-3 col-12 '>
         <div class='col mr-3 p-0'>
           <div class='m-2' id='power_generation_b'></div>
           <div  id='energy_supply_b'></div>
@@ -204,14 +204,14 @@
     var layout = {
     barmode: 'stack',
     xaxis:{
-      range:[0,{{data1.total_power_generation}} + 10]
+      range:[0,{{data1.total_power_gen}} + 10]
     },
     yaxis:{showticklabels:false,},
     height: 90,
     width: 300,
     showlegend: false,
     title: {
-      text: 'Power generation capacity',
+      text: "{% translate 'Power generation capacity'%} (GW)",
       font: {
           size: 13
       },
@@ -231,7 +231,7 @@
       },
       yaxis:{showticklabels:false,},
       title: {
-        text: 'System balance capacity',
+        text: "{% translate 'System balance capacity'%} (GW)",
         font: {
             size: 13
         },
@@ -248,11 +248,11 @@
     var layout = {
       barmode: 'stack',
       xaxis:{
-        range:[0,{{data2.total_power_generation}} + 10]
+        range:[0,{{data2.total_power_gen}} + 10]
       },
       yaxis:{showticklabels:false,},
       title: {
-        text: 'Power generation capacity',
+        text: "{% translate 'Power generation capacity'%} (GW)",
         font: {
             size: 13
         },
@@ -269,7 +269,7 @@
     var layout = {
       barmode: 'stack',
       title: {
-        text: 'System balance capacity',
+        text: "{% translate 'System balance capacity'%} (GW)",
         font: {
             size: 13
         },
@@ -402,7 +402,7 @@
 
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Agricultural Land Occupation',
+      title:"{% translate 'Agricultural Land Occupation'%}  (m2/year) <br> <span style='font-size: 12px;'>{% translate 'Environmental Impacts associated with land use changes' %}</span> ",
       width: 500,
       showlegend: false,
    
@@ -429,7 +429,7 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Surplus Ore',
+      title:"{% translate 'Surplus Ore Potential' %} (kg Cu) <br> <span style='font-size: 12px;'>{% translate 'Damage to the natrual resource scarcity' %}</span>",
       width: 500,
       showlegend: false,
     };
@@ -454,7 +454,7 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Global Warming',
+      title:"{% translate 'Global Warming Potential' %} (kg CO2 to air) <br> <span style='font-size: 12px;'>{% translate 'Impact on global warming due to greenhouse gas emissions'%}</span>",
       width: 500,
       showlegend: false,
     };
@@ -479,7 +479,7 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Water Consumption',
+      title:"{% translate 'Water Consumption' %}  (m3 water consumed) <br> <span style='font-size: 12px;'>{% translate 'Environmental Impact of the energy system on water resources'%}</span>",
       width: 500,
       showlegend: false,
     };
@@ -504,7 +504,7 @@
     };
     var data_a = [ trace1_a, trace2_a ];
     var layout_a = {
-      title:'Freshwater Eutrophication',
+      title:"{% translate 'Freshwater Eutrophication Potential' %} (kg P to fresh water) <br> <span style='font-size: 12px;'>{% translate 'Impact on water ecosystems, particularly due to eutrophication' %}</span>",
       width: 500,
       showlegend: false,
     };
@@ -529,7 +529,7 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Agricultural Land Occupation',
+      title:"{% translate 'Agricultural Land Occupation'%} (m2/year) <br> <span style='font-size: 12px;'>{% translate 'Environmental Impacts associated with land use changes'%}</span> ",
       width: 500,
       showlegend: false,
     };
@@ -554,7 +554,7 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Surplus Ore',
+      title:"{% translate 'Surplus Ore Potential' %} (kg Cu) <br> <span style='font-size: 12px;'>{% translate 'Damage to the natrual resource scarcity'%}</span>",
       width: 500,
       showlegend: false,
     };
@@ -579,7 +579,7 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Global Warming',
+      title:"{% translate 'Global Warming Potential' %} (kg CO2 to air) <br> <span style='font-size: 12px;'>{% translate 'Impact on global warming due to greenhouse gas emissions'%}",
       width: 500,
       showlegend: false,
     };
@@ -604,7 +604,7 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Water Consumption',
+      title:"{% translate 'Water Consumption' %}(m3 water consumed) <br> <span style='font-size: 12px;'>{% translate 'Environmental Impact of the energy system on water resources' %}</span>",
       width: 500,
       showlegend: false,
     };
@@ -629,7 +629,7 @@
     };
     var data_b = [ trace1_b, trace2_b ];
     var layout_b = {
-      title:'Freshwater Eutrophication',
+      title:"{% translate 'Freshwater Eutrophication Potential' %} (kg P to fresh water) <br> <span style='font-size: 12px;'>{% translate 'Impact on water ecosystems, particularly due to eutrophication'%}</span>",
       width: 500,
       showlegend: false,
     };
