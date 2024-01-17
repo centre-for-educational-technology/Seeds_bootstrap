@@ -63,10 +63,10 @@
         <input type="hidden" name="form_type" value="signin">
         <br/>
         <small class='text-right'>
-         <!----> <a href="{% url 'password_reset' %}"> {% translate  'I forgot my password' %}</a>
+         <!--@todo: add forget password page with email send functionality <a href="{% url 'password_reset' %}"> {% translate  'I forgot my password' %}</a> -->
         </small>
         <div class="py-3  d-flex justify-content-center">
-          <input type="submit" class="btn btn-primary py-2 px-5 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="Log in"> 
+          <input type="submit" class="btn btn-primary py-2 px-5 btn-pill btn-md waves-effect text-center m-b-20" style=" font-weight:bold;"name="submit" value="{% translate 'Log in' %}"> 
         </div>
       </form>
     </div>
