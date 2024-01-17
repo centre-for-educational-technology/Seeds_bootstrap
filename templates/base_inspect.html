@@ -75,10 +75,10 @@
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'portfolio' query='saved_scenarios' %}" class="nav-link text-dark">{% translate 'My Portfolio' %}</a></li>
                 {% endif %}
-                <li><a href="#home-section" class="nav-link text-dark">{% translate 'Documentation' %}</a></li>
+                <li><a href="https://seeds-project.org/" target="_blank"  class="nav-link text-dark">{% translate 'Documentation' %}</a></li>
                 <li><a href="#home-section" class="nav-link text-dark">{% translate 'Help' %}</a></li>
-                <li><a href="#home-section" class="nav-link text-dark">{% translate 'About the Project' %}</a></li>
-                <li><a href="#home-section" class="nav-link text-dark">{% translate 'Contact' %}</a></li>
+                <li><a href="https://seeds-project.org/" target="_blank"  class="nav-link text-dark">{% translate 'About the Project' %}</a></li>
+                <li><a href="https://seeds-project.org/consortium/" target="_blank"  class="nav-link text-dark">{% translate 'Contact' %}</a></li>
                 {% if user.is_superuser %}
                 <li><a href="{% url 'get_logs'  %}" class="nav-link text-dark">{% translate 'Activity Logs' %}</a></li>
                 {% endif %}
