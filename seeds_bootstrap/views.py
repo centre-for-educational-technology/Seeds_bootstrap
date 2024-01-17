@@ -635,10 +635,10 @@ def get_scenario_details(scenario_id):
             "y": ['Power'],
             "x": [str(round(value, 2))],
             "name": POWER_TECHS_LABELS[key],
-            "text":POWER_TECHS_LABELS[key],
             "marker": { 'color':processed_power_gen_colors[key]},
             "type": 'bar',
-            "orientation": 'h'
+            "orientation": 'h',
+            "hovertemplate": '{}: {} GW <extra></extra>'.format(POWER_TECHS_LABELS[key],str(round(value, 2)))
         }
         data['total_power_gen'] += value
         bar_chart_data.append(trace)
@@ -674,10 +674,10 @@ def get_scenario_details(scenario_id):
             "y": ['System Balance'],
             "x": [str(round(value, 2))],
             "name": SYSTEM_BALANCE_LABELS[key],
-            "text": SYSTEM_BALANCE_LABELS[key],
             "marker": { 'color':SYSTEM_BALANCE_COLORS[key]},
             "type": 'bar',
-            "orientation": 'h'
+            "orientation": 'h',
+            "hovertemplate": '{}: {} GW <extra></extra>'.format(SYSTEM_BALANCE_LABELS[key],str(round(value, 2)))
         }
         system_chart_data.append(trace)
 
