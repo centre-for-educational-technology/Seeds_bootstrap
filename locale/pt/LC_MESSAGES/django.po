@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-16 13:43+0200\n"
+"POT-Creation-Date: 2024-01-17 15:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,8 @@ msgid ""
 "Create an account using your email address and get access to all resources "
 "of the SEEDS tool."
 msgstr ""
-"Crie a sua conta usando o endereço de email para aceder a todos os recursos "
-"da aplicação SEEDS"
+"Crie a sua conta usando o endereço de email para aceder a todos os "
+"recursosda aplicação SEEDS"
 
 #: register/templates/sign_up.html:42
 msgid "First name"
@@ -208,7 +208,7 @@ msgid "My Portfolio"
 msgstr "Meu portfolio"
 
 #: templates/base.html:80 templates/base_inspect.html:78
-#: templates/project_page.html:27
+#: templates/project_page.html:28
 msgid "Documentation"
 msgstr "Documentação"
 
@@ -276,7 +276,7 @@ msgstr "Desempenho do cenário"
 msgid ""
 "The chart illustrates scenario performance across Global Warming Potential "
 "(GWP100), Agricultural Land Occupation (LOP), Metal Depletion (SOP), Water "
-"Depletion (WPC), and Freshwater Eutrophication Potential (FEP)."
+"Depletion (WCP), and Freshwater Eutrophication Potential (FEP)."
 msgstr ""
 "O gráfico ilustra o desempenho do cenário em termos de Potencial de "
 "Aquecimento Global (GWP100), Ocupação de Solos Agrícolas (LOP), Esgotamento "
@@ -288,7 +288,7 @@ msgstr ""
 #: templates/param_selection_b.html:167 templates/starting_page.html:214
 #: templates/starting_page.html:255
 msgid "Power generation capacity"
-msgstr "Capacidade de geração de energia (GW)"
+msgstr "Capacidade de geração de energia"
 
 #: templates/compare_scenario.html:228 templates/compare_scenario.html:266
 #: templates/inspect_scenario.html:401 templates/starting_page.html:234
@@ -303,6 +303,14 @@ msgstr "Capacidade de armazenamento"
 msgid "Agricultural Land Occupation"
 msgstr "Ocupação de Solos Agrícolas"
 
+#: templates/compare_scenario.html:399 templates/compare_scenario.html:526
+#: templates/inspect_scenario.html:480 templates/starting_page.html:405
+#: templates/starting_page.html:532
+msgid "Environmental Impacts associated with land use changes"
+msgstr ""
+"Impactos ambientais associados às transformações na ocupação de solos "
+"<br>agrícolas"
+
 #: templates/compare_scenario.html:426 templates/compare_scenario.html:551
 #: templates/inspect_scenario.html:507 templates/param_selection_a.html:325
 #: templates/param_selection_a.html:402 templates/param_selection_b.html:325
@@ -311,19 +319,40 @@ msgstr "Ocupação de Solos Agrícolas"
 msgid "Surplus Ore Potential"
 msgstr "Depleção de metais"
 
+#: templates/compare_scenario.html:426 templates/compare_scenario.html:551
+#: templates/inspect_scenario.html:507 templates/starting_page.html:432
+#: templates/starting_page.html:557
+msgid "Damage to the natrual resource scarcity"
+msgstr "Danos à escassez de recursos naturais."
+
 #: templates/compare_scenario.html:451 templates/compare_scenario.html:576
 #: templates/inspect_scenario.html:532 templates/param_selection_a.html:336
 #: templates/param_selection_a.html:423 templates/param_selection_b.html:336
 #: templates/param_selection_b.html:423 templates/show_results.html:452
 #: templates/starting_page.html:457 templates/starting_page.html:582
 msgid "Global Warming Potential"
-msgstr "Potencial de Aquecimento Global (GWP 100)"
+msgstr "Potencial de Aquecimento Global"
+
+#: templates/compare_scenario.html:451 templates/compare_scenario.html:576
+#: templates/inspect_scenario.html:532 templates/starting_page.html:457
+#: templates/starting_page.html:582
+msgid "Impact on global warming due to greenhouse gas emissions"
+msgstr ""
+"Impacto no aquecimento global devido a emissões de gases de efeito estufa"
 
 #: templates/compare_scenario.html:476 templates/compare_scenario.html:601
 #: templates/inspect_scenario.html:557 templates/show_results.html:412
 #: templates/starting_page.html:482 templates/starting_page.html:607
 msgid "Water Consumption"
 msgstr "Depleção de água"
+
+#: templates/compare_scenario.html:476 templates/compare_scenario.html:601
+#: templates/inspect_scenario.html:557 templates/starting_page.html:482
+#: templates/starting_page.html:607
+msgid "Environmental Impact of the energy system on water resources"
+msgstr ""
+"Impactos ambientais associados ao sistema de energia no consumo de recursos "
+"<br>hídricos"
 
 #: templates/compare_scenario.html:501 templates/compare_scenario.html:626
 #: templates/inspect_scenario.html:582 templates/param_selection_a.html:361
@@ -333,12 +362,12 @@ msgstr "Depleção de água"
 msgid "Freshwater Eutrophication Potential"
 msgstr "Potencial de eutrofização de água doce"
 
-#: templates/compare_scenario.html:526 templates/inspect_scenario.html:480
-#: templates/starting_page.html:405 templates/starting_page.html:532
-msgid "Environmental Impacts associated with land use changes"
+#: templates/compare_scenario.html:501 templates/compare_scenario.html:626
+#: templates/inspect_scenario.html:582 templates/starting_page.html:507
+#: templates/starting_page.html:632
+msgid "Impact on water ecosystems, particularly due to eutrophication"
 msgstr ""
-"Impactos ambientais associados às transformações na ocupação de solos "
-"agrícolas"
+"Impacto nos ecossistemas aquáticos, principalmente devido à eutrofização"
 
 #: templates/index.html:10
 msgid "Welcome to SEEDS app!"
@@ -413,11 +442,15 @@ msgstr "Criar uma nova conta"
 
 #: templates/index.html:52
 msgid "Sign in to SEEDS app"
-msgstr "Entrar na aplicação do SEEDS"
+msgstr "Faça login com suas credenciais do SEEDS."
 
 #: templates/index.html:66
 msgid "I forgot my password"
 msgstr "Esqueci-me da senha"
+
+#: templates/index.html:69
+msgid "Log in"
+msgstr "Entrar"
 
 #: templates/index.html:78
 msgid "START USING IT NOW"
@@ -454,8 +487,9 @@ msgstr ""
 "A confirmação desta escolha apagará todas as configurações definidas para "
 "estes cenários."
 
-#: templates/inspect_scenario.html:74 templates/param_selection_a.html:56
-#: templates/param_selection_b.html:56 templates/show_results.html:92
+#: templates/inspect_scenario.html:74 templates/inspect_scenario.html:134
+#: templates/param_selection_a.html:56 templates/param_selection_b.html:56
+#: templates/show_results.html:92
 msgid "Confirm"
 msgstr "Confirmar"
 
@@ -494,10 +528,6 @@ msgid ""
 msgstr ""
 "Avalie a adequação deste sistema para ajudar as opções de classificação do "
 "SEEDS para o sistema energético português"
-
-#: templates/inspect_scenario.html:134
-msgid "Cofirm"
-msgstr "Confirmar"
 
 #: templates/inspect_scenario.html:154
 msgid "Vote"
@@ -564,30 +594,7 @@ msgstr "Baterias"
 
 #: templates/inspect_scenario.html:374
 msgid "Total energy supply"
-msgstr "Fornecimento total de energia"
-
-#: templates/inspect_scenario.html:507 templates/starting_page.html:432
-#: templates/starting_page.html:557
-msgid "Damage to the natrual resource scarcity"
-msgstr "Danos à escassez de recursos naturais."
-
-#: templates/inspect_scenario.html:532 templates/starting_page.html:457
-#: templates/starting_page.html:582
-msgid "Impact on global warming due to greenhouse gas emissions"
-msgstr ""
-"Impacto no aquecimento global devido a emissões de gases de efeito estufa"
-
-#: templates/inspect_scenario.html:557 templates/starting_page.html:607
-msgid "Environmental Impact of the energy system on water resources"
-msgstr ""
-"Impactos ambientais associados ao sistema de energia no consumo de recursos "
-"hídricos"
-
-#: templates/inspect_scenario.html:582 templates/starting_page.html:507
-#: templates/starting_page.html:632
-msgid "Impact on water ecosystems, particularly due to eutrophication"
-msgstr ""
-"Impacto nos ecossistemas aquáticos, principalmente devido à eutrofização"
+msgstr "Fornecimento total de energia<br>"
 
 #: templates/param_selection_a.html:18 templates/param_selection_b.html:18
 msgid "Define Scenario Settings"
@@ -845,7 +852,7 @@ msgstr "Transmissão"
 
 #: templates/param_selection_a.html:592 templates/param_selection_b.html:592
 msgid "Biofuels Supply (Domestic)"
-msgstr "BIOFUEL SUPPRIDO (DOMÉSTICO)"
+msgstr "Abastecimento de biocombustíveis (Doméstico)"
 
 #: templates/param_selection_a.html:630 templates/param_selection_b.html:630
 msgid ""
@@ -932,6 +939,8 @@ msgid "Generate results"
 msgstr "Gerar resultados"
 
 #: templates/param_selection_a.html:893 templates/param_selection_b.html:875
+#, fuzzy
+#| msgid "Scenarios are matching your search parameters"
 msgid "Scenarios are matching your preferences"
 msgstr "Os cenários correspondem às suas preferências"
 
@@ -1030,7 +1039,11 @@ msgstr ""
 "adaptar os algoritmos utilizados pela nossa aplicação para a classificação "
 "das soluções ótimas."
 
-#: templates/project_page.html:22
+#: templates/project_page.html:21
+msgid "PT 2050 - Decarbonisation"
+msgstr "PT 2020 - Descarbonização"
+
+#: templates/project_page.html:23
 msgid ""
 "\n"
 "                    This project gathers information and preferences of "
@@ -1045,11 +1058,11 @@ msgstr ""
 "relativamente às metas de descarbonização propostas para o ano 2050. "
 "Descubra mais na nossa Documentação                   "
 
-#: templates/project_page.html:27
+#: templates/project_page.html:28
 msgid "Find out more in our"
 msgstr "Saiba mais em nosso"
 
-#: templates/project_page.html:31
+#: templates/project_page.html:32
 msgid "Join"
 msgstr "Aderir"
 
@@ -1178,6 +1191,9 @@ msgstr ""
 #: templates/starting_page.html:77 templates/starting_page.html:128
 msgid "Start with this"
 msgstr "Começar com este"
+
+#~ msgid "Cofirm"
+#~ msgstr "Confirmar"
 
 #~ msgid "Total Energy"
 #~ msgstr "Energia Total"
