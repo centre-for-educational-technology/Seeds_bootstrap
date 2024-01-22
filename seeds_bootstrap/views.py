@@ -603,14 +603,19 @@ def get_scenario_details(scenario_id):
                               'wind':'#3F5A33',
                               'chp_hydrogen':'#08A4A7',
                               'chp_methane_extraction':'#B14F7E',}
+    
     ###### Preparing final power generation data for chart
     final_generation_data = {}
     final_generation_data['wind'] = 0
     final_generation_data['solar'] = 0
     final_generation_data['chp_biofuel_waste'] = 0
     final_generation_data['hydro'] = 0
+
     for key, value in data['generation'].items():
         value = float(value)
+        if 'existing' in key:
+            continue
+        
         if key in POWER_GEN_TECHS:
             if 'wind' in key:
                 final_generation_data['wind'] += value
@@ -698,14 +703,11 @@ def get_scenario_details(scenario_id):
     data['energy_supply_pie_values'] = list(energy_data.values())
     data['energy_supply_pie_colors'] = list(pie_colors.values())
     data['energy_supply_total'] = total_supply
-
     data['generation_labels'] = generation_labels
     data['generation_values'] = [float(item) for item in generation_values]
-
     data['power_pie_data'] = pie_chart_data
 
     data['energy'] = energy
-
     total_electrification = 0
     for ob in electrification:
         print(ob.carriers_type, ':', ob.electrification_rate)
@@ -718,12 +720,12 @@ def get_scenario_details(scenario_id):
                 ob.electrification_rate)
 
         total_electrification += ob.electrification_rate
+
     data['electrification']['heat_percentage'] = data['electrification']['heat'] * \
         100 / float(total_electrification)
     data['electrification']['transport_percentage'] = data['electrification']['transport'] * \
         100 / float(total_electrification)
 
-    
 
     data['total_storage'] = total_storage
     data['total_supply'] = total_supply
@@ -741,11 +743,16 @@ def get_scenario_details(scenario_id):
         roof = data['generation']['roof_pv']
     else:
         roof = 0
+
     if 'open_field_pv' in data['generation'].keys():
         open = data['generation']['open_field_pv']
     else:
         open = 0
-    data['total_pv'] = roof + open + exist_pv
+
+    data['total_pv'] = roof + open  + exist_pv
+
+    print('=====> Total PV:',data['total_pv'])
+
     data['pv_roof_percentage'] = '{:.2}'.format(roof * 100 / data['total_pv'])
     data['pv_open_percentage'] = '{:.2}'.format(open * 100 / data['total_pv'])
 
@@ -763,7 +770,7 @@ def get_scenario_details(scenario_id):
         offshore = data['generation']['wind_offshore']
     else:
         offshore = 0
-    data['total_wind'] = onshore + offshore + exist_wind
+    data['total_wind'] = onshore + offshore  + exist_wind
     data['wind_onshore_percentage'] = '{:.2}'.format(
         onshore * 100 / data['total_wind'])
     data['wind_offshore_percentage'] = '{:.2}'.format(
