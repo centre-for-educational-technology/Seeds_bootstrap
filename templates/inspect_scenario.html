@@ -380,7 +380,7 @@ aria-hidden="true">
 
     var power_data = {{data.power_bar_data | safe}};
     var layout = {
-    title: "{% translate 'Power generation capacity'%}(GW)",
+    title: "{% translate 'Power generation capacity'%} (GW)",
     barmode: 'stack',
     xaxis:{
         range:[0,{{data.total_power_gen}} + 10]
@@ -398,7 +398,7 @@ aria-hidden="true">
 
     var storage_data = {{data.storage_bar_data | safe}};
     var layout = {
-    title: "{% translate 'System balance capacity'%}(GW)",
+    title: "{% translate 'System balance capacity'%} (GW)",
     barmode: 'stack',
     xaxis:{
         range:[0,{{data.total_system_balance_capacity}} + 10]
