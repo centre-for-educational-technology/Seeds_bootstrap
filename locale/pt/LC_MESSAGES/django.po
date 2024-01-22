@@ -294,7 +294,7 @@ msgstr "Capacidade de geração de energia"
 #: templates/inspect_scenario.html:401 templates/starting_page.html:234
 #: templates/starting_page.html:272
 msgid "System balance capacity"
-msgstr "Capacidade de armazenamento"
+msgstr "Capacidade de equilíbrio do sistema"
 
 #: templates/compare_scenario.html:399 templates/compare_scenario.html:526
 #: templates/inspect_scenario.html:480 templates/param_selection_a.html:381
@@ -1041,7 +1041,7 @@ msgstr ""
 
 #: templates/project_page.html:21
 msgid "PT 2050 - Decarbonisation"
-msgstr "PT 2020 - Descarbonização"
+msgstr "PT 2050 - Descarbonização"
 
 #: templates/project_page.html:23
 msgid ""
