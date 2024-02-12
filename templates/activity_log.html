@@ -76,7 +76,7 @@
                             <td class='text-left'>{{log.actor}}</td>     
                             {% if log.verb == 'deleted' %}
                             <td><span class="badge badge-danger font-weight-light">{{log.verb}}</span></td>
-                            {% elif log.verb == 'voted' %}
+                            {% elif 'voted' in log.verb  %}
                             <td><span class="badge badge-warning font-weight-light">{{log.verb}}</span></td>
                             {% else %}
                             <td><span class="badge badge-primary font-weight-light">{{log.verb}}</span></td>

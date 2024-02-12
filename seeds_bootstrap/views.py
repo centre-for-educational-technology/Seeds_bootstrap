@@ -988,7 +988,11 @@ def inspect(request, project_id, scenario_id):
                        submitted_user=submitted_user, scenario=scenario_obj)
             obj.save()
             # log entry
-            create_log_entry(project_id, request.user, 'voted',
+            if response:
+                create_log_entry(project_id, request.user, 'voted-positive',
+                             'scenario: {}'.format(scenario_id), '')
+            else:
+                create_log_entry(project_id, request.user, 'voted-negative',
                              'scenario: {}'.format(scenario_id), '')
             messages.success(request, _("Your vote has been saved."))
         else:
