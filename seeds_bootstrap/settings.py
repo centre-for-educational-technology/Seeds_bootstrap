@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-6o8s_(%8iu(5ngpz$!e8tif4f!mp)jtk#%j$=gea&1vme9u4ni
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1',
-                 'app.seeds.project.org', '86.107.197.103']
+                 'app.seeds-project.org', '86.107.197.103']
 
 
 # Application definition
@@ -137,12 +137,16 @@ LOCALE_PATHS = (
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_URL = os.path.join(SETTINGS_PATH, '/static/')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
