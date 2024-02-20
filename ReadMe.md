@@ -2,14 +2,42 @@
 **SEEDS stands for Stakeholder-Based Environmentally-sustainable And Economically Doable Scenarios for the Energy Transition**
 
 In the SEEDS project a consortium of four European institutions is building an approach to integrate humans into energy transition scenario design, while accurately modelling the relevant technical, economic and environmental constraints. Doing so involves methodological development, software development and implementation, and experimentation with a pilot study in Portugal.
-This work is done in a focused consortium of four partners:
+This work is done in a focused consortium of four partners: 
 
-1. `ETHZ` is a leading centre of high-resolution energy system modelling
-2. `ICTA-UAB` is a leading centre in the development of integrated sustainability assessment methods
+1. `ETHZ` is a leading centre of high-resolution energy system modelling 
+2. `ICTA-UAB` is a leading centre in the development of integrated sustainability assessment methods 
 3. `TLU` provides expertise in participatory design of trustworthy interactive systems
 4. `FC.ID` contributes its unique expertise combining modelling with participatory action research.
 
-# Setting up and Running SEEDS app
+# Source Code Structure
+The SEEDS repository has the following structure. 
+
+
+`
+|
+|____locale
+|____db.sqlite3
+|____register
+|____static
+|____scripts
+|____seeds_bootstrap
+|____requirement.txt
+|____templates
+|____manage.py
+|____Expl.ipynb
+`
+
+* `locale` directory contains English-Portuguese translation files. 
+* `db.sqlite3` file is the database of the app using sqlite3. 
+* `register` directory contains code that handles sign-in and sign-up functionalities. 
+* `static` directory contains `css` and `js` files. 
+* `scripts` directory contains the script to populate seeds db.
+* `seeds_bootstrap` directory contains the source code of the seeds app (e.g., views, models)
+* `templates` directory contains html template file for the app.
+* `Expl.ipynb` is a jupyter notebook containing the preprocessing of SEEDS original dataset files.
+
+
+# Setting up and Running SEEDS app 
 
 The following steps offers guidlines on setting up & running SEEDS app on local machine.
 
@@ -19,21 +47,21 @@ The following steps offers guidlines on setting up & running SEEDS app on local 
 git clone https://github.com/centre-for-educational-technology/Seeds_bootstrap
 ```
 
-### Install the required packages
+### Install required packages
 
 ```
 cd Seeds_bootstrap
 pip install -r ./requirement.txt
 ```
 
-### Initialise SEEDS database
+### Initialise database
 
 ```
 python3 manage.py makemigrations
 python3 manage.py migrate --run-syncdb
 ```
 
-### Populate the database
+### Populate database 
 The seeds dataset comprises multiple CSV files which were processed to store in the database. To populate the database with SEEDS data, we will use a script `loadAll.py` available in the `scripts` directory. The following command performs the loading of data into the SEEDS database.
 
 ```
@@ -41,16 +69,16 @@ python3 manage.py shell < ./scripts/loadAll.py
 ```
 
 ### Create a superuser account
-The following command creates an admin user account for the app.
+The following command creates an admin user account.
 
 ```
 python3 manage.py createsuperuser
 ```
 
 ### Run the server
-Everything is set now to run the server.
+Everything is set now to run the server. 
 
-```
+``` 
 python3 manage.py runserver
 ```
 
@@ -58,7 +86,7 @@ python3 manage.py runserver
 
 MIT License
 
-Copyright (c) 2024
+Copyright (c) 2024 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
