@@ -37,7 +37,7 @@
 </head>
 
 <body  data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-  <div class="site-wrap">
+  <div class="site-wrap" style="min-height: 100vh; display: flex; flex-direction: column;">
     <div class="site-mobile-menu site-navbar-target">
       <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-close mt-3">
@@ -46,8 +46,6 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div>
-
-
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
@@ -121,8 +119,9 @@
 
       </div>
     </div>
+    <div style="flex-grow:1"></div>
     <div class='site-footer mt-5'>
-    <footer class="footer-section bg-light px-5 py-0 fixed-bottom">
+    <footer class="footer-section bg-light px-5 py-0">
       <div class="container-fluid px-4 text-muted py-0">
         <div class='row pl-5 align-items-center'>
             <div class="col col-8 p-0">
@@ -153,7 +152,7 @@
     </footer>
   </div>
 
-  <div class='m-5 p-5 h-100'></div>
+
 
   </div> <!-- .site-wrap -->
 
