@@ -142,8 +142,8 @@ POWER_TECHS_COLORS = {'chp_biofuel_waste':'#C78281',
                'wind_offshore':'#69B578'}
 
 
-def map(request):
-    return render(request, 'map.html')
+def documentation(request):
+    return render(request, 'documentation.html')
 
 
 def reduce_intensity(c, intensity=.2):

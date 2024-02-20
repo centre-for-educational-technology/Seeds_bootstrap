@@ -1,0 +1,223 @@
+
+{% extends 'base.html'%}
+{% load static %}
+{% load i18n %}
+{%block body%}
+
+<div class='row  h-100 m-5 p-5' style="color:#414B5B">
+  <div class="p-5 text-center text-dark mb-5">
+    <div class="text-center py-1">
+      HOW SEEDS TOOL WORKS?
+    </div>
+    <div class="display-4  font-weight-bold  offset-lg-3 col-lg-6 col-sm-12 col-xs-12 offset-md-3 col-md-6 mb-3">
+      {% translate 'Understand how SEEDS  project deals with the  Models Uncertainty' %}
+    </div>
+
+    <a href="https://seeds-project.org/" target="_blank" class='px-3 py-2 btn-primary text-light border border-primary' style='border-radius:3rem ; ' >   {% translate 'Go to SEEDS Project'%}</a>
+  </div>
+  <div class="row">
+    <div class="col align-self-center">
+      <div class="display-4  font-weight-bold ">
+        What is Uncertainty?
+      </div>
+    </div>
+
+    <div class="col">
+       <div class='p-2 h1 font-weight-bold '> Models cannot predict the future </div>
+       <div class='p-2'> Some of the reasons models cannot predict the future are the uncertainty in data, model assumptions and structure. Models are by definition representations and simplifications of reality.</div>
+       <a href="#approach" class='px-5 py-2 text-dark border border-secondary' style='border-radius:3rem ; ' >   {% translate 'Read More'%}</a>
+    </div>
+
+    <div class="col">
+      <div class='p-2 h1 font-weight-bold '> General workflow of models </div>
+      <div class='p-2'> Here a brief description of workflow of models in the app.</div>
+      <a href="#workflow" class='px-5 py-2 text-dark border border-secondary' style='border-radius:3rem ; ' >   {% translate 'Read More'%}</a>
+   </div>
+  </div>
+
+  <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B" id="approach">
+    <div class="row">
+      <div class="col align-self-start">
+        <div class="display-4  font-weight-bold ">
+          A Post Normal Science <br/> Approach
+        </div>
+      </div>
+
+      <div class="col">
+       
+       <div class='p-4 mb-4'>
+        <div class='p-2 h1 font-weight-bold ' > Our approach in the project</div>
+        <div class='p-2'> Models do not predict the future since forecasting social systems is an impossible task. Our model has generated 260 possible future energy systems in Portugal within the objectives of carbon neutrality and close to cost minimization, called spores. These scenarios have different configurations (energy mix and regional distribution) with a concomitant diversity of costs and impacts: investment, employment, income, landscape, etc. <br/><br/>
+          
+          The impacts shown here are climate change, agricultural land occupation, natural land transformation, metal depletion and water depletion, which were selected during a participatory process. Different stakeholders will evaluate the importance of these dimensions differently according to their values, stakes, and knowledge, which will make those possible futures more or less attractive. One of the reasons why social systems are not forecastable or controllable is that they depend on decisions at different scales where these different values, knowledge and interests are put into practice: companies’ decisions and interests, market dynamics, individuals’ choices, and political decisions that aim to reach different visions of the future. Policy-making therefore cannot be simply based on “scientific evidence”, but on a political debate and compromise of visions and interests of the different stakeholders.<br/><br/>
+
+
+          Since models cannot be expected to be “prediction tools”, we use models as tools for broad and diverse audiences to state their preferences but also for learning and social debate. Through this web app, the general public can explore these possible futures and express their preferent spores. <br/><br/>
+
+
+          To ensure a totally informed opinion, we are presenting how the methods and models in this app work and how they might be not exact. This inexactitude is not a matter of this work only, but it is inherent in any model and exploration of plausible futures. So what we are doing here is only exposing it transparently. In the following sections, we present the general structure of the model in this app and its uncertainty is qualitatively described. 
+          <img  src="{% static 'images/doc-model.png'%}" class='img img-fluid rounded'/>
+         
+          .</div>
+        
+       </div>
+      
+      </div>
+    </div>
+  </div>
+
+  <!-- General Workflow -->
+  <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B" id="workflow">
+    <div class="row">
+      <div class="col col-6 align-self-center">
+        <div class="h3 py-2 text-dark">
+          General Workflow
+        </div>
+        <div class="display-4  py-2 font-weight-bold ">
+          Model relationships
+        </div>
+        <div class="py-2">
+          The model in this app is made of two different models that are ensembled: <a href="#calliope">Calliope</a> and <a href="#enbios">ENBIOS</a>. This means simply that the outputs of the model generating low-carbon scenarios are the inputs for the model calculating the rest of the impacts. 
+          The conditions for the energy model and the environmental impact indicators were selected through a participatory process. Then, the energy model (Calliope) generates 260 possible energy system configurations following conditions of low cost and net-zero direct CO2 emissions. Finally, the environmental model (ENBIOS) calculates the environmental impacts of those 260 configurations. The scope of the model is the whole energy system of Portugal in 2050. Therefore, we are not analysing the transition pathway but only the possible final configuration of the system.
+
+        </div>
+      </div>
+
+      <div class="col col-6">
+        <img  src="{% static 'images/doc-structure.png'%}" class='img img-fluid rounded'/>
+      </div>
+    </div>
+  </div>
+
+    <!-- Calliope model -->
+  <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B">
+    <div class="row">
+      <div class="col align-self-start">
+        <div class="display-4  font-weight-bold pt-5">
+          The Calliope Model
+        </div>
+      </div>
+
+      <div class="col" id="calliope">
+       <div class='p-4 mb-4'>
+         <div class='p-2 h1 font-weight-bold '> What is Calliope? </div>
+         <div class='p-2'> Calliope calculates the need for different energy power plants, storage systems, etc. It provides the amount of energy provided by each type of technology in a given year. Unlike other models that only address electricity production, Calliope also includes heat and fuels. Its objective here is to generate 260 maximally different system designs that are within 10% of the lowest feasible system cost with no net CO2 emissions and limited imports from other countries. <br/><br/>
+          Computational power is a limit for modelling. Therefore, each model focuses on some scales and resolutions, addressing different issues. For example, a very detailed technical assessment of the operation of one year of electricity production, storage, and distribution in a country would require a very high spatial and hourly (or less) resolution with different assumptions on climate conditions and electricity demand. On the other hand, assessments of the transition to renewables to 2050 estimating the global use of materials might not reach that spatial and time resolution. 
+          One of the main challenges of renewable electricity production is the inherent variability related to weather conditions. Until now, the electricity power system adapted to the instantaneous demand of electricity since some types of power plants, such as gas combined cycles, can be switched on and off very quickly to adapt to rapid changes in demand. This variability of renewables has temporal and regional implications.
+          In terms of time, both demand and wind and solar resources change depending on the seasons (e.g., more or less heating or cooling demand, holidays, etc.) and on an hourly basis (e.g., less activity at night, more activity when everyone is cooking dinner at home, etc.). This model includes this kind of small-scale temporal variability, which is key for the analysis of storage and the shares of wind and solar in the electricity mix. More specifically, the temporal scope is the analysis of one year, and it is disaggregated for electricity at a 3-hour resolution. 2016 is taken as a reference year for the variability of demand and weather. Diverse demand and weather time series could be used to decrease the uncertainty of results. <br/><br/>
+          The variability of renewables also depends largely on the location. Therefore, the model also addresses different spatial resolutions. Weather conditions (input) and electricity production (output) are available for 18 sub-regions for finer details on renewable deployment. The finer spatial resolution could provide more exact results and specific distribution of infrastructure. On the other hand, there are only two regions for demand and non-electric sectors. 
+          .</div>
+         
+       </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- ENBIOS -->
+  <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B" id="enbios">
+    <div class="row">
+      <div class="col align-self-start">
+        <div class="display-4  font-weight-bold pt-5">
+          ENBIOS
+        </div>
+      </div>
+
+      <div class="col">
+       <div class='p-2 mb-4'>
+         <div class='p-1 h1 font-weight-bold '> What is ENBIOS?</div>
+         <div class='p-2'> ENBIOS calculates the requirements and impacts of the energy system generated by Calliope from a life-cycle perspective.
+          The impacts for the generation of 1 unit of energy for each technology are stored in Ecoinvent databases of processes. These are data inventories of very detailed inputs and outputs for the production of one unit of energy of each type, including both direct and indirect impacts. For example, we could analyze the production of heat in a boiler. The combustion of biomass in a boiler generates direct impacts, for example, the generation of different gases (carbon dioxide, carbon monoxide, etc.), ashes, and pollutants. Indirect impacts refer to those due to the production of the inputs necessary to that process, for example, the production of biomass in agriculture and forestry and the manufacturing of the boiler. We will allocate the impact of the production of the boiler (industry, materials extraction, etc.) proportional to the expected production in the whole lifetime of the boiler. Each unit of heat produced by the boiler will include a share of the impacts on the manufacturing of the boiler. 
+          <br/><br/>
+          These indirect impacts can be further detailed and branched, for example, with the production of fertilizers for agriculture.
+          Here, we can see already some assumptions that involve uncertainties, for example, the lifetime and overall production of devices and machinery, the detail of the production chains (boundaries of the system), the type of boiler (this might refer to a similar technology of what we are expecting or to old, outdated data). These are set for each process in Ecoinvent. The modeller selects the processes that are most similar to those in the analyzed system and can also make adaptations. However, there is another inherent uncertainty of exploration of possible futures: we do not really know how technology will be in the future. Here, we are using data from existing technologies, and we have adapted the electricity mix to those expected in the future.</div>
+       </div>
+   
+       
+      </div>
+    </div>
+  </div>
+
+      <!-- Reducing uncertainty -->
+      <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B">
+        <div class="row">
+          <div class="col align-self-start">
+            <div class="display-4  font-weight-bold ">
+              Reducing Uncertainty through User-Centric Design
+            </div>
+          </div>
+    
+          <div class="col">
+           <div class='p-2 mb-4'>
+             <div class='p-1 h1 font-weight-bold '> Stakeholder Engagement and Participation</div>
+             <div class='p-2'> Energy models generate possible future configurations of the energy system or calculate the impacts of given energy scenarios. However, these mathematical assessments are full of assumptions and modelling choices, and some inevitably contain different political and economic perspectives. In the SEEDS project, instead of generating a set of scenarios or conditions according to the modelers’ choices, we conducted participatory processes to select the conditions from which the energy model will generate scenarios (e.g., subregions, technology sectors) and the environmental impacts that will be shown to the participants of the scenario selection process. </div>
+           </div>
+     
+           <div class='p-4'>
+            <div class='p-2 h1 font-weight-bold '> Human-in-the-loop (HIL) approach to the generation of alternatives</div>
+            <div class='p-2'> These participatory processes were a Delphi survey (10 expert stakeholders) and a workshop (19 stakeholders). The analysis builds on an overview of the Portuguese energy and climate policy regulatory frameworks. This way, we want to understand the most relevant criteria for renewable energy-modelled scenarios such as the acceptance of energy technologies.
+              <img  src="{% static 'images/doc-participation.png'%}" class=' p-0 img img-fluid rounded'/>
+
+              <h5> Policy Delhpi Study </h5>
+              The policy Delphi study allows the discussion and valuation of possible directions and policies for the future. The Delphi involves three rounds of questionnaires until consensual decisions are achieved. The first part consisted of an open-ended questionnaire, whose responses built a structured questionnaire for the second and third rounds with close-ended responses. The final questionnaire aimed to reach a consensus, and an average of 77% was reached. The maximum consensus was reached for questions related to new technologies and decarbonisation issues, whereas only 50% was reached on public acceptance.
+              This involved 10 diverse energy and climate experts: two related to policy, five to technology and market, and three to civil society. The number of participants is small but considered to be enough. Calliope and ENBIOS modelers also participated in order to match the selection of the participants to the possibilities given by the models. Because they were not measurable, 14 criteria were left out of the assessment. <br/><br/>
+
+
+              <h5> World café workshop </h5>
+              This online workshop took place in November 2022 and involved market (5 participants), policy (2), civil society and academia (7), and community stakeholder groups (5). This consisted of a discussion around three pairs of extreme scenarios. The topics were: fast vs slow transition, government vs community-driven, and national self-sufficiency (storage) vs import-based. This introduced a wider reflection on stakeholder concerns.
+
+              
+            </div>
+        
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='row justify-content-center h-100 m-5 p-5' style="color:#414B5B">
+      <div class="col col-offset-3 text-dark mb-5">
+        <p class='text-center display-2  font-weight-bold '> FAQ </p>
+      <div class="accordion" id="accordionExample">
+        <div class="card" style="border-radius:0px; border:0px;">
+          <div class="card-header" id="headingOne" style="background:white;font-weight: bold;font-size: 18px;">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <span style="font-weight: bold;font-size: 18px;">
+                  How does SEEDS app helps you to find optimal solutions for the Portuguese Energy system?</span>
+              </button>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              We (1) develop an automated approach to generate a wide range or alternative energy system scenarios that go beyond an economically optimal solution; (2) integrate the computation of social and environmental impacts into these alternatives; and (3) build a web-based interface with experts and members of the public; in which they can interactively visualise scenarios and feed their preferences into the generation of refined alternatives in a human-computer co-creation loop. We hypothesises that this will permit the generation of clean energy scenarios that embrace social and environmental sustainability, therefore engendering broader public support.
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-radius:0px; border:0px;">
+          <div class="card-header" id="headingTwo" style="background:white;font-weight: bold;font-size: 18px;">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <span style="font-weight: bold;font-size: 18px;">How do we include the local stakeholders into the design project?</span>
+              </button>
+          </div>
+          <div id="collapseTwo" class="collapse hide" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+              It is an easy to use online service that measure perceived trust of product or service. It enables researchers, designers and anyone else interested to run studies to understand to what extent users trust digital technologies.
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-radius:0px; border:0px;">
+          <div class="card-header" id="headingThree" style="background:white;font-weight: bold;font-size: 18px;">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                <span style="font-weight: bold;font-size: 18px;">What's behind our model calculation?</span>
+              </button>
+          </div>
+          <div id="collapseThree" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              The SEEDS project's modelling workflow is grounded on the key idea of generating many equally feasible energy transition options of Portugal, as opposed to a single 'optimal solution'. This allows stakeholders to assess the trade-offs among the feasible option and discuss together what is most viable in practice. However, the feasible options that might matter for real-world discussion are virtually infinite. For this reason, the project foresees the use of stakeholder feedback to update and improve the generated option space in the direction of stakeholders needs.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

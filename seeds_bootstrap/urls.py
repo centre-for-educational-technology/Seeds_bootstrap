@@ -79,8 +79,7 @@ urlpatterns = i18n_patterns(
 
     path('fetch/<search_id>', views.get_saved_search, name='fetch'),
     path('aboutus/', views.aboutus, name='aboutus'),
-    path('maps/', views.map, name='map'),
-    path('location/', login_required(views.select_location), name='location')
+    path('documentation/',views.documentation,name='documentation'),
 ) + [
     path('changeLang/<lang_code>', views.changLang, name='change_language'),
     path('save/<label>/', views.save_search_params),
