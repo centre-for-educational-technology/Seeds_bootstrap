@@ -26,9 +26,6 @@ LOGIN_URL = 'login'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-6o8s_(%8iu(5ngpz$!e8tif4f!mp)jtk#%j$=gea&1vme9u4ni'
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOCKIE_SECURE = True
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
