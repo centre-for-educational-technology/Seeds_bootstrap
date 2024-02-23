@@ -37,7 +37,7 @@
   }
 }" class="m-4 p-5" >
     
-    <h3 >     {% translate 'Scenario Inspection'%} </h3>
+    <h3 >     {% translate 'Scenario Inspection'%} {% get_current_language as LANGUAGE_CODE %} </h3>
     <p class="'text-secondary">    {% translate 'The table below presents to you the overall indicators of each scenario generated. You can select scenarios for detailed inspection clicking on Inspect, on the right side of the table. Further actions are available to explore and download the generated options.'%}  </p>
     
     <div class='d-flex flex-row-reverse p-2 m-2'>
@@ -176,8 +176,7 @@ aria-hidden="true">
             <div class="modal-footer">
               <template x-if="check()">
                 <div>
-                 
-                  <a x-bind:href="'/compare/' + selected_scenarios[0] + '/' + selected_scenarios[1] + '/'" class="btn btn-primary text-white">   {% translate 'Compare'%}</a>
+                   <a x-bind:href="'/compare/' + selected_scenarios[0] + '/' + selected_scenarios[1] + '/'" class="btn btn-primary text-white">   {% translate 'Compare'%}</a> 
                 </div>
                 </form>
               </template>
@@ -188,7 +187,7 @@ aria-hidden="true">
         </div>
     </div>
   </div>
-        <div x-data="{power:true, infra:true, pace:true, storage:true,wind_onshore:true,wind_offshore:false,roof_pv:false,field_pv:false,global:true,water:false,land:false}" class="row m-4 p-4 min-vh-100">
+        <div x-data="{power:true, infra:true, pace:true, storage:true,wind_onshore:true,wind_offshore:false,roof_pv:false,field_pv:false,global:false,water:false,land:false}" class="row m-4 p-4 min-vh-100">
             <div class="col-auto col-md-3 col-xl-2  mr-5">
                 <div class="d-flex flex-column align-items-center px-5 pt-2 ">
                     <div id="accordion">
