@@ -25,7 +25,7 @@ LOGIN_URL = 'login'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOCKIE_SECURE = True
