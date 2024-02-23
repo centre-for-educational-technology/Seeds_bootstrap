@@ -12,9 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
-load_dotenv('.env')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +24,7 @@ LOGIN_URL = 'login'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-6o8s_(%8iu(5ngpz$!e8tif4f!mp)jtk#%j$=gea&1vme9u4ni'
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOCKIE_SECURE = True
