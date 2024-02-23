@@ -138,23 +138,39 @@
   </div>
 
       <!-- Reducing uncertainty -->
-      <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B">
+      <div class="display-4 text-center  font-weight-bold  offset-lg-3 col-lg-6 col-sm-12 col-xs-12 offset-md-3 col-md-6 mb-3">
+        {% translate 'Reducing Uncertainty through User-Centric Design' %}
+      </div>
+
+      <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B" id="enbios">
         <div class="row">
           <div class="col align-self-start">
-            <div class="display-4  font-weight-bold ">
-              Reducing Uncertainty through User-Centric Design
+            <div class="display-4  font-weight-bold pt-5">
+              Stakeholder Engagement and Participation
             </div>
           </div>
     
           <div class="col">
            <div class='p-2 mb-4'>
-             <div class='p-1 h1 font-weight-bold '> Stakeholder Engagement and Participation</div>
-             <div class='p-2'> Energy models generate possible future configurations of the energy system or calculate the impacts of given energy scenarios. However, these mathematical assessments are full of assumptions and modelling choices, and some inevitably contain different political and economic perspectives. In the SEEDS project, instead of generating a set of scenarios or conditions according to the modelers’ choices, we conducted participatory processes to select the conditions from which the energy model will generate scenarios (e.g., subregions, technology sectors) and the environmental impacts that will be shown to the participants of the scenario selection process. </div>
+             <div class='p-1 h1 font-weight-bold '></div>
+             <div class='p-2'> Energy models generate possible future configurations of the energy system or calculate the impacts of given energy scenarios. However, these mathematical assessments are full of assumptions and modelling choices, and some inevitably contain different political and economic perspectives. In the SEEDS project, instead of generating a set of scenarios or conditions according to the modelers’ choices, we conducted participatory processes to select the conditions from which the energy model will generate scenarios (e.g., subregions, technology sectors) and the environmental impacts that will be shown to the participants of the scenario selection process.</div>
            </div>
-     
-           <div class='p-4'>
-            <div class='p-2 h1 font-weight-bold '> Human-in-the-loop (HIL) approach to the generation of alternatives</div>
-            <div class='p-2'> These participatory processes were a Delphi survey (10 expert stakeholders) and a workshop (19 stakeholders). The analysis builds on an overview of the Portuguese energy and climate policy regulatory frameworks. This way, we want to understand the most relevant criteria for renewable energy-modelled scenarios such as the acceptance of energy technologies.
+          </div>
+        </div>
+      </div>
+
+      <div class='row h-100 p-3 mt-4 pt-5' style="color:#414B5B" id="enbios">
+        <div class="row">
+          <div class="col align-self-start">
+            <div class="display-4  font-weight-bold pt-5">
+              Human-in-the-loop (HIL) approach to the generation of alternatives
+            </div>
+          </div>
+    
+          <div class="col">
+           <div class='p-2 mb-4'>
+             <div class='p-1 h1 font-weight-bold '></div>
+             <div class='p-2'>  These participatory processes were a Delphi survey (10 expert stakeholders) and a workshop (19 stakeholders). The analysis builds on an overview of the Portuguese energy and climate policy regulatory frameworks. This way, we want to understand the most relevant criteria for renewable energy-modelled scenarios such as the acceptance of energy technologies.
               <img  src="{% static 'images/doc-participation.png'%}" class=' p-0 img img-fluid rounded'/>
 
               <h5> Policy Delhpi Study </h5>
@@ -164,15 +180,24 @@
 
               <h5> World café workshop </h5>
               This online workshop took place in November 2022 and involved market (5 participants), policy (2), civil society and academia (7), and community stakeholder groups (5). This consisted of a discussion around three pairs of extreme scenarios. The topics were: fast vs slow transition, government vs community-driven, and national self-sufficiency (storage) vs import-based. This introduced a wider reflection on stakeholder concerns.
-
-              
             </div>
-        
            </div>
           </div>
         </div>
       </div>
+
+      <div class="display-4 text-center  font-weight-bold  offset-lg-3 col-lg-6 col-sm-12 col-xs-12 offset-md-3 col-md-6 mb-3">
+        {% translate 'Co-designing the interface' %}
+      </div>
+      <div class='p-4 mb-4 text-center'>
+        The stakeholder input was fundamental in shaping the design of the SEEDS app. Through a comprehensive engagement process involving contextual inquiries and collaborative workshops, we have gained valuable insights into concerns and aspirations regarding the energy transition. The design team held online and in-person meetings with stakeholder groups to discuss and co-design the application. During the co-design workshops held throughout the project, participatants interacted in groups to create an suitable interface solution matching their needs and preferences. In each phase of the process, design of the interface was inspected and readjusted based on the inputs of the stakeholders. 
+      </div>
+  
+      
+     </div>
+
     </div>
+    <!--
     <div class='row justify-content-center h-100 m-5 p-5' style="color:#414B5B">
       <div class="col col-offset-3 text-dark mb-5">
         <p class='text-center display-2  font-weight-bold '> FAQ </p>
@@ -206,7 +231,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 </div>
 
 {% endblock %}
