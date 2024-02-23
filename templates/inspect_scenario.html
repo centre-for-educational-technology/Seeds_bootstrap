@@ -7,6 +7,11 @@
     font-weight: bold;
     border-bottom: #007bff;
   }
+  .circle
+  {
+    border-radius:50%;
+    background-color: #278B52;
+  }
 
   .al-range-slider__input {
     display: none;
@@ -22,15 +27,15 @@
   <div class='d-flex  p-2 m-2'>
   {% if user.is_authenticated %}
   
-    <i style="cursor:pointer" class="fa fa-folder  bg-primary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
+    <i title="Save this to your portfolio" style="cursor:pointer" class="fa fa-folder fa-2x circle  text-white p-3 mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
-    <i style="cursor:pointer" class="fa fa-star   bg-primary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#vote_modal"></i>
+    <i title="Submit your preference" style="cursor:pointer" class="fa fa-star fa-2x circle   text-white p-3 " data-toggle='modal' data-placement='top' data-target="#vote_modal"></i>
   
   {% else %}
   
-    <i style="cursor:pointer" class="fa fa-folder  bg-secondary text-white p-2 rounded-top rounded-bottom mx-2" data-toggle='modal' data-placement='top' data-target="#disable_modal"></i>
+    <i style="cursor:pointer" class="fa fa-folder fa-2x circle  bg-secondary text-white p-3  mx-2" data-toggle='modal' data-placement='top' data-target="#disable_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
-    <i style="cursor:pointer" class="fa fa-star   bg-secondary text-white p-2 rounded-top rounded-bottom" data-toggle='modal' data-placement='top' data-target="#disable_modal"></i>
+    <i style="cursor:pointer" class="fa fa-star fa-2x circle   bg-secondary text-white p-3" data-toggle='modal' data-placement='top' data-target="#disable_modal"></i>
   
     {% endif %}
  
