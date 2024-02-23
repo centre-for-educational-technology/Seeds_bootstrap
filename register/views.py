@@ -1,4 +1,4 @@
-from mailjet_rest import Client
+from django.utils.translation import gettext as _
 import os
 from django.shortcuts import render
 from .forms import RegisterForm
@@ -46,13 +46,9 @@ def login(request):
             try:
                 user = User.objects.get(email=email)
                 print('user exists:', user.username, ' pwd:', pwd)
-                if not user.is_active:
-                    messages.warning(request, 'Your account is not activated.')
-                    return redirect('login')
-                user_login_status = authenticate(
-                    username=user.username, password=pwd)
+                user_login_status = authenticate(username=user.username, password=pwd)
                 if user_login_status is not None:
-                    user.backend = 'django.contrib.auth.backends.ModelBackend'
+                    #user.backend = 'django.contrib.auth.backends.ModelBackend'
                     auth_login(request, user)
                     messages.info(request, 'Successfully logged in!')
                     return redirect('portfolio')
