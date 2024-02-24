@@ -71,6 +71,7 @@ urlpatterns = i18n_patterns(
          login_required(views.portfolio_actions), name='portfolio_actions'),
     path('interface/scenarios', views.get_scenarios_count_ajax,
          name='scenarios_count'),
+    path('results/<project_id>', views.show_results,name='show_results'),
     path('project/', views.project_page,
          name='project_select_page'),
     path('select/<project_id>', views.select_starting_point, name='starting_page'),

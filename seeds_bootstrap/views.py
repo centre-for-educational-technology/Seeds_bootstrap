@@ -159,7 +159,6 @@ def create_log_entry(project_id, actor, verb, object, notes):
     except:
         return
 
-
 def get_mapdata(scenario_id):
     solar = {}
     wind = {}
@@ -181,7 +180,6 @@ def get_mapdata(scenario_id):
             else:
                 solar[tech_ob.location.location] = float(
                     tech_ob.energy_generation)
-
     map_data = {}
     map_data['solar'] = {}
     map_data['solar']['z'] = []
@@ -239,37 +237,36 @@ def standardise(value, min, max):
     return (float(value) - float(min)) / range
 
 
-def filter_scenarios(search_params):
-    print('------>', search_params)
+def filter_scenarios(search_params,project_id):
+    #@todo: filter based on project_id
+
+    #print('------>', search_params)
     scenarios_community = Scenario.objects.all().filter(
         community_infrastructure__range=(search_params['community_min'], search_params['community_max']))
-    
-    print('community objects:', len(scenarios_community))
-    
     scenarios_power = scenarios_community.filter(
         power_capacity__range=(search_params['power_min'], search_params['power_max']))
-    print('power objects:', len(scenarios_power))
+    #print('power objects:', len(scenarios_power))
     scenarios_storage = scenarios_power.filter(
         storage_capacity__range=(search_params['storage_min'], search_params['storage_max']))
-    print('storage objects:', len(scenarios_storage))
+    #print('storage objects:', len(scenarios_storage))
     scenarios_implementation = scenarios_storage.filter(
         implementation_pace__range=(search_params['implementation_min'], search_params['implementation_max']))
-    print('impl objects:', len(scenarios_implementation))
+    #print('impl objects:', len(scenarios_implementation))
     scenarios_import = scenarios_implementation.filter(
         import_dependency__range=(search_params['import_min'], search_params['import_max']))
-    print('import objects:', len(scenarios_import))
+    #print('import objects:', len(scenarios_import))
     scenarios_land = scenarios_import.filter(
         land_occupation__range=(search_params['land_min'], search_params['land_max']))
-    print('land objects:', len(scenarios_land))
+    #print('land objects:', len(scenarios_land))
     scenarios_global = scenarios_land.filter(
         global_warming__range=(search_params['global_min'], search_params['global_max']))
-    print('global objects:', len(scenarios_global))
+    #print('global objects:', len(scenarios_global))
     scenarios_surplus = scenarios_global.filter(
         surplus_ore__range=(search_params['surplus_min'], search_params['surplus_max']))
-    print('surplus objects:', len(scenarios_surplus))
+    #print('surplus objects:', len(scenarios_surplus))
     scenarios_water = scenarios_surplus.filter(
         water_consumption__range=(search_params['water_min'], search_params['water_max']))
-    print('water objects:', len(scenarios_water))
+    #print('water objects:', len(scenarios_water))
     scenarios_fresh = scenarios_water.filter(
         freshwater_eutrophication__range=(search_params['fresh_min'], search_params['fresh_max']))
 
@@ -281,7 +278,7 @@ def filter_scenarios(search_params):
         scenarios_roof_pv = scenarios_fresh
     #print(int(search_params['photo_roof_min']), int(search_params['photo_roof_max']))
     #print((int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_min']== 26)))
-    print('photo objects roof:', len(scenarios_roof_pv))
+    #print('photo objects roof:', len(scenarios_roof_pv))
     
     scenarios_open_field_pv = scenarios_roof_pv.filter(
         open_field_pv__range=(search_params['photo_open_field_min'], search_params['photo_open_field_max']))
@@ -289,44 +286,42 @@ def filter_scenarios(search_params):
     if (int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_max']== 125)):
         scenarios_open_field_pv = scenarios_roof_pv 
 
-    print('photo objects field:', len(scenarios_open_field_pv))
+    #print('photo objects field:', len(scenarios_open_field_pv))
     scenarios_wind_onshore = scenarios_open_field_pv.filter(
         wind_onshore__range=(search_params['wind_onshore_min'], search_params['wind_onshore_max']))
-    print(search_params['wind_onshore_min'],search_params['wind_onshore_max'])
+    #print(search_params['wind_onshore_min'],search_params['wind_onshore_max'])
     if (int(search_params['wind_onshore_min']) == 0) and (int(search_params['wind_onshore_max']== 45)):
         scenarios_wind_onshore = scenarios_open_field_pv
 
-    print('wind on objects:', len(scenarios_wind_onshore))
+    #print('wind on objects:', len(scenarios_wind_onshore))
     scenarios_wind_offshore = scenarios_wind_onshore.filter(
         wind_offshore__range=(search_params['wind_offshore_min'], search_params['wind_offshore_max']))
     if (int(search_params['wind_offshore_min']) == 0) and (int(search_params['wind_offshore_max']== 13)):
         scenarios_wind_offshore = scenarios_wind_onshore
 
-    print('wind off objects:', len(scenarios_wind_offshore))
+    #print('wind off objects:', len(scenarios_wind_offshore))
     scenarios_hydrogen = scenarios_wind_offshore.filter(
         hydrogen__range=(search_params['hydrogen_min'], search_params['hydrogen_max']))
     if (int(search_params['hydrogen_min']) == 0) and (int(search_params['hydrogen_max']== 125)):
         scenarios_open_field_pv = scenarios_roof_pv
 
-    print('hydrogen objects:', len(scenarios_hydrogen))
+    #print('hydrogen objects:', len(scenarios_hydrogen))
     scenarios_biofuel = scenarios_hydrogen.filter(
         bio_fuel__range=(search_params['bio_min'], search_params['bio_max']))
     if (int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_max']== 125)):
         scenarios_open_field_pv = scenarios_roof_pv
 
-    print('bio objects:', len(scenarios_biofuel))
+    #print('bio objects:', len(scenarios_biofuel))
     scenarios_battery = scenarios_biofuel.filter(
         battery__range=(search_params['battery_min'], search_params['battery_max'])).order_by('id')
     if (int(search_params['photo_open_field_min']) == 0) and (int(search_params['photo_open_field_max']== 125)):
         scenarios_open_field_pv = scenarios_roof_pv
 
-    print('battery objects:', len(scenarios_battery))
+    #print('battery objects:', len(scenarios_battery))
     return scenarios_battery
 
-
-def get_filtered_scenarios(request, project_id):
+def get_search_params(request,project_id):
     search_params = {}
-    scenarios_filtered = None
     if request.method == 'POST':
         # fetching energy systems params
         search_params = {}
@@ -410,7 +405,7 @@ def get_filtered_scenarios(request, project_id):
             request.POST['photo-open-field_0'], param_config['open_field_pv']['min'], param_config['open_field_pv']['max'])
         photo_open_field_max = rescale(
             request.POST['photo-open-field_1'], param_config['open_field_pv']['min'], param_config['open_field_pv']['max'])
-        print('Photo open field min:',photo_open_field_max,photo_open_field_min)
+        #print('Photo open field min:',photo_open_field_max,photo_open_field_min)
        
         hydrogen_min = rescale(request.POST['hydrogen_0'], param_config['hydrogen']['min'], param_config['hydrogen']['max'])
         hydrogen_max = rescale(request.POST['hydrogen_1'], param_config['hydrogen']['min'], param_config['hydrogen']['max'])
@@ -461,13 +456,18 @@ def get_filtered_scenarios(request, project_id):
         search_params['bio_max'] = bio_max
         search_params['battery_min'] = battery_min
         search_params['battery_max'] = battery_max
-        scenarios_filtered = filter_scenarios(search_params)
+    else:
+        search_params = request.session['search_params']
+    return search_params
 
-    return scenarios_filtered, search_params
+def get_filtered_scenarios(request, project_id):
+    search_params = get_search_params(request, project_id)
+    scenarios_filtered = filter_scenarios(search_params,project_id)
+    return scenarios_filtered
 
 
 def get_scenarios_count_ajax(request):
-    print(request.POST)
+    #print(request.POST)
     scenarios_filtered, search_params = get_filtered_scenarios(
         request, 1)
     return JsonResponse({'total_scenarios': len(scenarios_filtered)})
@@ -479,25 +479,36 @@ def interface(request, project_id, starting_scenario):
     else:
         template = 'param_selection_b.html'
 
+    request.session['starting_scenario'] = starting_scenario
+
     if request.method == 'POST':
-        scenarios_filtered, search_params = get_filtered_scenarios(
-            request, project_id)
-        create_log_entry(project_id, request.user, 'submitted',
-                         'search parameters', '')
-        print('created log entry')
-        return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
-                                                     'search_params': search_params,
-                                                     'json_format': serializers.serialize('json', scenarios_filtered),
-                                                     'project_id': project_id})
+        search_params = get_search_params(request,project_id)
+        request.session['search_params'] = search_params
+        return redirect('show_results',project_id=project_id)
     else:
-        locations = ScenarioLocation.objects.all()
         return render(request, template, {'project': project_id})
+
+
+def show_results(request, project_id):
+    scenarios_filtered = get_filtered_scenarios(
+            request, project_id)
+    create_log_entry(project_id, request.user, 'submitted',
+                         'search parameters', '')
+    print('created log entry')
+    starting_scenario = request.session['starting_scenario']
+    #request.session['search_params'] = search_params
+        
+    return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
+                                                     'json_format': serializers.serialize('json', scenarios_filtered),
+                                                     'project_id': project_id,
+                                                     'starting_scenario':starting_scenario
+                                                     })
 
 
 def changLang(request, lang_code):
     next = request.META.get('HTTP_REFERER')
     next = next and unquote(next)  # HTTP_REFERER may be encoded.
-    print('URL:', next)
+    #print('URL:', next)
     response = HttpResponse(status=204)
     if lang_code == 'pt':
         next = next.replace('/en/', '/pt/')
@@ -631,8 +642,8 @@ def get_scenario_details(scenario_id):
                 final_generation_data[key] = value
 
     
-    print('Power gen data=====>')
-    print(final_generation_data)
+    #print('Power gen data=====>')
+    #print(final_generation_data)
 
     data['total_power_gen'] = 0
     for key, value in final_generation_data.items():
@@ -751,7 +762,7 @@ def get_scenario_details(scenario_id):
 
     data['total_pv'] = roof + open  + exist_pv
 
-    print('=====> Total PV:',data['total_pv'])
+    #print('=====> Total PV:',data['total_pv'])
 
     data['pv_roof_percentage'] = '{:.2}'.format(roof * 100 / data['total_pv'])
     data['pv_open_percentage'] = '{:.2}'.format(open * 100 / data['total_pv'])
@@ -779,11 +790,11 @@ def get_scenario_details(scenario_id):
     # this is processed data with combining categories, e.g., wind on shore, offshore to wind
     data['final_generation_data'] = final_generation_data
 
-    print('Scenario:', model_to_dict(data['scenario']))
-    print("wind:", data['total_wind'])
-    print('generation:', data['generation'])
-    print('Final generation data:',final_generation_data)
-    print('System data:',system_data)
+    #print('Scenario:', model_to_dict(data['scenario']))
+    #print("wind:", data['total_wind'])
+    #print('generation:', data['generation'])
+    #print('Final generation data:',final_generation_data)
+    #print('System data:',system_data)
     return data
 
 
@@ -974,6 +985,8 @@ def inspect(request, project_id, scenario_id):
     scenarios = get_all_scenarios_impact_data(request)
     impact_a = get_impact_graph_data(scenarios, int(scenario_id))
 
+    starting_scenario = request.session['starting_scenario']
+
     if request.method == 'POST':
         scenario = Scenario.objects.get(id=scenario_id)
         form_type = request.POST['form_type']
@@ -994,7 +1007,7 @@ def inspect(request, project_id, scenario_id):
             else:
                 create_log_entry(project_id, request.user, 'voted-negative',
                              'scenario: {}'.format(scenario_id), '')
-            messages.success(request, _("Your vote has been saved."))
+            messages.success(request, _("Your vote has been saved. Go back to your <a href='/results/{}'>scenario list.</a>".format(project_id)))
         else:
             user = request.user
             project = Project.objects.get(id=project_id)
@@ -1006,11 +1019,11 @@ def inspect(request, project_id, scenario_id):
             create_log_entry(project_id, request.user, 'saved',
                              'scenario: {}'.format(scenario_id), '')
             messages.success(
-                request, _("Scenario has been added to your portfolio."))
+                request, _("Scenario has been added to your portfolio. <a href = '/portfolio/saved_scenarios'>Check scenario in your portfolio.</a>"))
     else:
         create_log_entry(1, request.user, 'inspected',
                          'scenario: {}'.format(scenario_id), '')
-    return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id, 'mapdata': map_data, 'impact_a': impact_a})
+    return render(request, 'inspect_scenario.html', {'data': data, 'project_id': project_id, 'mapdata': map_data, 'impact_a': impact_a,'starting_scenario':starting_scenario})
 
 
 def select_location(request):

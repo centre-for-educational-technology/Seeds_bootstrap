@@ -17,8 +17,8 @@
     display: none;
   }
 </style>
-<div class="mt-4 mx-4 px-4 ">
-  <a class="text-muted" href="" onclick="history.back();"> <span class='fa fa-arrow-left fa-2x'></span><a>
+<div class="mt-4 mx-4 px-4 "> 
+  <a class="text-muted" href="{% url 'show_results' project_id=project_id%}"> <span class='fa fa-arrow-left fa-2x'></span><a>
 </div>
 <div class='d-flex px-4 mx-4 pt-3  justify-content-between'>
   <div class='py-1'>
@@ -27,9 +27,9 @@
   <div class='d-flex  p-2 m-2'>
   {% if user.is_authenticated %}
   
-    <i title="Save this to your portfolio" style="cursor:pointer" class="fa fa-folder fa-2x circle  text-white p-3 mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
+    <i title="{% translate 'Save this to your portfolio' %}" style="cursor:pointer" class="fa fa-folder fa-2x circle  text-white p-3 mx-2" data-toggle='modal' data-placement='top' data-target="#save_modal"></i>
     <!--<i class="fa fa-download  pr-2 bg-primary text-white p-2 rounded-top rounded-bottom mx-2"></i> -->
-    <i title="Submit your preference" style="cursor:pointer" class="fa fa-star fa-2x circle   text-white p-3 " data-toggle='modal' data-placement='top' data-target="#vote_modal"></i>
+    <i title="{% translate 'Submit your preference' %}" style="cursor:pointer" class="fa fa-star fa-2x circle   text-white p-3 " data-toggle='modal' data-placement='top' data-target="#vote_modal"></i>
   
   {% else %}
   
