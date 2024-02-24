@@ -467,9 +467,10 @@ def get_filtered_scenarios(request, project_id):
 
 
 def get_scenarios_count_ajax(request):
+    #@todo: add project_id in the code
     #print(request.POST)
-    scenarios_filtered, search_params = get_filtered_scenarios(
-        request, 1)
+    search_params = get_search_params(request, 1)
+    scenarios_filtered = filter_scenarios(search_params,1)
     return JsonResponse({'total_scenarios': len(scenarios_filtered)})
 
 
@@ -1007,6 +1008,7 @@ def inspect(request, project_id, scenario_id):
             else:
                 create_log_entry(project_id, request.user, 'voted-negative',
                              'scenario: {}'.format(scenario_id), '')
+                
             messages.success(request, _("Your vote has been saved. Go back to your <a href='/results/{}'>scenario list.</a>".format(project_id)))
         else:
             user = request.user
