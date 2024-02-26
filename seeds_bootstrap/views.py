@@ -491,6 +491,7 @@ def interface(request, project_id, starting_scenario):
 
 
 def show_results(request, project_id):
+    search_params = request.session['search_params']
     scenarios_filtered = get_filtered_scenarios(
             request, project_id)
     create_log_entry(project_id, request.user, 'submitted',
@@ -502,7 +503,8 @@ def show_results(request, project_id):
     return render(request, 'show_results.html', {'page_obj': scenarios_filtered,
                                                      'json_format': serializers.serialize('json', scenarios_filtered),
                                                      'project_id': project_id,
-                                                     'starting_scenario':starting_scenario
+                                                     'starting_scenario':starting_scenario,
+                                                      'search_params':search_params,
                                                      })
 
 
