@@ -80,7 +80,7 @@
                   <li><a href="https://seeds-project.org/" target="_blank"  class="nav-link text-dark">{% translate 'About the Project' %}</a></li>
                
                 {% if user.is_superuser %}
-                <li><a href="{% url 'get_logs'  %}" class="nav-link text-dark">{% translate 'Activity Logs' %}</a></li>
+                <li class='pr-5'><a href="{% url 'get_logs'  %}" class="nav-link text-dark">{% translate 'Activity Logs' %}</a></li>
                 {% endif %}
                 <!--
                 <li><a href="#team-section" class="nav-link text-dark">About us</a></li>
@@ -88,6 +88,9 @@
                 <li><a href="#help-section" class="nav-link text-dark">Help</a></li>
                 <li><a href="#contact-section" class="nav-link text-dark">Contact</a></li>
                 -->
+                {% if user.is_authenticated %}
+                <li class=' px-5 text-end'><a href="{% url 'logout'  %}" class="nav-link text-end text-dark">{% translate 'Logout' %}</a></li>
+                {% endif %}
               </ul>
             </nav>
           </div>
@@ -125,12 +128,12 @@
       <footer class="footer-section bg-light px-5 py-0">
         <div class="container-fluid px-4 text-muted py-0">
           <div class='row pl-5 align-items-center'>
-              <div class="col col-8 p-0">
+              <div class="col col-8 p-0  footer-content">
                 <p class='p-0  pt-1'>
                   &copy;
                   <script>2023</script> {% translate 'SEEDS Project'%}
               </p>
-              <p class='small' style="font-size:3px!;">
+              <p>
                 {% translate 'The SEEDS project is supported by the CHIST-ERA grant CHIST-ERA-19-CES-004, the Swiss National Science Foundation grant number 195537, the Fundação para a Ciência e Tecnologia (FCT) grant number CHIST-ERA/0005/2019, the Spanish Agencia Estatal de Investigación with grant PCI2020-120710-2, and the Estonian Research Council grant number 4-8/20/26' %}
               </p>
               </div>
