@@ -40,8 +40,10 @@
           <div class='p-0 m-1' id='power_storage_a'></div>
         </div>
         <div class='col p-0'>
-          <div class='d-flex align-items-start p-1' id="solar_map_a"></div>
-          <div class='d-flex align-items-end p-1'   id="wind_map_a"></div>
+          <p class='smaller-text p-0 text-dark'> {% trans 'Solar' %} </p>
+          <div class='d-flex  pb-2 align-items-start p-0' id="solar_map_a"></div>
+          <p class='smaller-text text-dark'> {% trans 'Wind' %} </p>
+          <div class='d-flex align-items-end'   id="wind_map_a"></div>
         </div>
       </div>
       <div class='my-3'>
@@ -89,12 +91,13 @@
           <div class='p-0 m-2' id='power_storage_b'></div>
         </div>
         <div class='col'>
-          <div class='p-1 d-flex align-items-start' id="solar_map_b"></div>
-          <div class='p-1 d-flex align-items-end'  id="wind_map_b"></div>
+          <p class='smaller-text p-0 text-dark'> {% trans 'Solar' %} </p>
+          <div class='pb-2 d-flex align-items-start p-0' id="solar_map_b"></div>
+          <p class='smaller-text text-dark pt-1 p-0'> {% trans 'Wind' %} </p>
+          <div class=' d-flex align-items-end p-0'  id="wind_map_b"></div>
         </div>
       </div>
       <div class='my-3'>
-        
         <div id="carouselExampleControls" class="carousel slide" data-interval="false" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -353,7 +356,7 @@
   
       height: 300,
       width: 160,
-      showlegend: false,
+      showlegend: true,
       margin : {l:0, r:20, t:0, b:0,pad:5},
       mapbox:{
           style:'carto-positron',
