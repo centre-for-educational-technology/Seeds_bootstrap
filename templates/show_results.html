@@ -2,7 +2,13 @@
 {% load i18n %}
 {%block body%}
 
-</script>
+<!--
+@todo: the current use alpine js for tracking selected scenario works only on page reload. 
+If the user refreshes the page then the selection remains on the page (showing two scenarios selection), however, alpine clears its state of those scenarios. That means user will see two scenarios selected but alpine.js does not remember that and ask for selection again for comparison.
+
+-->
+
+
 <style>
     a.active {
         font-weight: bold;
@@ -438,19 +444,104 @@ aria-hidden="true">
                         <tr>
                             
                             <th>   {% translate 'Scenario'%} ID</th>
-                            <th x-show="power">   {% translate 'Power capacity'%} (GW)</th>
-                            <th x-show="storage">   {% translate 'Storage capacity'%} (TWh)</th>
-                            <th x-show="pace">   {% translate 'Community-led Infrastructure'%}</th>
-                            <th x-show="infra">   {% translate 'Implementation Pace'%}</th>
-                            <th>   {% translate 'Import dependency'%}</th>
+                            <th x-show="power">   {% translate 'Power capacity'%} (GW) 
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#power_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="storage">   {% translate 'Storage capacity'%} (TWh)
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#store_help">
+                                </i>
+                              </span>
+
+                            </th>
+                            <th x-show="infra">   {% translate 'Community-led Infrastructure'%}
+                            <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#community_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="pace">   {% translate 'Implementation Pace'%}
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#pace_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th>   {% translate 'Import dependency'%}
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#import_help">
+                                </i>
+                              </span>
+                            </th>
                             
-                            <th x-show="wind_onshore">   {% translate 'Wind On-shore'%} (GW) </th>
-                            <th x-show="wind_offshore">   {% translate 'Wind Off-shore'%} (GW) </th>
-                            <th x-show="roof_pv">   {% translate 'PV Roof-mounted'%} (GW)</th>
-                            <th x-show="field_pv">   {% translate 'PV Open-field'%} (GW)</th>
-                            <th x-show="global">   {% translate 'Global Warming Potential'%}</th>
-                            <th x-show="water">   {% translate 'Water consumption'%}</th>
-                            <th x-show="land">   {% translate 'Land occupation'%}</th>
+                            <th x-show="wind_onshore">   {% translate 'Wind On-shore'%} (GW) 
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#wind_on_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="wind_offshore">   {% translate 'Wind Off-shore'%} (GW) 
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#wind_off_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="roof_pv">   {% translate 'PV Roof-mounted'%} (GW)
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#roof_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="field_pv">   {% translate 'PV Open-field'%} (GW)
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#open_field_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="global">   {% translate 'Global Warming Potential'%}
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#global_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="water">   {% translate 'Water consumption'%}
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#water_help">
+                                </i>
+                              </span>
+                            </th>
+                            <th x-show="land">   {% translate 'Land occupation'%}
+                              <span>
+                                <i style='color:#007bff;' class="text-primary fa fa-info-circle"
+                                        data-toggle='modal' data-placement='top'
+                                        data-target="#land_help">
+                                </i>
+                              </span>
+                            </th>
                             <th ></th>
                            
                         </tr>
@@ -481,7 +572,265 @@ aria-hidden="true">
                 </table>
             </div>
         </div>
+        <div class="modal fade" id="global_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Global warming' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                        Impact on global warming due to greenhouse gas emissions (in kg CO2 to air). Indicator: Infrared radiative forcing increase.
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
 
+        <div class="modal fade" id="power_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Power generation capacity' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                        Total amount of power generation capacity in GW.
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="store_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Power storage capacity' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                        Total amount of power storage capacity in TWh.
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="community_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Degree of community-led infrastructure' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                        1 means all the infrastructure installed can be potentially driven bottom-up by communities; 0 means none of it.
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="pace_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Pace of implementation' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                        1 means the amount of infrastructure to be installed per year (between 2023 and 2050) to reach the selected system design is comparable to what experienced historically (so, the pace of implementation is the same as historically). Less than 1 means we need to install less infrastructure per year than historically (so, the pace of implementation is slower than historically). More than 1 means we need to install more infrastructure per year than historically (so, the pace of implementation is faster than historically. For instance, if the value is 2, it means it is 2x faster than historically. 10 means 10x faster than historically. Etc.).
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="import_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Import dependency' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                    1 means all primary energy is imported; 0 means none of it
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="wind_on_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind On-shore' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                        Amount of power generated through Onshore wind (in GW).
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="wind_off_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Wind Off-shore' %}
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                       Amount of power generated through Offshore wind (in GW).
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="modal fade" id="open_field_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'PV Open-field' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktrans %} 
+                                Amount of power generated through Open field PV (in GW).
+                                {% endblocktrans %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        <div class="modal fade" id="roof_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'PV Roof-mounted'%} 
+                      </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class='modal-body'>
+                    {% blocktrans %} 
+                        Amount of power generated through Rooftop PV (in GW).
+                    {% endblocktrans %}
+                                
+                  </div>
+              </div>
+          </div>
+        </div>
+         <div class="modal fade" id="water_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Water Consumption Potential' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktrans %} 
+                                Environmental Impact of the energy system on water resources (m3 water consumed).
+                                {% endblocktrans %}
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        <div class="modal fade" id="land_help" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel"><span><i style='color:#007bff;'
+                                            class='fa fa-info-circle mr-2'></i></span>{% translate 'Agricultural Land Occupation' %}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                {% blocktrans %} 
+                                Environmental Impacts associated with land use changes (in m2/year)
+                                {% endblocktrans %}
+                                
+                            </div>
+                        </div>
+                    </div>
+        </div>
 
 
 
