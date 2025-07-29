@@ -66,6 +66,8 @@ python3 manage.py migrate --run-syncdb
 ### Populate database
 The seeds dataset comprises multiple CSV files which were processed to store in the database. To populate the database with SEEDS data, we will use a script `loadAll.py` available in the `scripts` directory. The following command performs the loading of data into the SEEDS database.
 
+> Update the `base` variable in the script file accordingly if deploying in production.
+
 ```
 python3 manage.py shell < ./scripts/loadAll.py
 ```

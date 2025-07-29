@@ -12,7 +12,10 @@ import pandas as pd
 import geopandas
 from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 import numpy as np
-base = '/Users/htk/Documents/Work/Seeds_project/seeds_bootstrap copy/scripts'
+import argparse
+
+
+base = './scripts'
 # Data files for Scenario table
 
 scenario = pd.read_csv(
